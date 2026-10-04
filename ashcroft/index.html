@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="OSINT-розбір згадок лорда Ешкрофта у файлах Епштейна (DOJ, EFTA)">
+<title>Ешкрофт у файлах Епштейна</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,650&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+/* Layout: a single reading column for an evidence file. Email exhibits are monospaced "printouts" with black redaction bars; EFTA numbers act as exhibit tags in the margin line. */
+:root{
+  --bg:#F3F5F4;
+  --paper:#FFFFFF;
+  --ink:#16191D;
+  --muted:#58606B;
+  --line:#D6DBD9;
+  --accent:#1D5C86;
+  --accent-soft:#E3EEF5;
+  --mark:#FFE58C;
+  --redact:#0D0F12;
+  --ok:#1E7A4C; --ok-soft:#E2F2E9;
+  --mid:#9A6A00; --mid-soft:#FBF0D6;
+  --no:#6B6F76; --no-soft:#ECEDEF;
+  --f-display:"Literata", Georgia, "Times New Roman", serif;
+  --f-body:"Golos Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --step--1:.8125rem; --step0:1rem; --step1:1.1875rem; --step2:1.5rem; --step3:2.125rem; --step4:clamp(2.1rem,5vw,3.25rem);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111416; --paper:#181C1F; --ink:#E6E9EB; --muted:#9AA3AD; --line:#2C3338;
+    --accent:#7EB6DD; --accent-soft:#1A2A36; --mark:rgba(255,214,90,.28); --redact:#000000;
+    --ok:#6FCF9B; --ok-soft:#173225; --mid:#E5B652; --mid-soft:#352A12; --no:#A3A8AF; --no-soft:#24282C;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111416; --paper:#181C1F; --ink:#E6E9EB; --muted:#9AA3AD; --line:#2C3338;
+  --accent:#7EB6DD; --accent-soft:#1A2A36; --mark:rgba(255,214,90,.28); --redact:#000000;
+  --ok:#6FCF9B; --ok-soft:#173225; --mid:#E5B652; --mid-soft:#352A12; --no:#A3A8AF; --no-soft:#24282C;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:var(--step0);line-height:1.6;padding-inline:16px;padding-block:0 64px}
+.wrap{max-width:780px;margin-inline:auto}
+a{color:var(--accent);text-underline-offset:2px;text-decoration-thickness:1px;overflow-wrap:anywhere}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+h1,h2,h3{font-family:var(--f-display);font-weight:650;line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:var(--step4);letter-spacing:-.01em}
+h2{font-size:var(--step3);margin-top:8px}
+h3{font-size:var(--step1);margin-top:4px}
+p{margin:0}
+.mono{font-family:var(--f-mono)}
+.eyebrow{font-size:var(--step--1);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+section{display:flex;flex-direction:column;gap:16px;padding-block:44px 0}
+section+section{border-top:1px solid var(--line);margin-top:44px}
+.stack{display:flex;flex-direction:column;gap:12px}
+mark{background:var(--mark);color:inherit;padding:0 .15em;border-radius:2px}
+
+/* masthead */
+header.mast{padding-block:56px 8px;display:flex;flex-direction:column;gap:18px}
+.tagline{display:flex;flex-wrap:wrap;gap:8px 18px;font-family:var(--f-mono);font-size:var(--step--1);color:var(--muted)}
+.lede{font-size:var(--step1);line-height:1.55;max-width:65ch}
+.bar{display:inline-block;background:var(--redact);height:.95em;vertical-align:-.1em;border-radius:1px}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:var(--step--1);font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap;vertical-align:.08em}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.b-ok{color:var(--ok);background:var(--ok-soft)}
+.b-mid{color:var(--mid);background:var(--mid-soft)}
+.b-no{color:var(--no);background:var(--no-soft)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:var(--step--1);color:var(--muted);align-items:center}
+
+/* verdict */
+.verdict{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:22px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+.verdict div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.verdict .k{font-family:var(--f-display);font-size:var(--step2);line-height:1.15}
+.verdict .v{color:var(--muted);font-size:.9375rem}
+
+ol.findings{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:12px;max-width:68ch}
+ol.findings li::marker{font-family:var(--f-mono);color:var(--muted);font-size:.875rem}
+
+/* timeline */
+.tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.tl li{display:grid;grid-template-columns:112px 1fr;gap:16px;padding:12px 0;border-top:1px solid var(--line)}
+.tl li:first-child{border-top:0}
+.tl time{font-family:var(--f-mono);font-size:.875rem;color:var(--muted);padding-top:2px;font-variant-numeric:tabular-nums}
+.tl .ash time{color:var(--accent);font-weight:500}
+.tl div{min-width:0}
+
+/* exhibit (email) */
+.exhibit{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.ex-tag{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;padding:10px 16px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:var(--step--1);color:var(--muted);background:var(--bg)}
+.ex-tag b{color:var(--ink);font-weight:500}
+.msg{padding:16px;display:flex;flex-direction:column;gap:10px;border-top:1px dashed var(--line)}
+.msg:first-of-type{border-top:0}
+.hdr{display:grid;grid-template-columns:64px 1fr;gap:2px 10px;font-family:var(--f-mono);font-size:.8125rem;color:var(--muted)}
+.hdr span:nth-child(odd){color:var(--muted)}
+.hdr span:nth-child(even){color:var(--ink);overflow-wrap:anywhere;min-width:0}
+.body{font-family:var(--f-mono);font-size:.875rem;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
+.tr{font-size:.9375rem;color:var(--muted);border-left:2px solid var(--line);padding-left:12px}
+.tr b{color:var(--ink);font-weight:600}
+.omit{font-size:var(--step--1);color:var(--muted);font-style:italic}
+.who{font-family:var(--f-body);font-size:var(--step--1);font-weight:600;color:var(--accent);letter-spacing:.02em}
+
+/* analysis callout */
+.note{background:var(--accent-soft);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.note h3{font-size:var(--step0);font-family:var(--f-body);font-weight:600}
+
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;font-size:.875rem;min-width:620px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-top:1px solid var(--line)}
+thead th{border-top:0;font-size:var(--step--1);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;background:var(--bg)}
+td.d{font-family:var(--f-mono);font-size:.8125rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+td .en{display:block;color:var(--muted);font-size:.8125rem}
+tr.last td{background:var(--mid-soft)}
+.hash{font-family:var(--f-mono);font-size:.75rem;word-break:break-all;color:var(--muted)}
+
+.answer{border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--paper);border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+
+ul.plain{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:8px}
+.src{font-size:.9375rem}
+.src li{overflow-wrap:anywhere}
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:var(--step--1);color:var(--muted);display:flex;flex-direction:column;gap:6px}
+
+@media (max-width:560px){
+  .tl li{grid-template-columns:1fr;gap:4px}
+  .hdr{grid-template-columns:52px 1fr}
+  .verdict{padding:18px}
+}
+@media (prefers-reduced-motion:no-preference){ a{transition:color .15s} }
+.back{padding-top:24px;font-family:var(--f-mono);font-size:var(--step--1)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="back" aria-label="Навігація"><a href="../">← Усі матеріали</a></nav>
+
+<header class="mast">
+  <div class="tagline"><span>OSINT · проєкт «Гончаренко»</span><span>версія 3 · 04.10.2026</span><span>Мін'юст США · реліз EFTA</span></div>
+  <h1>Ешкрофт у файлах Епштейна</h1>
+  <p class="lede">Ми перевірили, як лорд Майкл Ешкрофт фігурує в документах, які Мін'юст США оприлюднив за Epstein Files Transparency Act. Слово «Ashcroft» трапляється на понад 400 сторінках, але лорда стосуються лише чотири епізоди 2010–2013 рр. Контакту Ешкрофта з Епштейном немає. Натомість документи показують, що у 2010 р. Епштейн радив Пітерові Мендельсону, як атакувати Ешкрофта.</p>
+  <div class="legend">
+    <span class="badge b-ok">підтверджено</span><span>першоджерело або кілька незалежних джерел</span>
+    <span class="badge b-mid">ймовірно</span><span>одне джерело або сильна непряма ознака</span>
+    <span class="badge b-no">не підтверджено</span><span>твердження третьої особи</span>
+  </div>
+</header>
+
+<section aria-labelledby="s-verdict">
+  <p class="eyebrow" id="s-verdict">Висновок</p>
+  <div class="verdict">
+    <div><span class="k">Мішень, а не учасник</span><span class="v">Листів від Ешкрофта чи до нього немає. Немає його й серед учасників листування.</span></div>
+    <div><span class="k">Опозиційне дослідження</span><span class="v">7–8 березня 2010 р. Епштейн підказує Мендельсону, тодішньому першому держсекретарю, як дискредитувати Ешкрофта.</span></div>
+    <div><span class="k">5 оригіналів звірено</span><span class="v">PDF Мін'юсту збігаються з OCR-текстом індексу. Ідентифікацію співрозмовників підтверджують недогляди при знеособленні.</span></div>
+  </div>
+  <ol class="findings">
+    <li><b>«Follow Ashcrofts money form Tory pocket back to its source».</b> Епштейн пише це Мендельсону 07.03.2010, через три дні після того, як Виборча комісія визнала, що не може встановити джерело грошей белізької Stargate Holdings. <span class="badge b-ok">підтверджено</span></li>
+    <li>Мендельсон відповідає: «I was running this story from NY !». За офіційними даними, він справді був у Нью-Йорку 2–3.03.2010, на піку скандалу. <span class="badge b-ok">підтверджено</span></li>
+    <li>08.03.2010 Епштейн пише план атаки: «British Caribbean Bank, would be easier to trash». Також радить спитати Онга Бенг Сенга, домогтися розкриття листування Ешкрофта з сином і перевірити перекази Stargate. <span class="badge b-ok">текст документа</span></li>
+    <li>Епштейн стверджує, що Ешкрофт не володіє Stargate, а є дискреційним бенефіціаром трасту, яким керують белізькі юристи. У публічних документах цього немає. <span class="badge b-no">не підтверджено</span></li>
+    <li>12.07.2010 сінгапурський мільярдер Онг Бенг Сенг пише Мендельсону: «Ashcroft have put all his cos in Turks into bankruptcy. He is strange.» Це реакція на зовнішнє управління в компанії Johnston International, яке за кілька днів до того ініціював банк Ешкрофта. <span class="badge b-mid">ідентифікація ймовірна</span></li>
+    <li>Доказів правопорушень Ешкрофта документи не містять.</li>
+  </ol>
+</section>
+
+<section aria-labelledby="s-tl">
+  <p class="eyebrow">Хронологія</p>
+  <h2 id="s-tl">Березень 2010: скандал і листи</h2>
+  <ol class="tl">
+    <li><time>01.03.2010</time><div>Ешкрофт визнає, що для податкових цілей не є доміцильованим у Великій Британії (non-dom).</div></li>
+    <li><time>02–03.03.2010</time><div>Мендельсон у Нью-Йорку: виступ у NYU і двосторонні зустрічі, витрати £8 628 (звітність BIS).</div></li>
+    <li><time>04.03.2010</time><div>Виборча комісія: пожертви Bearwood консерваторам законні, але про джерело коштів Stargate (Беліз) «no meaningful information».</div></li>
+    <li><time>05.03.2010</time><div>Guardian пише про позики British Caribbean Bank прем'єрові островів Теркс і Кайкос Місіку.</div></li>
+    <li class="ash"><time>07.03.2010</time><div>Епштейн → Мендельсон: «Follow Ashcrofts money…». Відповідь: «I was running this story from NY !».</div></li>
+    <li class="ash"><time>08.03.2010</time><div>Команда Мендельсона пересилає блог Telegraph про «the Ashcroft business». Через 28 хвилин Епштейн надсилає план атаки на BCB.</div></li>
+    <li><time>06.05.2010</time><div>Вибори. Лейбористи втрачають владу, Мендельсон — посади.</div></li>
+    <li><time>поч. 07.2010</time><div>BCB ініціює зовнішнє управління в Johnston International на островах Теркс і Кайкос.</div></li>
+    <li class="ash"><time>12.07.2010</time><div>Онг Бенг Сенг → Мендельсон: «Ashcroft have put all his cos in Turks into bankruptcy». Лист переслано Епштейну.</div></li>
+    <li class="ash"><time>09.09.2013</time><div>Ранковий огляд брокера в пошті Епштейна згадує опитування Ешкрофта про Шотландію.</div></li>
+  </ol>
+</section>
+
+<section aria-labelledby="s-mand">
+  <p class="eyebrow">Ключова особа</p>
+  <h2 id="s-mand">Хто такий Пітер Мендельсон</h2>
+  <p style="max-width:65ch"><b>Peter Benjamin Mandelson, Baron Mandelson</b> — британський політик-лейборист, один з архітекторів «нових лейбористів» Тоні Блера. З 2008 р. — довічний пер. Двічі йшов у відставку з уряду Блера через скандали, був єврокомісаром, у 2008–2010 рр. — однією з ключових фігур уряду Гордона Брауна. Прізвисько в британській пресі — «Prince of Darkness». У березні 2010 р., коли тривало листування з Епштейном, він водночас обіймав три посади: першого державного секретаря, державного секретаря з питань бізнесу, інновацій і навичок та лорда-голови Таємної ради.</p>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Посада</th><th>Період</th><th>Першоджерело</th></tr></thead>
+      <tbody>
+        <tr><td>Директор з кампаній і комунікацій Лейбористської партії<span class="en">Director of Campaigns and Communications, Labour Party</span></td><td class="d">1985–1990</td><td><a href="https://www.gov.uk/government/people/peter-mandelson">GOV.UK</a></td></tr>
+        <tr><td>Член Палати громад від округу Гартлпул<span class="en">Member of Parliament for Hartlepool</span></td><td class="d">09.04.1992–08.09.2004</td><td><a href="https://members.parliament.uk/member/500/career">UK Parliament</a></td></tr>
+        <tr><td>Міністр без портфеля<span class="en">Minister without Portfolio</span></td><td class="d">05.05.1997–26.07.1998</td><td><a href="https://members.parliament.uk/member/500/career">UK Parliament</a></td></tr>
+        <tr><td>Державний секретар (міністр) торгівлі та промисловості; відставка<span class="en">Secretary of State for Trade and Industry (у реєстрі парламенту — «Secretary of State for Trade»)</span></td><td class="d">27.07.1998–22.12.1998</td><td><a href="https://members.parliament.uk/member/500/career">UK Parliament</a></td></tr>
+        <tr><td>Державний секретар у справах Північної Ірландії; відставка<span class="en">Secretary of State for Northern Ireland</span></td><td class="d">11.10.1999–24.01.2001</td><td><a href="https://members.parliament.uk/member/500/career">UK Parliament</a></td></tr>
+        <tr><td>Член Єврокомісії з питань торгівлі<span class="en">European Commissioner for Trade</span></td><td class="d">22.11.2004–03.10.2008</td><td><a href="https://members.parliament.uk/member/500/career">UK Parliament</a>, <a href="https://www.gov.uk/government/people/peter-mandelson">GOV.UK</a></td></tr>
+        <tr><td>Довічний пер, член Палати лордів<span class="en">Life peer, House of Lords</span></td><td class="d">13.10.2008–04.02.2026</td><td><a href="https://members.parliament.uk/member/500/career">UK Parliament</a></td></tr>
+        <tr><td>Державний секретар з питань бізнесу, підприємництва та регуляторної реформи<span class="en">Secretary of State for Business, Enterprise and Regulatory Reform</span></td><td class="d">13.10.2008–05.06.2009</td><td><a href="https://members.parliament.uk/member/500/career">UK Parliament</a></td></tr>
+        <tr><td>Перший державний секретар, фактично старший міністр після прем'єра<span class="en">First Secretary of State</span></td><td class="d">06.2009–05.2010</td><td><a href="https://www.gov.uk/government/people/peter-mandelson">GOV.UK</a> (подано разом із BIS як «2008 to 2010»)</td></tr>
+        <tr><td>Лорд-голова Таємної ради<span class="en">Lord President of the Council</span></td><td class="d">06.06.2009–06.05.2010</td><td><a href="https://members.parliament.uk/member/500/career">UK Parliament</a></td></tr>
+        <tr><td>Державний секретар з питань бізнесу, інновацій і навичок (BIS)<span class="en">Secretary of State for Business, Innovation and Skills</span></td><td class="d">06.06.2009–06.05.2010</td><td><a href="https://members.parliament.uk/member/500/career">UK Parliament</a></td></tr>
+        <tr class="last"><td><b>Посол Сполученого Королівства у США</b>; звільнений<span class="en">British Ambassador to the USA</span></td><td class="d">10.02.2025–11.09.2025</td><td><a href="https://www.gov.uk/government/people/peter-mandelson">GOV.UK</a>, <a href="https://publications.parliament.uk/pa/cm5902/cmselect/cmfaff/504/report.html">звіт Комітету закордонних справ</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="answer">
+    <h3>Чи остання його посада — посол у США?</h3>
+    <p><b>Так.</b> Остання державна посада Мендельсона — посол Сполученого Королівства у США. Призначення оголосили 20.12.2024, до обов'язків він приступив 10.02.2025, а 11.09.2025 прем'єр Кір Стармер його звільнив після оприлюднення листування з Епштейном. Довше тривало лише членство в Палаті лордів, але це статус законодавця, а не посада: він склав його 04.02.2026. Наразі Мендельсон не обіймає жодних посад.</p>
+  </div>
+
+  <h3>Що сталося після звільнення</h3>
+  <ol class="tl">
+    <li><time>02.10.2025</time><div>Рада Гартлпула одноголосно позбавила його звання почесного громадянина. <a href="https://www.hartlepool.gov.uk/news/article/122/lord-peter-mandelson-s-civic-honour-withdrawn">hartlepool.gov.uk</a></div></li>
+    <li><time>01.02.2026</time><div>Вийшов з Лейбористської партії (у реєстрі парламенту членство в партії до 01.02.2026). <a href="https://members.parliament.uk/member/500/career">UK Parliament</a></div></li>
+    <li><time>03.02.2026</time><div>Столична поліція почала кримінальне розслідування. <a href="https://www.itv.com/news/2026-02-03/mandelson-to-step-down-from-house-of-lords-lord-speaker-announces">ITV</a></div></li>
+    <li><time>04.02.2026</time><div>Склав повноваження в Палаті лордів («retired»). <a href="https://members.parliament.uk/member/500/career">UK Parliament</a></div></li>
+    <li><time>23.02.2026</time><div>Заарештований за підозрою у misconduct in public office (передача Епштейну службової інформації у 2009–2010 рр.), звільнений під заставу. <a href="https://www.rte.ie/news/uk/2026/0223/1560023-mandelson-arrest/">RTÉ</a>, <a href="https://www.cnn.com/2026/02/23/uk/peter-mandelson-arrested-gbr-intl">CNN</a></div></li>
+    <li><time>10.03.2026</time><div>Указом «His Majesty in Council» виключений зі списку членів Таємної ради. <a href="https://privycouncil.independent.gov.uk/wp-content/uploads/2026/03/2026-03-10-Lord-Mandelson-Strike-Out-Order.pdf">Privy Council Office, наказ (PDF)</a></div></li>
+    <li><time>09.07.2026</time><div>Комітет закордонних справ Палати громад назвав його призначення послом «nothing short of disastrous». <a href="https://publications.parliament.uk/pa/cm5902/cmselect/cmfaff/504/report.html">звіт комітету</a></div></li>
+  </ol>
+  <p class="omit">Обвинувачень у знайдених джерелах не висунуто; розслідування триває. Звинувачень Мендельсону, пов'язаних з Ешкрофтом, немає.</p>
+</section>
+
+<section aria-labelledby="s-a">
+  <p class="eyebrow">Ланцюжок А · 6–7 березня 2010</p>
+  <h2 id="s-a">«Follow Ashcrofts money»</h2>
+  <p>17 копій одного ланцюжка в наборах 9, 10 і 11. Найповніша — EFTA00889350. Час у листах Епштейна — за Нью-Йорком (−0500), у листах Мендельсона — за Гринвічем. Орфографію збережено. Юридичні застереження прибрано.</p>
+
+  <article class="exhibit">
+    <div class="ex-tag"><span><b>EFTA00889350</b> · набір 9 · 5 с.</span><span>звірено: EFTA02528796, EFTA02528805 (оригінали PDF)</span></div>
+
+    <div class="msg">
+      <span class="who">Мендельсон → Епштейн</span>
+      <div class="hdr"><span>Date</span><span>Sat, 6 Mar 2010, 13:55</span></div>
+      <p class="body">Went well this afternoon. Ben booked for trip.
+I am also summoned to see Presdt Zuma tomorrow for private meeting. Do we like South Africa ??</p>
+      <p class="tr">«Сьогодні все пройшло добре. Бен заброньований на поїздку. Мене також викликають завтра до президента Зуми на приватну зустріч. Нам подобається Південна Африка??»</p>
+    </div>
+
+    <div class="msg"><p class="omit">06.03.2010, 14:06–14:18: короткий приватний обмін про третіх осіб. До Ешкрофта не стосується, тут не відтворюється.</p></div>
+
+    <div class="msg">
+      <span class="who">Епштейн → Мендельсон</span>
+      <div class="hdr"><span>Date</span><span>Sun, 7 Mar 2010, 02:51 −0500</span></div>
+      <p class="body">Well, like the Irishman who found his best friend in bed with his wife. approached them with a gun, and pointed it at his own head , and said ,i 'm so upset that after i shoot myself i , going to kill you both, ---The price of food, children's clothing and fuel bills should rise to replace a 50% tax on the super-rich, the Tory-backed think tank Reform said yesterday.</p>
+      <p class="tr">Анекдот про самопошкодження і вставлена новина: аналітичний центр Reform, близький до торі, пропонує замінити 50% податок на найбагатших підвищенням цін на їжу, дитячий одяг і пальне. Епштейн подає ідею торі як аргумент для лейбористів.</p>
+    </div>
+
+    <div class="msg">
+      <span class="who">Мендельсон → Епштейн</span>
+      <div class="hdr"><span>Date</span><span>Sun, 7 Mar 2010, ~05:26</span></div>
+      <p class="body">How do you pick up this news ?</p>
+      <p class="tr">«Як ти дізнаєшся ці новини?»</p>
+    </div>
+
+    <div class="msg">
+      <span class="who">Епштейн → Мендельсон</span>
+      <div class="hdr"><span>Date</span><span>Sun, 7 Mar 2010, 06:22 −0500</span></div>
+      <p class="body">I want you to win , in al aspects of life</p>
+      <p class="tr">«Я хочу, щоб ти перемагав у всіх сферах життя».</p>
+    </div>
+
+    <div class="msg">
+      <span class="who">Епштейн → Мендельсон · ключовий лист</span>
+      <div class="hdr"><span>Date</span><span>Sun, 7 Mar 2010, 06:43 −0500 (11:43 GMT)</span><span>To</span><span><span class="bar" style="width:14em" aria-label="замазано"></span></span></div>
+      <p class="body">Vince Cable, the Liberal Democrat Treasury spokesman, said that Lord Ashcroft's failure to bring all of his finances onshore had cost taxpayers £100 million..<mark>Follow Ashcrofts money form Tory pocket back to its source.. don't pass go„ collect winnings</mark></p>
+      <p class="tr">«Вінс Кейбл, речник ліберал-демократів з фінансів, заявив, що відмова лорда Ешкрофта перевести всі фінанси на британський берег коштувала платникам податків £100 млн. <b>Простеж гроші Ешкрофта від кишені торі назад до джерела. Не проходь через "Старт", забери виграш</b>».</p>
+    </div>
+
+    <div class="msg">
+      <span class="who">Мендельсон → Епштейн</span>
+      <div class="hdr"><span>Date</span><span>Sun, 7 Mar 2010, 06:47</span><span>From</span><span><span class="bar" style="width:9em" aria-label="замазано"></span> <span class="mono">target="_blank"&gt;petermand=lson@btinternet.com&gt;</span></span></div>
+      <p class="body"><mark>I was running this story from NY !</mark>
+R is up for living part of time in Beijing. Says he knows basic mandarin...</p>
+      <p class="tr">«Я вів цю історію з Нью-Йорка! Р. готовий частину часу жити в Пекіні, каже, що знає базову китайську…»</p>
+    </div>
+
+    <div class="msg">
+      <span class="who">Епштейн → Мендельсон</span>
+      <div class="hdr"><span>Date</span><span>Sun, 7 Mar 2010, 06:51 і 06:56 −0500</span></div>
+      <p class="body">i have already found an altlernative medicice school for him to augment his osetopathy.. im on it
+
+unlike america , each major hospital in Beijing has an osteopath.. ,The head of Beth Israel in new york , the largest altenrnative care in the US , met with me the morning of your visit , to provide me all beijing info. dear boy</p>
+      <p class="tr">Епштейн знайшов для «Р.» школу альтернативної медицини на додачу до остеопатії. Голова Beth Israel зустрівся з ним «вранці в день твого візиту».</p>
+    </div>
+
+    <div class="msg">
+      <span class="who">Мендельсон → Епштейн, потім Епштейн → Мендельсон</span>
+      <div class="hdr"><span>Date</span><span>Sun, 7 Mar 2010, 11:58 і 12:00 GMT</span></div>
+      <p class="body">I am glad you are not my enemy x
+
+I appreciate the accolade from one who understands " devious"</p>
+      <p class="tr">«Радий, що ти мені не ворог x». — «Ціную комплімент від того, хто знається на "підступності"».</p>
+    </div>
+  </article>
+
+  <div class="note">
+    <h3>Хто співрозмовник</h3>
+    <p><b>Пітер Мендельсон.</b> <span class="badge b-ok">підтверджено в оригіналі</span> В EFTA02528805 Мін'юст замазав ім'я і адресу в рядку відповіді від 06:47, але хвіст HTML-розмітки з адресою <span class="mono">petermand=lson@btinternet.com</span> перенісся на наступний рядок і лишився відкритим. У копії EFTA02528796 той самий рядок замазаний повністю. «Р.» і остеопатія збігаються з оприлюдненими у 2026 р. даними про те, що Епштейн оплачував навчання остеопатії партнерові Мендельсона.</p>
+  </div>
+  <div class="note">
+    <h3>Що означає «Follow Ashcrofts money … don't pass go, collect winnings»</h3>
+    <p>«From Tory pocket back to its source» — від каси консерваторів (≈£5,1–5,4 млн через Bearwood Corporate Services) назад до белізької Stargate Holdings. Саме її джерело коштів Виборча комісія за три дні до листа визнала невстановленим.</p>
+    <p>«Don't pass go» — перекручена картка «Монополії» «Go directly to jail. Do not pass Go, do not collect £200». Найімовірніше, Епштейн свідомо обіграв два значення: «бери політичний виграш» і натяк на «в'язничне» походження грошей. <span class="badge b-mid">інтерпретація</span></p>
+    <p>Це порада союзникові щодо атаки, а не знання про злочини Ешкрофта. Мендельсон відповідає, що й так «вів цю історію» з Нью-Йорка.</p>
+  </div>
+</section>
+
+<section aria-labelledby="s-b">
+  <p class="eyebrow">Лист Б · 8 березня 2010</p>
+  <h2 id="s-b">«British Caribbean Bank would be easier to trash»</h2>
+  <article class="exhibit">
+    <div class="ex-tag"><span><b>EFTA00746371</b> · набір 9 · ім'я сина не замазане</span><span>копія: EFTA01825460 (набір 10)</span></div>
+    <div class="msg">
+      <span class="who">Епштейн → Мендельсон</span>
+      <div class="hdr"><span>From</span><span>Jeffrey Epstein &lt;jeevacation@gmail.com&gt;</span><span>To</span><span>PETER MANDELSON</span><span>Date</span><span>Mon, 08 Mar 2010 11:53:53 +0000</span></div>
+      <p class="body">Ashcrofts " British Caribbean Bank", would be easier to trash. Ask B.S. Ong, if it were part of his lending group in the turks. . otherwise a civil proceeding that required production of Ashcrofts emails to his son Andrew. might be helpful ( they are not privileged. in addition, his- Stargate co ( Belize ) transfers to the Turks , banks , might fall into new categories of reporting/laundering. <mark>He does not control or own.stargate .. He is a discretionary beneficiary of a trust controlled by his local lawyers ( privileged ).</mark></p>
+      <p class="tr">«"British Caribbean Bank" Ешкрофта буде легше знищити. Спитай Б. С. Онга, чи входив банк до його кредитної групи на Терксі. Інакше може допомогти цивільний процес із вимогою розкрити листи Ешкрофта синові Ендрю: вони не захищені адвокатською таємницею. Крім того, перекази його компанії Stargate (Беліз) на Теркс, у банки, можуть підпадати під нові категорії звітності й протидії відмиванню. <b>Він не контролює Stargate і не володіє нею. Він дискреційний бенефіціар трасту, яким керують його місцеві юристи</b>».</p>
+    </div>
+  </article>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Порада Епштейна</th><th>Контекст</th><th>Оцінка</th></tr></thead>
+      <tbody>
+        <tr><td>Атакувати BCB</td><td>Guardian 05.03.2010: BCB — найбільший кредитор на островах Теркс і Кайкос, ним керує син Ешкрофта Ендрю. Банк видав понад $5 млн позик прем'єрові Місіку.</td><td><span class="badge b-ok">текст</span></td></tr>
+        <tr><td>Спитати «B.S. Ong»</td><td>Курорт Parrot Cay на островах Теркс і Кайкос з 1998 р. належить COMO Hotels Крістіни Онг, дружини Онга Бенг Сенга. Кредитування BCB проєктів Онгів не підтверджено.</td><td><span class="badge b-no">не підтверджено</span></td></tr>
+        <tr><td>Розкрити через суд листування з сином</td><td>У 2010 р. тривав позов Ешкрофта про наклеп проти Independent, де фігурували BCB і Місік. Пізніше Independent вибачилась (2012).</td><td><span class="badge b-mid">тактика</span></td></tr>
+        <tr><td>Перекази Stargate у банки островів</td><td>Stargate Holdings стоїть на початку ланцюга Stargate → Astraporta UK → Bearwood Holdings → Bearwood Corporate Services → консерватори.</td><td><span class="badge b-no">не підтверджено</span></td></tr>
+        <tr><td>Траст і дискреційний бенефіціар</td><td>У рішенні Виборчої комісії від 04.03.2010 власник Stargate не названий і про траст не сказано нічого. Джерело твердження Епштейна невідоме. Новий напрям перевірки.</td><td><span class="badge b-no">не підтверджено</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="omit">Відповіді Мендельсона на цей лист у файлах не знайдено.</p>
+</section>
+
+<section aria-labelledby="s-c">
+  <p class="eyebrow">Документ В · 8 березня 2010</p>
+  <h2 id="s-c">«The Ashcroft business»</h2>
+  <article class="exhibit">
+    <div class="ex-tag"><span><b>EFTA00762260</b> · набір 9 · 1 с.</span><span>звірено з оригіналом PDF</span></div>
+    <div class="msg">
+      <span class="who">Пересилання (найімовірніше, Мендельсон) <span class="badge b-mid">ймовірно</span></span>
+      <div class="hdr"><span>From</span><span><span class="bar" style="width:11em" aria-label="замазано"></span></span><span>To</span><span><span class="bar" style="width:13em" aria-label="замазано"></span></span><span>Subject</span><span>Fw: Ben brogan blog</span><span>Date</span><span>Mon, 08 Mar 2010 11:25:36 +0000</span></div>
+      <p class="body">A big Tory media supporter blog
+Sent from my BlackBerry® wireless device</p>
+    </div>
+    <div class="msg">
+      <span class="who">Вихідний лист у вкладенні</span>
+      <div class="hdr"><span>From</span><span>"Loughran Patrick \(MPST MIN\)" <span class="bar" style="width:10em" aria-label="замазано"></span></span><span>Date</span><span>Mon, 8 Mar 2010 10:40:17 −0000</span><span>Subject</span><span>Ben brogan blog</span></div>
+      <p class="tr">Повністю вставлено пост Бенедикта Брогана з The Daily Telegraph «If the Tories want to win, they've got to fight» (08.03.2010, 9:34). Ключова фраза: <mark>«Labour has successfully shaped the Ashcroft business into its 'same old Tories' narrative»</mark>. Решту переказуємо через авторські права. Броган пише, що тиждень для торі «майже змарновано»: тема Ешкрофта заглушила все інше, а штаб Кемерона щодня пропускає удари від лейбористів, зокрема від Мендельсона «того ранку в Guardian». У листі стоїть штамп урядової мережі Government Secure Intranet (CCTM Certificate 2009/09/0052).</p>
+    </div>
+  </article>
+  <p>Патрік Лафран у жовтні 2008 — квітні 2010 р. був спецрадником Мендельсона в BIS (<a href="https://powerbase.info/index.php/Patrick_Loughran">Powerbase</a> <span class="badge b-mid">ймовірно</span>). Броган — незалежний сучасний свідок того, що атакою на Ешкрофта керував Мендельсон. Через 28 хвилин після цього пересилання Епштейн надіслав лист Б.</p>
+</section>
+
+<section aria-labelledby="s-d">
+  <p class="eyebrow">Ланцюжок Г · 12 липня 2010</p>
+  <h2 id="s-d">«He is strange»</h2>
+  <article class="exhibit">
+    <div class="ex-tag"><span><b>EFTA00742214</b> · набір 9 · звірено з оригіналом PDF</span><span>копії: EFTA01814302, EFTA02531957, EFTA02410416, EFTA02410565, EFTA00736630, EFTA00742227, EFTA00894179</span></div>
+    <div class="msg">
+      <span class="who">Мендельсон → «BS»</span>
+      <div class="hdr"><span>Date</span><span>Mon, 12 Jul 2010 08:22:48 −0700</span><span>To</span><span><span class="bar" style="width:10em" aria-label="замазано"></span></span></div>
+      <p class="body">BS,
+How did you get on at RBS last week ? Hope they were helpful.
+Nat has had a long chat with Ivan about Glenc. He thinks it would be helpful if my Singapore friends were to indicate that they would favour consideration of me. Do you think MM would help on this ? P</p>
+      <p class="tr">«BS, як пройшло в RBS минулого тижня? Нат довго говорив з Іваном про Glenc[ore]. Він вважає, що було б корисно, якби мої сінгапурські друзі дали зрозуміти, що підтримали б мою кандидатуру. Як думаєш, MM допоможе? P»</p>
+    </div>
+    <div class="msg">
+      <span class="who">«BS» → Мендельсон</span>
+      <div class="hdr"><span>From</span><span><span class="bar" style="width:9em" aria-label="замазано"></span></span><span>ReplyTo</span><span>ong…@pacific.net.sg <span class="omit">(в оригіналі не замазано)</span></span><span>Date</span><span>Mon, 12 Jul 2010 16:46:54 +0000</span></div>
+      <p class="body">Good chance that he will put in a good word. How strongly it will be depends on how we approach it. Will revert on ideas if any.
+RBS meeting went very well will call you on my next step. There is a win win win deal possible. 3 wins. Need to connect to Lloyds HBOS too. They have loads of unloading. Talk soon and stay cool.
+<mark>Fyi Ashcroft have put all his cos in Turks into bankruptcy.
+He is strange.</mark>
+Sent via BlackBerry from SingTel!</p>
+      <p class="tr">«Добрі шанси, що він замовить слово… Зустріч в RBS пройшла дуже добре… Треба вийти й на Lloyds HBOS. <b>До відома: Ешкрофт відправив усі свої компанії на Терксі в банкрутство. Він дивний</b>».</p>
+    </div>
+    <div class="msg">
+      <span class="who">Мендельсон → Епштейн, відповідь Епштейна</span>
+      <div class="hdr"><span>Date</span><span>12 Jul 2010, 18:36 і 18:48 GMT</span></div>
+      <p class="body">Sort of helpful.
+
+are you home?</p>
+    </div>
+  </article>
+  <div class="note">
+    <h3>Хто такий «BS»</h3>
+    <p><b>Онг Бенг Сенг</b>, сінгапурський готельний мільярдер (Hotel Properties Ltd). <span class="badge b-mid">сильна непряма ідентифікація</span> На це вказують чотири речі:</p>
+    <ul class="plain">
+      <li>звертання «BS,»;</li>
+      <li>не замазане поле ReplyTo з адресою на сінгапурському домені pacific.net.sg, що починається на «ong…»;</li>
+      <li>лист Епштейна Борису Ніколичу від 11.08.2010 «the persion in singapore is BS ong» (EFTA00734070);</li>
+      <li>порада «Ask B.S. Ong» у листі Б.</li>
+    </ul>
+    <p>Повне ім'я в листі не назване. Інші особи, за нашою інтерпретацією: «Nat» — Нет Ротшильд, «Ivan» — Іван Глазенберг (Glencore), «MM» — у Сінгапурі 2004–2011 рр. так позначали посаду Minister Mentor, яку обіймав Лі Куан Ю. <span class="badge b-mid">інтерпретація</span></p>
+  </div>
+
+  <h3>Кейс: що збанкрутувало на островах Теркс і Кайкос</h3>
+  <div class="stack" style="max-width:68ch">
+    <p><b>Johnston International</b> — будівельна компанія, наступниця британського підрядника Johnston. Будувала курорти в Карибському регіоні; оборот у 2000-х — близько £180 млн. Належала групі Ешкрофта, але, за його версією, у 1999 р. була продана менеджменту, і відтоді він не має в ній «жодного економічного, бенефіціарного чи юридичного інтересу». Материнська компанія — <b>Oxford Ventures</b> (Британські Віргінські острови). Її директор, анонімна фірма Northtown, раніше була директором Bearwood Corporate Services, через яку йшли пожертви консерваторам. <span class="badge b-mid">Observer 2012</span></p>
+    <p>На островах Теркс і Кайкос Johnston будувала віллу прем'єра Місіка. Місік узяв у дочірньої компанії Johnston позики майже на $5 млн; згодом їх консолідовано в позику BCB. Компанія також будувала дві лікарні: бюджет зріс із $40 млн до $125 млн без тендеру. Комісія Олда (2009) назвала це можливим напрямом розслідування, але доказів корупції не знайшла. <span class="badge b-ok">підтверджено</span></p>
+    <p><b>Крах.</b> Наприкінці червня 2010 р. персонал не пустили в офіси, розташовані в будівлі BCB; щонайменше двоє директорів звільнились. На початку липня, за тиждень до листа Онга, «The British Caribbean Bank called in the receivers» (<a href="https://www.constructionenquirer.com/2010/07/12/caribbean-expats-see-paradise-contractor-collapses/">Construction Enquirer, 12.07.2010</a>). Oxford Ventures пішла в адміністрацію одночасно. Борги — близько $30 млн, працівники лишились без зарплати. <span class="badge b-ok">підтверджено</span></p>
+    <p><b>Що це означає.</b> Репліка Онга — реакція майже в реальному часі: банк Ешкрофта, яким керував його син, відправив у зовнішнє управління компанію, яку на островах вважали ешкрофтовою. «All his cos» — перебільшення. <span class="badge b-no">не підтверджено</span></p>
+    <p><b>Далі.</b></p>
+    <ul class="plain">
+      <li>2012: BBC Panorama показала факси CEO Johnston Ешкрофту («which you are of course» — про контроль над активами Oxford). Ешкрофт заперечує.</li>
+      <li>2012: ліквідатор Oxford отримав на островах судовий дозвіл запитати документи BCB.</li>
+      <li>2014: Johnston у ліквідації позивається до Coral Square на $4 080 982 (<a href="https://amandala.com.bz/news/4-mil-claim-ashcroft-company-heard-turks-caicos-court/">Amandala</a> <span class="badge b-mid">ймовірно</span>).</li>
+      <li>02.02.2026: Місіка засуджено за хабарництво й відмивання, вирок — 4 роки (Wikipedia <span class="badge b-mid">ймовірно</span>).</li>
+    </ul>
+    <p>Звинувачень Ешкрофту чи BCB у цих справах немає.</p>
+  </div>
+</section>
+
+<section aria-labelledby="s-e">
+  <p class="eyebrow">Документ Ґ · 9 вересня 2013</p>
+  <h2 id="s-e">Опитування про Шотландію</h2>
+  <article class="exhibit">
+    <div class="ex-tag"><span><b>EFTA02128810</b> · набір 10 · 9 с., с. 7</span><span>звірено з оригіналом PDF</span></div>
+    <div class="msg">
+      <span class="who">Ранковий огляд брокера «Early Tour 9.9.13»</span>
+      <div class="hdr"><span>From</span><span><span class="bar" style="width:6em" aria-label="замазано"></span> · підпис: 680 Washington Blvd, Stamford, CT</span><span>Sent</span><span>Mon 9/9/2013 10:02:28 AM</span></div>
+      <p class="body">• Space race fuels resurgence in London offices  Independent
+• Osborne: We've saved the economy and proved Labour wrong  Telegraph
+• <mark>Lord Ashcroft poll: Independence near bottom of Scots' priorities  Telegraph</mark>
+• China embraces 'British Model', ditching Mao for Edmund Burke  Telegraph</p>
+    </div>
+  </article>
+  <div class="stack" style="max-width:68ch">
+    <p><b>Lord Ashcroft Polls</b>, шотландське дослідження: 10 007 дорослих, телефон і онлайн, лютий–травень 2013 р., оприлюднено 08–09.09.2013. На референдне питання — так 25%, ні 65%, не визначились 10%. Близько половини назвали незалежність головним пріоритетом уряду Шотландії, а 61% вважали цей пріоритет неправильним. На питання, що має бути пріоритетом, ці 61% найчастіше відповідали «економіка»; незалежність опинилась майже в кінці. Звідси заголовок.</p>
+    <p>Кампанія «Ні» поширювала цифру «3%». Прихильники незалежності назвали це маніпуляцією, бо питання ставили лише тим 61%. Ешкрофт додав до свого поста уточнення про базу. Значення для досьє нейтральне: ранковий огляд потрапив до архіву як розсилка.</p>
+  </div>
+</section>
+
+<section aria-labelledby="s-f">
+  <p class="eyebrow">Звірка</p>
+  <h2 id="s-f">Оригінали PDF Мін'юсту</h2>
+  <p>Користувачка вручну завантажила п'ять документів з <a href="https://www.justice.gov/epstein">justice.gov/epstein</a> (сайт вимагає підтвердити вік). Кожну сторінку переглянуто й звірено з OCR-текстом індексу. SHA-256 зафіксовано для перевірки цілісності локальних копій.</p>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Документ</th><th>Що підтверджено</th><th>SHA-256 локальної копії</th></tr></thead>
+      <tbody>
+        <tr><td class="d"><a href="https://www.justice.gov/epstein/files/DataSet%209/EFTA00742214.pdf">EFTA00742214</a><span class="en">набір 9 · 1 с. · <a href="docs/EFTA00742214.pdf">локальна копія</a></span></td><td>Ланцюжок 12.07.2010; «He is strange»; не замазане поле ReplyTo</td><td class="hash">b9e605e09925cebdfb5f648114b6b34cdd52cd1de9b884b7840355dec30d5748</td></tr>
+        <tr><td class="d"><a href="https://www.justice.gov/epstein/files/DataSet%209/EFTA00762260.pdf">EFTA00762260</a><span class="en">набір 9 · 1 с. · <a href="docs/EFTA00762260.pdf">локальна копія</a></span></td><td>Пересилання блогу Брогана; «Loughran Patrick (MPST MIN)»; штамп урядової мережі</td><td class="hash">5738259be27d7ea212c89df539162e62ff2ff24fc260afc062dd2451e1e4c0a5</td></tr>
+        <tr><td class="d"><a href="https://www.justice.gov/epstein/files/DataSet%2010/EFTA02128810.pdf">EFTA02128810</a><span class="en">набір 10 · 9 с. · <a href="docs/EFTA02128810.pdf">локальна копія</a></span></td><td>Огляд «Early Tour 9.9.13», заголовок про опитування на с. 7</td><td class="hash">94e2b6e4577e14d35af772751de91ad798e15b977d2102fe6e645f5cf9da8889</td></tr>
+        <tr><td class="d"><a href="https://www.justice.gov/epstein/files/DataSet%2011/EFTA02528796.pdf">EFTA02528796</a><span class="en">набір 11 · 3 с. · <a href="docs/EFTA02528796.pdf">локальна копія</a></span></td><td>Ланцюжок А; адреси співрозмовника замазані повністю</td><td class="hash">9591eb0f385df08b3254d91e97260ef4b494161082c170ec12022b1cec25571b</td></tr>
+        <tr><td class="d"><a href="https://www.justice.gov/epstein/files/DataSet%2011/EFTA02528805.pdf">EFTA02528805</a><span class="en">набір 11 · 4 с. · <a href="docs/EFTA02528805.pdf">локальна копія</a></span></td><td>Ланцюжок А; відкритий хвіст адреси Мендельсона</td><td class="hash">208e49f7fbf5e64ebe287e9c747ea573a6fac5c2a20ebc84b07dc9b0e1b4c5ef</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="omit">Ще не звірено з оригіналами: <a href="https://www.justice.gov/epstein/files/DataSet%209/EFTA00746371.pdf">EFTA00746371</a> (лист Б), <a href="https://www.justice.gov/epstein/files/DataSet%209/EFTA00889350.pdf">EFTA00889350</a>, <a href="https://www.justice.gov/epstein/files/DataSet%2011/EFTA02410565.pdf">EFTA02410565</a>, <a href="https://www.justice.gov/epstein/files/DataSet%209/EFTA00734070.pdf">EFTA00734070</a>. Мін'юст замазував непослідовно: одна й та сама адреса в одних копіях закрита, в інших відкрита.</p>
+</section>
+
+<section aria-labelledby="s-g">
+  <p class="eyebrow">Для повноти</p>
+  <h2 id="s-g">Інші «Ashcroft» у файлах</h2>
+  <ul class="plain" style="max-width:68ch">
+    <li><b>Джон Ешкрофт</b>, генпрокурор США 2001–2005, — більшість збігів. Це «Ashcroft Memo» в матеріалах про угоду Акости з Епштейном і лист Епштейна від 12.06.2017 «Qatar. Hired Ashcroft.» (EFTA02647898).</li>
+    <li>Судові прецеденти: Ashcroft v. Iqbal, Leocal v. Ashcroft, Ashcroft v. Free Speech Coalition.</li>
+    <li>Однофамільці: Джей Ешкрофт (Міссурі), Річард Ешкрофт (музикант), Ashcroft Eyewear.</li>
+  </ul>
+  <h3>Що перевірити далі</h3>
+  <ul class="plain" style="max-width:68ch">
+    <li>Твердження Епштейна про траст Stargate Holdings: реєстр Белізу, матеріали BCB Holdings для біржі AIM, OCCRP Aleph.</li>
+    <li>Чи кредитував BCB проєкти Онгів на островах Теркс і Кайкос.</li>
+    <li>Результат розслідування ліквідатора Oxford Ventures і позову Johnston до Coral Square.</li>
+    <li>Чотири ще не звірені оригінали PDF.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="s-src">
+  <p class="eyebrow">Джерела · звернення 04.10.2026</p>
+  <h2 id="s-src">Джерела та їхня надійність</h2>
+  <ul class="plain src">
+    <li><a href="https://www.justice.gov/epstein">U.S. Department of Justice — Epstein Library</a> <span class="badge b-ok">першоджерело</span>. Формат посилань: justice.gov/epstein/files/DataSet%20N/EFTA########.pdf.</li>
+    <li><a href="https://epstein-data.com">epstein-data.com</a> <span class="badge b-mid">вторинний індекс</span>. Неофіційний повнотекстовий індекс релізу EFTA; OCR звірено з п'ятьма оригіналами.</li>
+    <li><a href="https://members.parliament.uk/member/500/career">UK Parliament — Parliamentary career for Lord Mandelson</a> <span class="badge b-ok">першоджерело</span></li>
+    <li><a href="https://www.gov.uk/government/people/peter-mandelson">GOV.UK — The Rt Hon Lord Peter Mandelson</a> <span class="badge b-ok">першоджерело</span></li>
+    <li><a href="https://publications.parliament.uk/pa/cm5902/cmselect/cmfaff/504/report.html">Foreign Affairs Committee — The appointment of Peter Mandelson as British Ambassador to the United States (09.07.2026)</a> <span class="badge b-ok">першоджерело</span></li>
+    <li><a href="https://privycouncil.independent.gov.uk/wp-content/uploads/2026/03/2026-03-10-Lord-Mandelson-Strike-Out-Order.pdf">Privy Council Office — Lord Mandelson Strike Out Order (10.03.2026)</a> <span class="badge b-ok">першоджерело</span></li>
+    <li><a href="https://www.hartlepool.gov.uk/news/article/122/lord-peter-mandelson-s-civic-honour-withdrawn">Hartlepool Borough Council — civic honour withdrawn</a> <span class="badge b-ok">першоджерело</span></li>
+    <li><a href="https://www.gov.uk/csv-preview/5a789666e5274a3b4807f089/overseas-travel-2009-10.csv">GOV.UK — Ministers' overseas travel 2009–10 (BIS)</a> <span class="badge b-ok">першоджерело</span></li>
+    <li><a href="https://www.electoralcommission.org.uk/sites/default/files/pdf_file/Case-summary-Bearwood-Corporate-Services.pdf">Electoral Commission — Case summary: Bearwood Corporate Services</a> <span class="badge b-ok">першоджерело</span></li>
+    <li><a href="https://www.constructionenquirer.com/2010/07/12/caribbean-expats-see-paradise-contractor-collapses/">Construction Enquirer, 12.07.2010</a> <span class="badge b-ok">галузеве видання</span></li>
+    <li>The Observer, 05.02.2012 (Jamie Doward) і The Guardian, 05.03.2010 (Rob Evans, David Leigh) <span class="badge b-ok">якісна преса</span>. PDF у робочій папці проєкту; сайт Guardian недоступний для автоматичного читання.</li>
+    <li><a href="https://taxpolicy.org.uk/2026/02/02/mandelson-epstein-no10-documents-4m-job/">Tax Policy Associates, 02.02.2026</a> <span class="badge b-mid">аналітичний центр</span></li>
+    <li><a href="https://www.lrb.co.uk/the-paper/v48/n04/james-butler/need-a-lord-on-the-board">London Review of Books, 05.03.2026</a> <span class="badge b-ok">якісний журнал</span></li>
+    <li><a href="https://www.rte.ie/news/uk/2026/0223/1560023-mandelson-arrest/">RTÉ, 23.02.2026</a>, <a href="https://www.cnn.com/2026/02/23/uk/peter-mandelson-arrested-gbr-intl">CNN, 23.02.2026</a>, <a href="https://www.itv.com/news/2026-02-03/mandelson-to-step-down-from-house-of-lords-lord-speaker-announces">ITV, 03.02.2026</a> <span class="badge b-ok">мейнстрим-медіа</span></li>
+    <li><a href="https://amandala.com.bz/news/4-mil-claim-ashcroft-company-heard-turks-caicos-court/">Amandala (Беліз), 30.04.2014</a> <span class="badge b-mid">критична до Ешкрофта</span></li>
+    <li><a href="https://barbadosfreepress.wordpress.com/2010/07/21/johnston-international-collapses-amid-corruption-allegations-employees-owed-millions/">Barbados Free Press, 21.07.2010</a> <span class="badge b-no">анонімний блог</span></li>
+    <li><a href="https://powerbase.info/index.php/Patrick_Loughran">Powerbase — Patrick Loughran</a> <span class="badge b-mid">активістська вікі</span></li>
+    <li><a href="https://lordashcroftpolls.com/2013/09/how-many-scots-know-what-the-scottish-parliament-does/">Lord Ashcroft Polls, 09.09.2013</a> <span class="badge b-mid">конфлікт інтересів: власний сайт Ешкрофта</span></li>
+    <li><a href="https://www.pressreader.com/uk/scottish-daily-mail/20130909/281689727489111">Scottish Daily Mail, 09.09.2013</a> <span class="badge b-mid">таблоїд</span>; <a href="https://bright-green.org/2013/09/09/no-campaign-straight-up-lie-about-lord-ashcroft-indyref-poll/">Bright Green, 09.09.2013</a> <span class="badge b-no">партійний блог</span></li>
+    <li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Peter_Mandelson">Peter Mandelson</a>, <a href="https://en.wikipedia.org/wiki/Michael_Misick">Michael Misick</a>, <a href="https://en.wikipedia.org/wiki/Ong_Beng_Seng">Ong Beng Seng</a>, <a href="https://en.wikipedia.org/wiki/Parrot_Cay">Parrot Cay</a>, <a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_2014_Scottish_independence_referendum">опитування щодо референдуму 2014</a> <span class="badge b-mid">третинне джерело</span></li>
+  </ul>
+</section>
+
+<footer>
+  <span>Згадка в листуванні Епштейна не означає ні зв'язку з Епштейном, ні правопорушення. Щодо всіх згаданих осіб діє презумпція невинуватості.</span>
+  <span>Приватні деталі третіх осіб, які не стосуються предмета дослідження, не відтворено. Особисту адресу Онга Бенг Сенга скорочено.</span>
+</footer>
+
+</div>
+</body>
+</html>

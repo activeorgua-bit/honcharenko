@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="OSINT-матеріали проєкту «Гончаренко»: розбори, документи, джерела">
+<title>Гончаренко: OSINT-матеріали</title>
+<style>
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+:root{
+  --bg:#F3F5F4;
+  --paper:#FFFFFF;
+  --ink:#16191D;
+  --muted:#58606B;
+  --line:#D6DBD9;
+  --accent:#1D5C86;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#111416; --paper:#181C1F; --ink:#E6E9EB; --muted:#9AA3AD; --line:#2C3338; --accent:#7EB6DD;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;font-size:1rem;line-height:1.6;padding:0 16px 64px}
+.wrap{max-width:720px;margin:0 auto}
+header{padding:56px 0 8px}
+.eyebrow{font-family:ui-monospace,"SFMono-Regular",Consolas,monospace;font-size:.8125rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+h1{font-size:clamp(1.9rem,5vw,2.75rem);line-height:1.2;margin:0;letter-spacing:-.01em}
+.lede{color:var(--muted);margin:14px 0 0;max-width:60ch}
+h2{font-size:1.125rem;margin:36px 0 12px;color:var(--muted);font-weight:600}
+ul.sections{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+ul.sections li{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+ul.sections a{color:var(--accent);font-size:1.1875rem;font-weight:600;text-decoration:none}
+ul.sections a:hover,ul.sections a:focus-visible{text-decoration:underline;text-underline-offset:2px}
+ul.sections p{margin:6px 0 0;color:var(--muted);font-size:.9375rem}
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:.8125rem;color:var(--muted)}
+footer p{margin:0 0 6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <p class="eyebrow">OSINT · проєкт «Гончаренко»</p>
+  <h1>Гончаренко: OSINT-матеріали</h1>
+  <p class="lede">Розбори, документи та джерела, зібрані з відкритих даних. Кожен розділ містить сторінку, повний аналіз і оригінали документів.</p>
+</header>
+
+<h2>Розділи</h2>
+<ul class="sections">
+  <li>
+    <a href="ashcroft/">Ешкрофт у файлах Епштейна</a>
+    <p>Згадки лорда Майкла Ешкрофта в документах Мін'юсту США (реліз EFTA): чотири епізоди 2010–2013 рр., оригінали PDF, звірка хешів.</p>
+  </li>
+</ul>
+
+<footer>
+  <p>Згадка особи в документах не означає ні зв'язку з іншими згаданими особами, ні правопорушення. Щодо всіх осіб діє презумпція невинуватості.</p>
+  <p>Код і матеріали: <a href="https://github.com/activeorgua-bit/honcharenko">github.com/activeorgua-bit/honcharenko</a></p>
+</footer>
+</div>
+</body>
+</html>
