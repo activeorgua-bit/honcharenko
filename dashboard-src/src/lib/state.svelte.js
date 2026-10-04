@@ -7,8 +7,6 @@ const DEFAULTS = {
   // огляд
   ovKey: "rol", ovPct: false,
   snPct: false, tzPct: false,
-  // звинувачення
-  acKey: "ros", acPct: false, acTop: 20,
   // схвалення
   enThesis: "tck", enPct: true, enTop: 20,
   // канали

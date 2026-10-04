@@ -7,7 +7,6 @@
   import { D, tg, google } from "$lib/data.svelte.js";
   import Summary from "./panels/Summary.svelte";
   import Overview from "./panels/Overview.svelte";
-  import Accusations from "./panels/Accusations.svelte";
   import Endorsements from "./panels/Endorsements.svelte";
   import Channels from "./panels/Channels.svelte";
   import Google from "./panels/Google.svelte";
@@ -19,7 +18,7 @@
 
   $effect(() => { syncURL(); });
   const PAGES = [
-    { key: "sm", label: "Головне" }, { key: "ov", label: "Загальна динаміка" }, { key: "ac", label: "Звинувачення" }, { key: "en", label: "Схвалення тез" },
+    { key: "sm", label: "Головне" }, { key: "ov", label: "Загальна динаміка" }, { key: "en", label: "Схвалення тез" },
     { key: "ch", label: "Канали" }, { key: "g", label: "Google" }, { key: "mt", label: "Матеріали й набори" }, { key: "pm", label: "Методологія" },
   ];
   const nUa = $derived(D.ready ? tg("ua").length : 0), nRu = $derived(D.ready ? tg("ru").length : 0), nG = $derived(D.ready ? google().length : 0);
@@ -31,6 +30,7 @@
   const ccOpts = $derived([{ value: "ua", label: "українські" }, { value: "ru", label: "російські" },
     ...(S.page === "mt" ? [{ value: "other", label: "інші країни" }, { value: "g", label: "Google" }, { value: "all", label: "усі" }] : [])]);
   $effect(() => { if (S.page !== "mt" && S.cc !== "ua" && S.cc !== "ru") S.cc = "ua"; });
+  $effect(() => { if (S.page === "ac") S.page = "sm"; });   // розділ «Звинувачення» видалено 04.10.2026 (рішення користувачки); старі посилання ведуть на «Головне»
 </script>
 
 <div class="grid min-h-screen grid-cols-[250px_1fr]">
@@ -78,7 +78,6 @@
       <p class="mt-10 text-center text-[13px] text-muted-foreground">{D.progress || "завантаження…"}</p>
     {:else if S.page === "sm"}<Summary />
     {:else if S.page === "ov"}<Overview />
-    {:else if S.page === "ac"}<Accusations />
     {:else if S.page === "en"}<Endorsements />
     {:else if S.page === "ch"}<Channels />
     {:else if S.page === "g"}<Google />
