@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Досьє 689884</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Дизайн-система за артефактом «Мережа Гончаренка»; сторінка — вкладки: Огляд · Граф · Особи · Декларації · Організації · Звʼязність · Джерела */
+:root {
+  --bg: #f6f7f8; --surface: #fcfcfb; --fg: #15181c; --muted: #5a6068; --faint: #8a9099;
+  --rule: #dfe2e6; --grid: #eceef0; --accent: #1f4f8f; --warn: #9a6700; --bad: #b42318; --ok: #1baf7a;
+  --n-core: #eb6834; --n-person: #2a78d6; --n-org: #1baf7a; --n-ext: #8a9099; --n-go: #7c3aed; --n-party: #d99a00;
+  --e-money: #d03b3b; --e-role: #9aa1a9; --e-family: #eb6834; --e-contact: #0e7490;
+  --c-salary: #2a78d6; --c-gift: #eb6834; --c-sale: #1baf7a; --c-other: #8a9099; --c-family: #7c3aed; --c-cash: #d03b3b;
+  --f-display: "Unbounded", "Golos Text", system-ui, sans-serif; --f-body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif; --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121417; --surface: #1a1a19; --fg: #f1f2f3; --muted: #b3b8bf; --faint: #7f858d; --rule: #2c3036; --grid: #24272b; --accent: #86b6ef; --warn: #e3b341; --bad: #f08a7e; --ok: #199e70;
+  --n-core: #d95926; --n-person: #3987e5; --n-org: #199e70; --n-ext: #7f858d; --n-go: #9d6bff; --n-party: #f5b301; --e-money: #e66767; --e-role: #5b6168; --e-family: #d95926; --e-contact: #22b8d6;
+  --c-salary: #3987e5; --c-gift: #d95926; --c-sale: #199e70; --c-other: #7f858d; --c-family: #9d6bff; --c-cash: #e66767; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #121417; --surface: #1a1a19; --fg: #f1f2f3; --muted: #b3b8bf; --faint: #7f858d; --rule: #2c3036; --grid: #24272b; --accent: #86b6ef; --warn: #e3b341; --bad: #f08a7e; --ok: #199e70;
+  --n-core: #d95926; --n-person: #3987e5; --n-org: #199e70; --n-ext: #7f858d; --n-go: #9d6bff; --n-party: #f5b301; --e-money: #e66767; --e-role: #5b6168; --e-family: #d95926; --e-contact: #22b8d6;
+  --c-salary: #3987e5; --c-gift: #d95926; --c-sale: #199e70; --c-other: #7f858d; --c-family: #9d6bff; --c-cash: #e66767; color-scheme: dark; }
+* { box-sizing: border-box }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 14px; line-height: 1.5; }
+.wrap { max-width: 1480px; margin: 0 auto; padding: 28px 24px 64px; display: grid; gap: 22px; }
+@media (max-width: 760px) { .wrap { padding: 16px 12px 48px; gap: 16px; } }
+header.hd { display: grid; gap: 8px; padding: 22px 24px; background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(22px, 3.4vw, 30px); margin: 0; line-height: 1.2; }
+h2 { font-family: var(--f-display); font-weight: 500; font-size: 17px; margin: 0 0 10px; }
+h3 { font-size: 15px; margin: 0 0 6px; font-weight: 600; }
+p { margin: 0; } .lede { color: var(--muted); max-width: 90ch; } a { color: var(--accent); }
+.mut { color: var(--muted) } .warn { color: var(--warn) } .bad { color: var(--bad) } .ok { color: var(--ok) }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 8px; }
+.kpi { background: var(--bg); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 14px; }
+.kpi b { display: block; font-family: var(--f-display); font-size: 20px; font-weight: 500; } .kpi span { color: var(--muted); font-size: 12px; }
+.kpi.high b { color: var(--bad) } .kpi.medium b { color: var(--warn) } .kpi.low b { color: var(--ok) }
+.pill { font-family: var(--f-mono); font-size: 10.5px; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--rule); white-space: nowrap; display: inline-block; vertical-align: middle; line-height: 1.5; }
+.pill.document { border-color: var(--n-org) } .pill.registry { border-color: var(--n-person) } .pill.name_match { border-style: dashed } .pill.ambiguous { border-style: dotted; color: var(--warn) }
+.pill.high { border-color: var(--bad); color: var(--bad) } .pill.medium { border-color: var(--warn); color: var(--warn) } .pill.low { border-color: var(--rule) }
+.caveat { background: var(--surface); border-left: 3px solid var(--warn); padding: 8px 12px; font-size: 13px; border-radius: 0 6px 6px 0; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px 20px; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; } @media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 12.5px; } th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; overflow-wrap: break-word; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; position: sticky; top: 0; background: var(--surface); white-space: nowrap; } tr:last-child td { border-bottom: 0 } .num { text-align: right; white-space: nowrap; font-family: var(--f-mono); font-size: 12px }
+tr.rowlink { cursor: pointer } tr.rowlink:hover td { background: var(--grid) }
+details summary { cursor: pointer; color: var(--accent); } details { margin: 6px 0 }
+/* вкладки */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--rule); padding-bottom: 8px; }
+.tab { font: inherit; font-weight: 600; padding: 8px 14px; border: 1px solid transparent; border-radius: 999px; background: transparent; color: var(--muted); cursor: pointer; }
+.tab:hover { color: var(--fg) } .tab.on { background: var(--fg); color: var(--bg); border-color: var(--fg); } .tab small { font-weight: 400; margin-left: 4px; opacity: .7 }
+.panel-tab { display: none; gap: 16px; } .panel-tab.on { display: grid; }
+/* граф */
+.viewbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.vbtn { font: inherit; font-weight: 600; padding: 7px 14px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface); color: var(--fg); cursor: pointer; }
+.vbtn.on { background: var(--fg); color: var(--bg); border-color: var(--fg); } .vcount { font-size: 12.5px; color: var(--muted); }
+.btn { font: inherit; font-size: 12.5px; padding: 5px 12px; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--fg); cursor: pointer; }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); } .btn + .btn { margin-left: 6px }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--muted); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; } .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; } .sq { width: 10px; height: 10px; border-radius: 2px; display: inline-block; } .ln { width: 22px; height: 0; border-top: 2px solid var(--e-role); display: inline-block; }
+.main { display: grid; grid-template-columns: 270px minmax(0, 1fr) 350px; gap: 14px; } @media (max-width: 1100px) { .main { grid-template-columns: 1fr; } }
+.canvas { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; position: relative; height: min(76vh, 760px); min-height: 460px; overflow: hidden; }
+.canvas svg { width: 100%; height: 100%; display: block; cursor: grab; } .canvas .fit { position: absolute; right: 10px; top: 10px; }
+.panel, .pool { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; max-height: min(76vh, 760px); overflow: auto; min-width: 0; }
+.panel h3 { margin: 0; font-size: 16px; } .sub { color: var(--muted); font-size: 12px; font-family: var(--f-mono); }
+.conn { display: grid; gap: 2px; padding: 9px 0; border-top: 1px solid var(--grid); font-size: 13px; } .conn b { font-weight: 600; cursor: pointer; } .conn b:hover { color: var(--accent); } .conn .src { color: var(--faint); font-size: 11.5px; } .conn .src a { color: var(--faint); }
+.pool input[type=search], .filterbar input[type=search] { font: inherit; width: 100%; padding: 7px 10px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--fg); }
+.pool label { display: flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--muted); cursor: pointer; }
+.pg b { display: block; font-size: 11px; font-family: var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--faint); margin: 10px 0 3px; }
+.pg a { display: block; padding: 3px 6px; border-radius: 4px; color: var(--fg); text-decoration: none; font-size: 13px; } .pg a:hover, .pg a.sel { background: var(--grid); } .pg a.exp::after { content: " ▾"; color: var(--faint); }
+.node text { font-family: var(--f-body); font-size: 11px; fill: var(--fg); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
+.zone { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; fill: var(--faint); } .hint { font-size: 12px; color: var(--faint); }
+/* ризики, графіки, модалка */
+.risk { border-left: 3px solid var(--rule); padding: 10px 14px; background: var(--surface); border-radius: 0 8px 8px 0; display: grid; gap: 4px; } .risk.high { border-color: var(--bad) } .risk.medium { border-color: var(--warn) } .risk.low { border-color: var(--n-person) }
+.risk b { font-weight: 600 } .risk .src { font-size: 12px; color: var(--faint) }
+.chart { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px 6px; } .chart h3 { margin-bottom: 2px } .chart .sub { margin-bottom: 6px }
+.chart svg { width: 100%; height: auto; display: block; font-family: var(--f-mono); font-size: 10px; } .chart .axis line, .chart .axis path { stroke: var(--rule) } .chart .axis text { fill: var(--muted) } .chart .gridl line { stroke: var(--grid) }
+.bars { display: grid; gap: 4px; } .bar { display: grid; grid-template-columns: minmax(140px, 1fr) 3fr auto; gap: 8px; align-items: center; font-size: 12.5px; } .bar i { display: block; height: 10px; border-radius: 3px; background: var(--n-person); } .bar .num { color: var(--muted) }
+.filterbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; } .filterbar select { font: inherit; padding: 6px 10px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--fg); }
+dialog { border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); color: var(--fg); padding: 0; max-width: min(760px, 94vw); width: 100%; } dialog::backdrop { background: rgba(0,0,0,.45) }
+.modal-h { display: flex; justify-content: space-between; gap: 12px; align-items: start; padding: 18px 22px 10px; } .modal-b { padding: 0 22px 22px; display: grid; gap: 12px; max-height: 72vh; overflow: auto; }
+.modal-h h3 { font-family: var(--f-display); font-weight: 500; font-size: 18px; } .x { font: inherit; border: 0; background: transparent; color: var(--muted); font-size: 22px; cursor: pointer; line-height: 1 }
+.src-pill { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted) }
+.mc summary { font-size: 12.5px } .mc { display: grid; gap: 6px } .mc-in { font: inherit; font-size: 13px; width: 100%; padding: 6px 9px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--fg); margin-top: 4px }
+.pill.party { border-color: var(--n-party); color: var(--n-party); font-weight: 600 } .diamond { width: 10px; height: 10px; display: inline-block; transform: rotate(45deg); background: var(--n-party) }
+.sel { font: inherit; font-weight: 600; padding: 6px 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); color: var(--fg); }
+.btn.mini { padding: 1px 8px; font-size: 11.5px; margin-top: 4px } .btn.mini.wrongb:hover { border-color: var(--bad); color: var(--bad) } .btn.mini.okb:hover { border-color: var(--ok); color: var(--ok) }
+.fb { display: flex; gap: 6px; align-items: center; flex-wrap: wrap } .fbmark { font-family: var(--f-mono); font-size: 11px } .fbmark.wrong { color: var(--bad) } .fbmark.correct { color: var(--ok) }
+.conn.wrong { opacity: .55 } .conn.wrong b { text-decoration: line-through }
+.pg a { position: relative; padding-right: 22px } .hidex { position: absolute; right: 4px; top: 2px; color: var(--faint); font-size: 14px; line-height: 1; display: none; padding: 0 3px; border-radius: 3px } .pg a:hover .hidex { display: inline } .hidex:hover { color: var(--bad); background: var(--bg) }
+.flag { font-family: var(--f-mono); font-size: 10.5px; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--bad); color: var(--bad); cursor: pointer; display: inline-block; margin-left: 4px; background: transparent; vertical-align: middle; } .flag:hover { background: var(--bad); color: #fff }</style>
+</head>
+<body>
+<div style="background:#fff3cd;color:#5c4400;padding:6px 12px;font:13px sans-serif">Статичний знімок досьє станом на 04.10.2026. Граф розгортається на обмежену глибину; зміни не зберігаються. <a href="index.html">Усі досьє</a></div>
+<div class="wrap">
+<p><a href="index.html">← пошук і всі досьє</a></p>
+
+<style>
+.projnav { display: grid; gap: 6px; margin: 0 0 14px; }
+.projnav .pt { font-family: var(--f-mono); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.projnav .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.projnav .who { font-weight: 600; margin-right: 2px; }
+.projnav a.tab { text-decoration: none; font-size: 13px; padding: 6px 12px; border-color: var(--rule); }
+.projnav .sep { width: 1px; height: 22px; background: var(--rule); margin: 0 6px; }
+</style>
+<nav class="projnav" aria-label="вкладки проєкту">
+  <div class="pt">проєкт «Гончаренко»</div>
+  <div class="row">
+    <span class="who">Гончаренко О. О.</span>
+    <a class="tab" href="11651.html">досьє</a>
+    <a class="tab" href="11651-core.html" title="Головне: родина, найближчі помічники та їхні структури">★ Головне</a><a class="tab" href="11651-fees_vymova.html" title="Членські внески ГО «ВИ.МОВА» за 2023 рік">Внески ВИ.МОВА</a><a class="tab" href="11651-criminal_cases.html" title="Кримінальні справи в оточенні Гончаренка">Кримінальні справи</a><a class="tab" href="11651-es_odesa_pr.html" title="Одеський осередок «Європейської Солідарності» і Партія регіонів">ЄС Одеса і Партія регіонів</a><a class="tab" href="11651-kryvorot.html" title="Криворот Олексій Васильович — досьє">Криворот О. В.</a>
+  <span class="sep"></span>
+    <span class="who">Паращенко С. В.</span>
+    <a class="tab" href="311873.html">досьє</a>
+    <a class="tab" href="311873-sbu_case.html" title="Паращенко С. В.: справа СБУ про фінансування армії РФ і звʼязки з Гончаренком">Справа СБУ</a>
+  <span class="sep"></span>
+    <span class="who">Дерев&#39;янко М. М.</span>
+    <a class="tab on" href="689884.html">досьє</a>
+    <a class="tab" href="689884-lesya.html" title="Дерев&#39;янко Леся Володимирівна — вкладене досьє">Леся Дерев&#39;янко</a>
+  <span class="sep"></span>
+    <span class="who">Обухов П. Г.</span>
+    <a class="tab" href="1522224.html">досьє</a>
+    
+  </div>
+</nav>
+<div id="root"><p class="mut">будую досьє uid 689884 — перший раз це може зайняти хвилину (документи з НАЗК)…</p></div>
+</div>
+<dialog id="modal"><div class="modal-h"><h3 id="m-title"></h3><button class="x" id="m-close" aria-label="закрити">×</button></div><div class="modal-b" id="m-body"></div></dialog>
+<script src="data/689884.js"></script>
+<script src="static-shim.js"></script>
+<script src="static/d3.v7.min.js"></script>
+<script>
+const TOKEN = "", UID = 689884;
+const hdr = { 'Authorization': 'Bearer ' + TOKEN, 'Content-Type': 'application/json' };
+const api = p => fetch('/api' + p, { headers: hdr }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+const post = (p, body) => fetch('/api' + p, { method: 'POST', headers: hdr, body: JSON.stringify(body) }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const money = v => v == null ? '—' : Math.round(v).toLocaleString('uk');
+const link = u => u ? `<a href="https://public.nazk.gov.ua/documents/${u}" target="_blank" rel="noopener">декл.</a>` : '';
+const tbl = (cols, rows, cls = '') => `<div class="tbl"><table><thead><tr>${cols.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr${cls && r.__id ? ` class="rowlink" data-open="${esc(r.__id)}"` : ''}>${(r.__id ? r.cells : r).map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+const plural = (n, a, b, c) => { const x = n % 10, y = n % 100; return n + ' ' + (x === 1 && y !== 11 ? a : x >= 2 && x <= 4 && (y < 12 || y > 14) ? b : c); };
+const SEVL = { high: 'високий', medium: 'середній', low: 'низький' };
+const SRC = { document: 'декларація НАЗК', registry: 'реєстр (збіг ПІБ)', name_match: 'за збігом ПІБ', ambiguous: 'тезки ×N' };
+const fmtUAH = v => v ? Math.round(v).toLocaleString('uk-UA') + ' грн' : '0';
+const prozorroBlock = n => { const z = n.prozorro, code = n.edrpou || '';
+  if (!z.supplier_total && !z.buyer_total) return `<div class="sub">Prozorro: договорів немає (перевірено ${esc(z.fetched_at)})</div>`;
+  const part = (t, sum) => t ? `${t >= 10000 ? '10 000+' : t.toLocaleString('uk-UA')} догов.${sum ? ', у перших ' + Math.min(t, 100) + ' — ' + fmtUAH(sum) : ''}` : 'немає';
+  return `<div class="sub">Prozorro (перевірено ${esc(z.fetched_at)}): постачальник — ${part(z.supplier_total, z.supplier_sum)}; замовник — ${part(z.buyer_total, z.buyer_sum)}.
+    <a href="https://prozorro.gov.ua/uk/search/contracts?supplier=${encodeURIComponent(code)}" target="_blank" rel="noopener">як постачальник</a> ·
+    <a href="https://prozorro.gov.ua/uk/search/contracts?buyer=${encodeURIComponent(code)}" target="_blank" rel="noopener">як замовник</a></div>`; };
+const srcLabel = e => e.kind === 'manual' ? ({ web: 'веб-пошук', user_doc: 'документ користувача', cvk: 'ЦВК' }[e.status] || e.status) : e.fee ? 'відомість ГО (надано користувачем)' : (e.kind === 'money' && /^Prozorro/.test(e.label || '')) ? 'Prozorro (контрагент — за назвою в ЄДР)' : e.kind === 'contact' ? (e.uncertain ? 'контакти (місто не перевірено)' : 'контакти: адреса / телефон') : (SRC[e.status] || e.status);
+const KLABEL = { family: 'родина', coowner: 'співвласність', income_source: 'джерело доходу', other: 'названий(-а)', named_by: 'назвав(-ла) у декларації', role: 'роль / власність (ЄДР)', go_role: 'роль у ГО / партії', money: 'гроші', contact: 'спільна адреса / телефон', political: 'помічник депутата', legal: 'реєстр корупціонерів' };
+const ORIGIN = { manual: 'документ / веб-джерело', family: 'декларація НАЗК', coowner: 'декларація НАЗК', income_source: 'декларація НАЗК', other: 'декларація НАЗК', named_by: 'декларація НАЗК', money: 'декларація НАЗК / POLITDATA', role: 'ЄДР', go_role: 'реєстр ГО', contact: 'реєстр ГО', political: 'data.rada.gov.ua', legal: 'corruptinfo.nazk.gov.ua' };
+const short = s => s || '';   // назви ніде не скорочуємо
+// Реєстр корупціонерів — маркер біля особи (не вузол графа); клік — яка саме справа
+const partyPill = n => n && n.is_party ? ' <span class="pill party">★ партія</span>' : '';
+const corruptById = {};   // маркери для вузлів зі списків звʼязності (заповнюється під час рендеру вкладок)
+const chesnoPill = n => n && n.chesno && n.chesno.length && n.chesno.some(c => (c.flags || []).length) ? ` <span class="flag" role="button" tabindex="0" data-chesno="${esc(n.id)}" title="ЧЕСНО — клік: позначки й історія висувань" style="border-color:var(--warn);color:var(--warn)">Ч ${esc(n.chesno.flatMap(c => c.flags || []).slice(0, 3).join(' · '))}</span>` : '';
+const chesnoHtml = r => {
+  if (r.error) return `<p class="warn">ЧЕСНО недоступне: ${esc(r.error)}</p>`;
+  if (!r.matches.length) return `<p class="mut">У ЧЕСНО профілю з таким повним ПІБ немає${r.namesakes && r.namesakes.length ? ` (є тезки з іншим роком народження: ${r.namesakes.map(x => `<a href="${esc(x.url || '#')}" target="_blank" rel="noopener">${esc(x.name || x.id)}${x.birth_year ? ', ' + x.birth_year : ''}</a>`).join(', ')})` : ''}.</p>`;
+  return r.matches.map(m => `<div class="risk ${m.flags.length ? 'medium' : 'low'}" style="margin-top:6px">
+    <div><b><a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.name)}</a></b>${m.birth_year ? ' · ' + m.birth_year + ' р.н.' : ''} <span class="src-pill">chesno.org</span></div>
+    ${m.flags.length ? `<div><b>Позначки:</b> ${m.flags.map(esc).join(' · ')}</div>` : '<div class="mut">позначок немає</div>'}
+    ${m.marks.length ? `<div class="mut">${m.marks.map(x => esc(x.label) + (x.tooltip ? ' — ' + esc(x.tooltip) : '') + (x.source_url ? ` (<a href="${esc(x.source_url)}" target="_blank" rel="noopener">джерело</a>)` : '')).join('; ')}</div>` : ''}
+    ${m.party_path.length ? `<div><b>Партійний шлях:</b> ${m.party_path.map(x => (x.year || '') + ' ' + esc(x.party)).join(' → ')}</div>` : ''}
+    ${m.nominations.length ? `<details><summary>висування (${m.nominations.length})</summary><ul>${m.nominations.map(x => `<li>${x.year || ''}: ${esc(x.info || '')}${x.status ? ' — ' + esc(x.status) : ''}</li>`).join('')}</ul></details>` : ''}
+    ${m.memberships.length ? `<details><summary>фракції й посади (${m.memberships.length})</summary><ul>${m.memberships.map(x => `<li>${esc(x.title || x.org || '')}${x.body ? ' · ' + esc(x.body) : ''}${x.period ? ' · ' + esc(x.period) : ''}</li>`).join('')}</ul></details>` : ''}
+    ${m.far_cases.length ? `<div>ФАР-справи: ${m.far_cases.map(c => `<a href="https://far.chesno.org/case/${c}/" target="_blank" rel="noopener">${c}</a>`).join(', ')}</div>` : ''}
+    ${m.knop.length ? `<div>Кнопкодавство: ${m.knop.map(k => (k.proof ? `<a href="${esc(k.proof)}" target="_blank" rel="noopener">${esc(k.date || 'відео')}</a>` : esc(k.date || ''))).join(', ')}</div>` : ''}
+    ${m.resignation.length ? `<div>Відкликання: ${m.resignation.map(x => esc(x.reason || x.body || '')).join('; ')}</div>` : ''}
+    ${m.grechka ? `<div>Гречкосійство: ${m.grechka} матеріал(и) в архіві агітації</div>` : ''}
+  </div>`).join('');
+};
+async function chesnoCheck(name, target) {
+  target.innerHTML = '<p class="sub">шукаю в ЧЕСНО…</p>';
+  try { const r = await fetch('/api/chesno?name=' + encodeURIComponent(name), { headers: hdr }).then(x => x.json()); target.innerHTML = chesnoHtml(r); }
+  catch (e) { target.innerHTML = `<p class="warn">помилка: ${esc(e.message)}</p>`; }
+}
+const feePill = n => n && n.fees && n.fees.length ? ` <span class="flag fee" role="button" tabindex="0" data-fee="${esc(n.id)}" title="членські внески — клік: дата і сума">🧾 внесок${n.fees.length > 1 ? ' ×' + n.fees.length : ''}</span>` : '';
+const corruptPill = n => n && n.corrupt && n.corrupt.length ? ` <span class="flag" role="button" tabindex="0" data-corrupt="${esc(n.id)}" title="у Реєстрі корупціонерів — клік: справа">⚠ реєстр корупціонерів${n.corrupt.length > 1 ? ' ×' + n.corrupt.length : ''}</span>` : '';
+
+(async () => {
+  let d;
+  try { d = await api(`/person/uid/${UID}/dossier`); } catch (e) { document.getElementById('root').innerHTML = `<p class="warn">не вдалося: ${e.message}</p>`; return; }
+  const p = d.person, risks = d.risks || { items: [], level: '—', counts: {} }, conn = d.connectivity || {};
+  // ── безпосереднє коло фігуранта — спільне джерело для вкладок «Особи», «Організації», «Граф»
+  let ego0 = { nodes: [], edges: [] };
+  try { [ego0] = await post('/ego/batch', { items: [{ kind: 'person', name_key: p.name_key, uids: [p.uid] }] }); } catch (e) { console.warn(e); }
+  const egoNodes = Object.fromEntries((ego0.nodes || []).map(n => [n.id, n])), centerId = 'p:' + p.name_key;
+  const egoEdgesOf = id => (ego0.edges || []).filter(e => e.src === id || e.dst === id);
+  // ── відгуки про звʼязки (хибний / вірний) — з бази; позначені хибними ховаються всюди
+  const edgeKey = (a, b, k) => a + '>' + b + '>' + k;
+  const fbMap = {}; let wrongSet = new Set(); const fbHooks = [];
+  // «хибний» стосується ПАРИ вузлів (між ними буває кілька ребер різних типів: співвласник + «назвав у декларації»)
+  const pairKey = (a, b) => a < b ? a + '>' + b : b + '>' + a;
+  const rebuildWrong = () => { wrongSet = new Set(Object.values(fbMap).filter(v => v.verdict === 'wrong').map(v => pairKey(v.src, v.dst))); };
+  const isWrongEdge = (a, b) => wrongSet.has(pairKey(a, b));
+  try { (await api(`/feedback?subject_uid=${UID}`)).forEach(f => { fbMap[edgeKey(f.src, f.dst, f.kind)] = f; }); rebuildWrong(); } catch (e) { console.warn('feedback', e); }
+  let CID = ''; try { CID = localStorage.getItem('links:cid') || ''; if (!CID) { CID = Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('links:cid', CID); } } catch (e) {}
+  const fbStore = {};
+  function fbButtons(src, dst, kind, status, label, sl, dl, evidence) {
+    const k = edgeKey(src, dst, kind), f = fbMap[k] || fbMap[edgeKey(dst, src, kind)]; fbStore[k] = { src, dst, kind, status, label, src_label: sl, dst_label: dl, evidence: (evidence || []).slice(0, 20) };
+    const mark = f ? `<span class="fbmark ${f.verdict}">${f.verdict === 'wrong' ? '✗ позначено хибним' : f.verdict === 'correct' ? '✓ підтверджено' : '? не впевнені'}${f.reason ? ': ' + esc(f.reason) : ''}</span>` : '';
+    return `<div class="fb">${mark}${!f || f.verdict !== 'wrong' ? `<button class="btn mini wrongb" data-fb="wrong" data-k="${esc(k)}" title="звʼязок хибний (тезка, помилка зіставлення) — приховати й записати в базу">✗ хибний</button>` : `<button class="btn mini" data-fb="correct" data-k="${esc(k)}" title="зняти позначку: звʼязок вірний">↺ це вірно</button>`}${!f || f.verdict === 'wrong' ? '' : ''}${!f ? `<button class="btn mini okb" data-fb="correct" data-k="${esc(k)}" title="підтвердити звʼязок">✓ вірно</button>` : ''}</div>`;
+  }
+  async function sendFeedback(verdict, k) {
+    const e = fbStore[k]; if (!e) return; let reason = null;
+    if (verdict === 'wrong') { reason = prompt(`Чому звʼязок хибний?\n${e.src_label || e.src} — ${e.dst_label || e.dst}: ${e.label || ''}\n(напр. «тезка, інша особа»; можна лишити порожнім)`, ''); if (reason === null) return; }
+    try { const r = await post('/feedback', { subject_uid: UID, ...e, verdict, reason: reason || null, client_id: CID });
+      fbMap[k] = { id: r.id, src: e.src, dst: e.dst, kind: e.kind, verdict, reason }; rebuildWrong(); fbHooks.forEach(f => f()); }
+    catch (err) { alert('не вдалося зберегти: ' + err.message); }
+  }
+  const famByKey = Object.fromEntries((d.family || []).map(f => [f.name_key, f]));
+  const famIncByKey = Object.fromEntries((d.family_income || []).map(f => [f.name_key, f]));
+  const namedByKey = Object.fromEntries((d.named_persons || []).map(n => [n.name_key, n]));
+
+  const h = [];
+  const sevClass = risks.counts.high ? 'high' : risks.counts.medium ? 'medium' : 'low';
+  h.push(`<header class="hd"><div class="eyebrow">Досьє · uid ${p.uid} · ${d.declarations.length} док. · побудовано ${(d.meta.built_at || '').slice(0, 16).replace('T', ' ')} · документи: ${esc(d.meta.docs_origin)}</div>
+    <h1>${esc(p.display)}</h1><p class="lede">${esc(p.last_work_place || '')} — ${esc(p.last_work_post || '')}; декларації ${p.years_from}–${p.years_to}.</p>
+    <div class="kpis">
+      <div class="kpi ${sevClass}"><b>${esc(risks.level)}</b><span>рівень індикаторів ризику · ${risks.counts.high || 0} / ${risks.counts.medium || 0} / ${risks.counts.low || 0}</span></div>
+      <div class="kpi"><b>${d.family.length}</b><span>членів сімʼї в деклараціях</span></div>
+      <div class="kpi"><b>${(ego0.edges || []).length}</b><span>прямих звʼязків у колі</span></div>
+      <div class="kpi"><b>${(d.registry.companies || []).length + (d.registry.go || []).length}</b><span>компаній і організацій</span></div>
+      <div class="kpi"><b>${(ego0.circle_orgs || []).length}</b><span>організацій найближчого оточення</span></div>
+      <div class="kpi"><b>${money(d.income_by_year.reduce((s, r) => s + (r.self_total || 0), 0))}</b><span>грн власного доходу ${p.years_from}–${p.years_to}</span></div>
+      <div class="kpi"><b>${money((d.assets_by_year.at(-1) || {}).cash_total)}</b><span>грн готівки й рахунків, ${(d.assets_by_year.at(-1) || {}).year || ''}</span></div>
+    </div><div id="reports" style="display:flex;gap:8px;flex-wrap:wrap"></div>${d.namesakes && d.namesakes.length ? `<div class="caveat">Тезки з таким самим ПІБ у реєстрі (НЕ злиті): ${d.namesakes.map(n => `uid ${n.uid} — ${esc(n.work_place || '')} (${n.n} док.)`).join('; ')}</div>` : ''}</header>`);
+
+  const TABS = [['overview', 'Огляд'], ['graph', 'Граф'], ['persons', 'Повʼязані особи', (ego0.edges || []).filter(e => (egoNodes[e.src === centerId ? e.dst : e.src] || {}).kind === 'person').length],
+    ['decl', 'Декларації', d.declarations.length], ['entities', 'Організації', (ego0.nodes || []).filter(n => n.kind !== 'person').length], ['conn', 'Звʼязність і партії'], ['sources', 'Джерела']];
+  h.push(`<nav class="tabs" role="tablist">${TABS.map(([id, t, n], i) => `<button class="tab${i === 0 ? ' on' : ''}" role="tab" data-tab="${id}">${t}${n != null ? `<small>${n}</small>` : ''}</button>`).join('')}</nav>`);
+
+  // ── Огляд
+  const topRisks = risks.items.slice(0, 4), topConn = (conn.circle1 || []).slice(0, 8);
+  h.push(`<section class="panel-tab on" data-panel="overview">
+    <div class="grid2">
+      <div class="card"><h2>Індикатори ризику <span class="pill ${sevClass}">${esc(risks.level)}</span></h2>
+        ${topRisks.length ? topRisks.map(riskCard).join('') : '<p class="mut">індикаторів не виявлено</p>'}
+        ${risks.items.length > 4 ? `<p style="margin-top:8px"><a href="#" data-tab-go="decl">усі ${risks.items.length} індикаторів →</a></p>` : ''}</div>
+      <div class="card"><h2>Найбільш повʼязані у безпосередньому колі</h2>
+        ${topConn.length ? `<div class="bars">${topConn.map(c => `<div class="bar"><span><a href="#" data-open="${esc(c.id)}">${esc(short(c.label))}</a>${c.n_declarants > 1 ? ` <span class="pill">×${c.n_declarants}</span>` : ''}${c.corrupt ? (corruptById[c.id] = { id: c.id, label: c.label, corrupt: c.corrupt }, corruptPill(corruptById[c.id])) : ''}</span><i style="width:${Math.max(4, 100 * c.degree / (topConn[0].degree || 1))}%"></i><span class="num">${plural(c.degree, 'звʼязок', 'звʼязки', 'звʼязків')}</span></div>`).join('')}</div>` : '<p class="mut">—</p>'}
+        <p class="sub" style="margin-top:8px">за глибоким графом BFS (${conn.nodes || 0} вузлів); деталі — у вкладці «Звʼязність»</p></div>
+      <div class="card"><h2>Сімʼя</h2>${tbl(['Особа', 'Стосунок', 'Роки', 'Дохід разом', 'Де отримує'],
+        d.family.map(f => { const fi = famIncByKey[f.name_key]; const emp = fi ? fi.employers.filter(e => e.is_employer).map(e => esc(e.name)).join('; ') : ''; return { __id: 'p:' + f.name_key, cells: [esc(f.name) + corruptPill(egoNodes['p:' + f.name_key]), esc(f.relation), `${f.years[0]}–${f.years.at(-1)}`, `<span class="num">${fi ? money(fi.total) : '—'}</span>`, emp || '<span class="mut">—</span>'] }; }), 'rowlink')}</div>
+      <div class="card"><h2>Карʼєра за деклараціями</h2>${tbl(['Роки', 'Орган', 'Посада'], d.career.map(x => [`${x.year_from}–${x.year_to}`, esc(x.work_place), esc(x.work_post) + (x.transition ? ' <span class="pill">перехід</span>' : '')]))}</div>
+    </div>
+    ${(d.caveats || []).map(c => `<div class="caveat">${esc(c)}</div>`).join('')}
+  </section>`);
+
+  // ── Граф
+  h.push(`<section class="panel-tab" data-panel="graph">
+  <div class="viewbar"><label class="vcount" for="depth">Рівнів звʼязків:</label>
+    <select id="depth" class="sel">${[1, 2, 3, 4, 5, 6, 7].map(n => `<option value="${n}"${n === 2 ? ' selected' : ''}>${n === 1 ? '1 — безпосереднє коло' : n === 2 ? '2 — коло + його учасники' : n}</option>`).join('')}<option value="99">усе (до 8 рівнів)</option></select>
+    <span class="vcount" id="vcount"></span></div>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--n-core)"></i>Фігурант і родина</span><span><i class="dot" style="background:var(--n-person)"></i>Інші особи</span>
+    <span><i class="sq" style="background:var(--n-org)"></i>Компанії (ЄДР)</span><span><i class="diamond"></i><b>★ Політичні партії</b></span><span><i class="sq" style="background:var(--n-go)"></i>Громадські формування</span><span><i class="sq" style="background:var(--n-ext)"></i>Платники доходу, банки</span>
+    <span><i class="ln" style="border-color:var(--e-money)"></i>Гроші (стрілка — напрямок)</span><span><i class="ln" style="border-color:var(--e-family)"></i>Родина</span><span><i class="ln"></i>Декларація / реєстр</span>
+    <span><i class="ln" style="border-top-style:dashed"></i>За збігом ПІБ (єдиний декларант)</span><span><i class="ln" style="border-top-style:dotted"></i>Тезки ×N</span><span><i class="dot" style="background:var(--bad)"></i>Маркер: у Реєстрі корупціонерів (клік — справа)</span><span><i class="ln" style="border-color:var(--warn);border-top-style:dotted;border-top-width:3px"></i><b>Додатковий шар</b> «Експо-Грейн» / «Інагро» (перемикач у фільтрах)</span>
+  </div>
+  <div class="main">
+    <aside class="pool" id="pool"><input type="search" id="q" placeholder="Знайти у пулі…" aria-label="Пошук вузла"><div id="filters"></div><div id="poollist"></div></aside>
+    <div class="canvas" id="canvas"><button class="btn fit" id="fitbtn">Вмістити все</button></div>
+    <aside class="panel" id="panel" aria-live="polite"></aside>
+  </div>
+  <p class="hint">Клік по вузлу відкриває його безпосереднє коло поверх показаного (повторний клік по виділеному — згортає); картка праворуч — усі звʼязки з джерелами, кнопка «Дослідити» — окреме досьє особи. «Рівнів звʼязків» — скільки кіл розгортати автоматично.</p>
+  <details><summary>Усі звʼязки графа таблицею</summary><div id="etbl"></div></details></section>`);
+
+  // ── Повʼязані особи
+  const personRows = [];
+  (ego0.edges || []).forEach(e => {
+    const oid = e.src === centerId ? e.dst : e.src, n = egoNodes[oid]; if (!n || n.kind !== 'person') return;
+    const ek = edgeKey(e.src, e.dst, e.kind);
+    const fam = famByKey[n.name_key]; const years = e.years || [];
+    personRows.push({ __id: oid, kind: e.kind, status: e.status, name: n.label, ek, label: e.label, ev: e.evidence, cells: [
+      `<b>${esc(n.label)}</b>${n.rel ? ` <span class="pill document">${esc(n.rel)}</span>` : ''}${n.n_declarants > 1 ? ` <span class="pill">×${n.n_declarants}</span>` : ''}${corruptPill(n)}${feePill(n)}${chesnoPill(n)}${n.sub ? `<br><span class="mut">${esc(n.sub)}</span>` : ''}`,
+      `${esc(e.label)}<br><span class="src-pill">${KLABEL[e.kind] || e.kind}</span>`,
+      `<span class="pill ${e.status}">${srcLabel(e)}</span><br><span class="src-pill">${ORIGIN[e.kind] || ''}</span>`,
+      years.length ? `${years[0]}–${years.at(-1)}` : '—',
+      n.n_declarants ? (n.uids || []).map(u => `<a href="/person/${u}">uid ${u}</a>`).join(', ') : '<span class="mut">ні</span>',
+      `<button class="btn" data-open="${esc(oid)}">картка</button> <button class="btn" data-research="${esc(n.name_key)}">дослідити</button>` + fbButtons(e.src, e.dst, e.kind, e.status, e.label, p.display, n.label, e.evidence)] });
+  });
+  const kindsPresent = [...new Set(personRows.map(r => r.kind))];
+  h.push(`<section class="panel-tab" data-panel="persons">
+    <div class="filterbar"><input type="search" id="pq" placeholder="Знайти особу…" style="max-width:320px"><select id="pk"><option value="">усі типи звʼязку</option>${kindsPresent.map(k => `<option value="${k}">${KLABEL[k] || k}</option>`).join('')}</select><span class="vcount" id="pcount"></span></div>
+    <div id="ptable"></div>
+    <p class="hint">Кожен рядок — звʼязок із безпосереднього кола фігуранта з типом, статусом надійності та джерелом. «Картка» — усе, що база знає про особу (декларації, ЄДР, ГО, помічники, внески, реєстр корупціонерів); «Дослідити» — окреме досьє з власним графом і глибоким аналізом.</p></section>`);
+
+  // ── Декларації
+  h.push(`<section class="panel-tab" data-panel="decl">
+    <div class="grid2">
+      <div class="chart" id="ch-income"><h3>Доходи по роках, грн</h3><p class="sub">власні за класами (стовпчики) і сукупний дохід сімʼї (лінія)</p></div>
+      <div class="chart" id="ch-cash"><h3>Готівка й рахунки проти накопиченого доходу</h3><p class="sub">червона — задекларовані кошти на кінець року; сіра — сума власного й сімейного доходу наростаючим підсумком</p></div>
+      <div class="chart" id="ch-realty"><h3>Нерухомість і транспорт</h3><p class="sub">обʼєкти нерухомості (стовпчики, шт.) і площа (лінія, м²)</p></div>
+    </div>
+    <div class="card"><h2>Індикатори корупційних ризиків <span class="pill ${sevClass}">${esc(risks.level)}</span></h2>
+      <p class="mut" style="margin-bottom:10px">Автоматичні індикатори з первинних документів — підстава для перевірки, не висновок. Кожен має числа й посилання на декларації.</p>
+      <div style="display:grid;gap:8px">${risks.items.length ? risks.items.map(riskCard).join('') : '<p class="mut">індикаторів не виявлено</p>'}</div></div>
+    <div class="card"><h2>Де працюють і що отримують члени сімʼї</h2>
+      ${(d.family_income || []).length ? d.family_income.map(f => `<h3 style="margin-top:10px">${esc(f.name)} <span class="pill document">${esc(f.relation || '')}</span> <span class="mut">разом ${money(f.total)} грн</span></h3>` +
+        tbl(['Джерело доходу', 'Вид', 'Роки', 'Разом, грн', ''], f.employers.map(e => [esc(e.name) + (e.edrpou ? ` <span class="src-pill">ЄДРПОУ ${e.edrpou}</span>` : '') + (e.foreign ? ' <span class="src-pill">іноземна</span>' : ''), e.kinds.map(k => ({ salary_main: 'зарплата', salary_other: 'зарплата (ін.)', gift: 'подарунок', sale: 'продаж', inheritance: 'спадщина', capital: 'капітал', rent: 'оренда', pension: 'пенсія', insurance: 'страхування' }[k] || k)).join(', '), `${e.years[0]}–${e.years.at(-1)}`, `<span class="num">${money(e.total)}</span>`, e.evidence.slice(0, 6).map(x => `<a href="https://public.nazk.gov.ua/documents/${x.uuid}" target="_blank" rel="noopener">${x.year}</a>`).join(' ')]))).join('') : '<p class="mut">доходів членів сімʼї в деклараціях немає або вони масковані</p>'}</div>
+    <div class="card"><h2>Усі документи</h2>${tbl(['Рік', 'Тип', 'Подано', 'Орган', 'Посада', ''], d.declarations.map(x => [x.year, x.type_label, (x.submitted || '').slice(0, 10), esc(x.work_place), esc(x.work_post), link(x.uuid)]))}</div>
+    <div class="card"><h2>Доходи по роках, грн</h2>${tbl(['Рік', 'Зарплата', 'Подарунки', 'Продаж майна', 'Інше', 'Разом свої', 'Сімʼя'], d.income_by_year.map(x => [x.year, ...[x.salary, x.gift, x.sale, x.other].map(v => `<span class="num">${money(v)}</span>`), `<span class="num"><b>${money(x.self_total)}</b></span>`, `<span class="num">${money(x.family_total)}</span>`]))}</div>
+    ${d.psz_events.length ? `<div class="card"><h2>Разові події (повідомлення про суттєві зміни)</h2>${tbl(['Дата', 'Вид', 'Що', 'Сума', 'Джерело', ''], d.psz_events.map(x => [x.date || '', x.kind, esc(x.object_type), `<span class="num">${money(x.amount)}</span>`, esc(x.source || ''), link(x.uuid)]))}</div>` : ''}
+    <div class="card"><h2>Майно в динаміці</h2>${tbl(['Рік', 'Нерухомість (шт/м²)', 'Земля', 'Транспорт', 'Готівка+рахунки', 'Корп. права', 'Крипто', 'Зміни'], d.assets_by_year.map(x => [x.year, `${x.realty_n}/${Math.round(x.realty_area)}`, x.land_n, x.vehicles.map(esc).join('; ') || '—', `<span class="num">${money(x.cash_total)}</span>`, x.corporate_n, `<span class="num">${money(x.crypto)}</span>`, esc(x.changes.join('; '))]))}</div>
+  </section>`);
+
+  // ── Організації
+  const orgRows = (ego0.nodes || []).filter(n => n.kind !== 'person').map(n => { const es = egoEdgesOf(n.id); return { __id: n.id, cells: [
+    `<b>${esc(n.label)}</b>${partyPill(n)}${n.terminated ? ' <span class="pill">припинено</span>' : ''}<br><span class="mut">${esc(n.sub || '')}${n.edrpou ? ' · ЄДРПОУ ' + n.edrpou : ''}${n.reg_number && !n.edrpou ? ' · № ' + n.reg_number : ''}</span>`,
+    { company: 'компанія (ЄДР)', go: 'громадське формування / партія', org: 'платник доходу' }[n.kind] || n.kind, es.map(e => esc(e.label)).join('<br>'), es.map(e => `<span class="pill ${e.status}">${srcLabel(e)}</span>`).join(' '), `<button class="btn" data-open="${esc(n.id)}">картка</button>`] }; });
+  const circleOrgs = ego0.circle_orgs || [];
+  const coRows = circleOrgs.map(o => [
+    `<b>${esc(o.name)}</b>${partyPill(o)}${o.stan && o.stan !== 'зареєстровано' ? ` <span class="pill">${esc(o.stan)}</span>` : ''}<br><span class="src-pill">ЄДРПОУ ${esc(o.edrpou)}${o.registration_date ? ' · з ' + esc(o.registration_date) : ''}</span>`,
+    o.people.map(x => `<a href="#" data-open="p:${esc(x.name_key)}">${esc(x.name)}</a> — ${esc(x.roles.join(', '))}<br><span class="src-pill">звʼязок із фігурантом: ${esc(x.link)}</span>`).join('<br>'),
+    `<span class="num">${o.n_people}</span>`,
+    `<button class="btn" data-graph-expand="${esc('p:' + o.people[0].name_key)}" title="відкрити граф і розгорнути коло цієї особи">на графі</button>`]);
+  h.push(`<section class="panel-tab" data-panel="entities">
+    <div class="card"><h2>Організації найближчого оточення <small class="mut">· ${circleOrgs.length}</small></h2>
+      <p class="mut" style="margin-bottom:10px">Компанії та громадські формування (ЄДР, реєстр ГО), де роль мають люди з безпосереднього кола — сімʼя, співвласники, помічники, названі в деклараціях, — а сам фігурант ні. Збіг осіб за ПІБ; у граф не додаються, доки не розгорнете коло відповідної особи.</p>
+      <div class="filterbar" style="margin-bottom:8px"><input type="search" id="coq" placeholder="Знайти організацію або особу…" style="max-width:360px"><label class="vcount"><input type="checkbox" id="co-active"> лише діючі</label><label class="vcount"><input type="checkbox" id="co-party"> ★ лише партії</label><span class="vcount" id="cocount"></span></div>
+      <div id="cotable"></div></div>
+    <div class="card"><h2>Компанії, організації, платники доходу — прямі звʼязки</h2>${tbl(['Організація', 'Тип', 'Звʼязок із фігурантом', 'Статус', ''], orgRows, 'rowlink')}</div>
+    ${(d.registry.companies || []).length ? `<div class="card"><h2>Ролі в ЄДР (збіг ПІБ)</h2>${tbl(['Ролі', 'Компанія', 'ЄДРПОУ', 'Стан', 'Частка'], d.registry.companies.map(x => [x.roles.join(', '), esc(x.company_name), x.edrpou, esc(x.stan || ''), x.share ? money(x.share) + ' грн' : (x.share_pct ? x.share_pct + '%' : '')]))}</div>` : ''}
+    ${(d.registry.go || []).length ? `<div class="card"><h2>Реєстр громадських формувань <small class="mut">(знімок 11.07.2023)</small></h2>${tbl(['Роль', 'Організація', 'ЄДРПОУ / №', 'Запис'], d.registry.go.map(g => [g.role, esc(g.go_name), esc(g.edrpou || g.reg_number || ''), esc(g.raw || '')]))}</div>` : ''}
+    <p class="hint">ФОП: ${d.registry.fop.length ? d.registry.fop.map(f => esc(f.stan) + (f.registration_date ? ' з ' + f.registration_date : '')).join('; ') : 'не знайдено'}.</p></section>`);
+
+  // ── Звʼязність і партії
+  const connList = (rows, title, open) => `<details${open ? ' open' : ''}><summary>${title} · ${rows.length}</summary>${rows.length ? `<div class="bars" style="margin-top:8px">${rows.map(c => `<div class="bar"><span><a href="#" data-open="${esc(c.id)}">${esc(short(c.label))}</a> <span class="src-pill">${c.kind === 'company' ? 'ЄДР' : c.kind === 'person' ? 'особа' : c.kind}</span>${c.n_declarants > 1 ? ` <span class="pill">×${c.n_declarants}</span>` : ''}${c.is_hub ? ' <span class="pill">хаб</span>' : ''}${c.corrupt ? (corruptById[c.id] = { id: c.id, label: c.label, corrupt: c.corrupt }, corruptPill(corruptById[c.id])) : ''}</span><i style="width:${Math.max(4, 100 * c.degree / (rows[0].degree || 1))}%"></i><span class="num">${c.degree} · ${c.edge_kinds.map(k => KLABEL[k] || k).join(', ')}</span></div>`).join('')}</div>` : '<p class="mut">—</p>'}</details>`;
+  h.push(`<section class="panel-tab" data-panel="conn">
+    <div class="card"><h2>Найбільш повʼязані вузли за колами</h2><p class="mut" style="margin-bottom:8px">Ступінь = кількість ребер у глибокому графі BFS (${conn.nodes || 0} вузлів, ${conn.edges || 0} ребер; за колами: ${Object.entries(conn.sizes || {}).map(([k, v]) => `${k}: ${v}`).join(', ')}).</p>
+      ${connList(conn.circle1 || [], 'Безпосереднє коло', true)}${connList(conn.circle2 || [], 'Друге коло', false)}${connList(conn.deeper || [], 'Дальші кола', false)}</div>
+    <div class="card"><h2>Спільні партії та фракції</h2><p class="mut" style="margin-bottom:8px">Лише для осіб, що вже є в досьє (без розгортання списків членів партій): депутатські фракції/партії за скликаннями (data.rada), керівництво партійних організацій (реєстр ГО), внески (POLITDATA).</p>
+      ${(d.parties || []).length ? d.parties.map(pt => `<h3 style="margin-top:10px">${esc(pt.party)} <span class="mut">· ${plural(pt.members.length, 'особа', 'особи', 'осіб')}</span></h3>${tbl(['Особа', 'Підстава'], pt.members.map(m => [`<a href="#" data-open="p:${esc(m.name_key)}">${esc(m.name)}</a>`, m.basis.map(esc).join('<br>')]))}`).join('') : '<p class="mut">спільних партій серед осіб досьє не знайдено</p>'}</div>
+  </section>`);
+
+  // ── Джерела
+  h.push(`<section class="panel-tab" data-panel="sources"><div class="card"><h2>Джерела й застереження</h2>
+    ${(d.caveats || []).map(c => `<div class="caveat">${esc(c)}</div>`).join('')}
+    <ul style="margin:10px 0 0 18px;line-height:1.7"><li>Декларації НАЗК — ${d.declarations.length} документів (public.nazk.gov.ua), джерело в цьому прогоні: ${esc(d.meta.docs_origin)}.</li>
+    <li>ЄДР (юрособи, ФОП) — щотижневий дамп data.gov.ua; реєстр громадських формувань — знімок 11.07.2023; збіг осіб лише за ПІБ.</li>
+    <li>Помічники народних депутатів — data.rada.gov.ua через activeorgua-bit/minions; POLITDATA — звіти партій (проіндексовані партії); Реєстр корупціонерів — відкриті дані getAllData.</li>
+    <li>Індикатори ризику — автоматичні правила над цими даними; їх перелік і пороги — у README сервісу.</li></ul>
+    <details style="margin-top:10px"><summary>Глибокий граф BFS (${d.graph.summary.nodes} вузлів, ${d.graph.summary.edges} ребер${d.graph.summary.truncated_at_circle ? ', зрізано на колі ' + d.graph.summary.truncated_at_circle : ''}) — найдовші ланцюжки</summary>
+    ${d.chains.length ? d.chains.map(c => `<ol>${c.steps.map(s => `<li>${esc(s.label)} <small class="mut">${s.n_declarants ? '×' + s.n_declarants : 'не декларант'}${s.edge_kind ? ' ← ' + s.edge_kind + ' (' + (s.confidence || 0).toFixed(2) + ')' : ''}</small></li>`).join('')}</ol>`).join('') : '<p class="mut">—</p>'}</details></div></section>`);
+
+  document.getElementById('root').innerHTML = h.join('');
+
+  function riskCard(r) { return `<div class="risk ${r.severity}"><div><span class="pill ${r.severity}">${SEVL[r.severity]}</span> <b>${esc(r.title)}</b></div><div>${esc(r.detail || '')}</div>${(r.evidence || []).filter(e => e.uuid).length ? `<div class="src">документи: ${r.evidence.filter(e => e.uuid).map(e => `<a href="https://public.nazk.gov.ua/documents/${e.uuid}" target="_blank" rel="noopener">${e.year || 'декл.'}</a>`).join(' · ')}</div>` : ''}</div>`; }
+
+  // ── вкладки
+  const root = document.getElementById('root');
+  let graphInit = false;
+  function showTab(id) {
+    root.querySelectorAll('.tab').forEach(b => b.classList.toggle('on', b.dataset.tab === id));
+    root.querySelectorAll('.panel-tab').forEach(s => s.classList.toggle('on', s.dataset.panel === id));
+    if (id === 'graph' && !graphInit) { graphInit = true; initGraph(); }
+    if (id === 'decl' && !window.__charts) { window.__charts = true; drawCharts(); }
+    try { history.replaceState(null, '', '#' + id); } catch (e) {}
+  }
+  root.addEventListener('click', e => {
+    const t = e.target.closest('[data-tab],[data-tab-go]'); if (t) { e.preventDefault(); showTab(t.dataset.tab || t.dataset.tabGo); }
+  });
+
+  // ── організації оточення: пошук і фільтр
+  function renderCircleOrgs() {
+    const q = (document.getElementById('coq').value || '').toLowerCase(), act = document.getElementById('co-active').checked, onlyParty = document.getElementById('co-party').checked;
+    const idx = circleOrgs.map((o, i) => [o, i]).sort((a, b) => (b[0].is_party ? 1 : 0) - (a[0].is_party ? 1 : 0)).filter(([o]) => (!onlyParty || o.is_party) && (!act || o.stan === 'зареєстровано') && (!q || o.name.toLowerCase().includes(q) || o.people.some(x => x.name.toLowerCase().includes(q))));
+    document.getElementById('cotable').innerHTML = tbl(['Організація', 'Хто з оточення і в якій ролі', 'Осіб', ''], idx.map(([, i]) => coRows[i]));
+    document.getElementById('cocount').textContent = plural(idx.length, 'організація', 'організації', 'організацій');
+  }
+  document.getElementById('coq').addEventListener('input', renderCircleOrgs); document.getElementById('co-active').addEventListener('change', renderCircleOrgs); document.getElementById('co-party').addEventListener('change', renderCircleOrgs); renderCircleOrgs();
+  // «на графі»: перейти на вкладку графа й розгорнути коло особи (після ініціалізації графа)
+  window.__pendingExpand = []; document.addEventListener('click', e => { const t = e.target.closest('[data-graph-expand]'); if (!t) return; e.preventDefault(); e.stopPropagation();
+    window.__pendingExpand.push(t.dataset.graphExpand); showTab('graph'); if (window.__graphExpand) window.__graphExpand(); }, true);
+
+  // ── таблиця осіб із фільтром
+  function renderPersons() {
+    const q = (document.getElementById('pq').value || '').toLowerCase(), k = document.getElementById('pk').value;
+    const all = personRows.filter(r => (!q || r.name.toLowerCase().includes(q)) && (!k || r.kind === k));
+    const rows = all.filter(r => { const [a, b] = r.ek.split('>'); return !isWrongEdge(a, b); }), nWrong = all.length - rows.length;
+    rows.forEach(r => { r.cells[5] = r.cells[5].replace(/<div class="fb">[\s\S]*<\/div>$/, '') + fbButtons(...r.ek.split('>'), r.status, r.label, p.display, r.name, r.ev); });
+    document.getElementById('ptable').innerHTML = tbl(['Особа', 'Статус / звʼязок', 'Надійність · джерело', 'Роки', 'Декларант', ''], rows, 'rowlink');
+    document.getElementById('pcount').textContent = plural(rows.length, 'особа', 'особи', 'осіб') + (nWrong ? ` · приховано позначених хибними: ${nWrong}` : '');
+  }
+  fbHooks.push(renderPersons);
+  document.getElementById('pq').addEventListener('input', renderPersons); document.getElementById('pk').addEventListener('change', renderPersons); renderPersons();
+
+  // ── модалка: усе, що база знає про вузол (+ коло вузла з API), і кнопка «дослідити»
+  const modal = document.getElementById('modal');
+  function openChesno(id) {
+    const n = (window.__meta && window.__meta[id]) || egoNodes[id] || {};
+    document.getElementById('m-title').textContent = 'ЧЕСНО: ' + (n.label || id);
+    document.getElementById('m-body').innerHTML = '<div class="chesno-box"></div>';
+    if (!modal.open) modal.showModal();
+    chesnoCheck(n.label || id, document.querySelector('#m-body .chesno-box'));
+  }
+  function openFee(id) {
+    const n = (window.__meta && window.__meta[id]) || egoNodes[id] || {}; const fs = n.fees || [];
+    const fmt = v => Math.round(v).toLocaleString('uk-UA') + ' грн';
+    document.getElementById('m-title').textContent = '🧾 Внески: ' + (n.label || id);
+    document.getElementById('m-body').innerHTML = `<p class="mut">Джерело — бухгалтерська відомість організації, надана користувачем (не публічний реєстр). Дат окремих платежів у такій відомості немає: є період (рік) і, якщо вказано, дата підстави.</p>` +
+      fs.map(f => `<div class="risk medium"><div><b>${fmt(f.amount)}</b> · ${esc(f.period)}${f.basis_date ? ` · дата підстави ${esc(f.basis_date)}` : ''}</div>
+        <div>${esc(f.basis || 'внесок')} → ${esc(f.org_name || f.org_edrpou)}${f.org_edrpou ? ` <span class="src-pill">ЄДРПОУ ${esc(f.org_edrpou)}</span>` : ''}</div>
+        <div class="mut">платник у документі: ${esc(f.payer)} · ${esc(f.doc || '')}${f.account ? ', рахунок ' + esc(f.account) : ''} · ${esc(f.note || '')}</div></div>`).join('') +
+      (fs.length > 1 ? `<p style="margin-top:8px"><b>Разом: ${fmt(fs.reduce((a, f) => a + f.amount, 0))}</b></p>` : '');
+    if (!modal.open) modal.showModal();
+  }
+  function openCorrupt(id) {
+    const n = egoNodes[id] || (window.__meta && window.__meta[id]) || corruptById[id] || {}; const recs = n.corrupt || [];
+    document.getElementById('m-title').textContent = 'Реєстр корупціонерів: ' + (n.label || id);
+    document.getElementById('m-body').innerHTML = `<p class="mut">Єдиний державний реєстр осіб, які вчинили корупційні або повʼязані з корупцією правопорушення (corruptinfo.nazk.gov.ua, відкриті дані). Збіг — лише за ПІБ: звірте місце роботи й посаду на момент правопорушення.</p>` +
+      (recs.length ? recs.map(r => `<div class="risk high"><div><b>${esc(r.punishment || 'стягнення')}</b>${r.decision_date ? ` · ${esc(r.decision_date)}` : ''}${r.entity ? ` · <span class="src-pill">${esc(r.entity)}</span>` : ''}</div><div>${esc(r.offense || '')}</div><div class="mut">${[r.work, r.post, r.sphere].filter(Boolean).map(esc).join(' · ')}</div>${r.court ? `<div class="src">${esc(r.court)}</div>` : ''}<div class="src">запис № ${esc(r.id)} · <a href="https://corruptinfo.nazk.gov.ua/" target="_blank" rel="noopener">corruptinfo.nazk.gov.ua</a></div></div>`).join('') : '<p class="mut">записів немає</p>');
+    if (!modal.open) modal.showModal();
+  }
+  document.getElementById('m-close').onclick = () => modal.close();
+  modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
+  async function openCard(id) {
+    const n = egoNodes[id] || (window.__meta && window.__meta[id]) || null;
+    document.getElementById('m-title').textContent = n ? n.label : id;
+    const body = document.getElementById('m-body'); body.innerHTML = '<p class="sub">завантажую…</p>'; modal.showModal();
+    let ego = null;
+    try {
+      const item = !n ? null : n.kind === 'company' ? { kind: 'company', edrpou: n.edrpou } : n.kind === 'go' ? { kind: 'go', ident: n.edrpou || n.reg_number } : n.kind === 'person' ? { kind: 'person', name_key: n.name_key } : null;
+      if (item) [ego] = await post('/ego/batch', { items: [item] });
+    } catch (e) { console.warn(e); }
+    const parts = [];
+    if (n) {
+      const fam = n.name_key && famByKey[n.name_key], fi = n.name_key && famIncByKey[n.name_key], nm = n.name_key && namedByKey[n.name_key];
+      parts.push(`<div>${n.rel ? `<span class="pill document">${esc(n.rel)} — за декларацією</span> ` : ''}${n.kind === 'person' ? (n.n_declarants ? `<span class="pill">декларант ×${n.n_declarants}</span>` : '<span class="pill">не декларант (лише названий)</span>') : `<span class="pill">${ ({ company: 'компанія (ЄДР)', go: 'громадське формування / партія', org: 'платник доходу', legal: 'реєстр корупціонерів' }[n.kind] || n.kind)}</span>`}${n.fop ? ' <span class="pill">ФОП</span>' : ''}${n.terminated ? ' <span class="pill">припинено</span>' : ''}${corruptPill(n)}${feePill(n)}${chesnoPill(n)}</div>
+        <div class="mut">${esc(n.sub || '')}${n.edrpou ? ' · ЄДРПОУ ' + n.edrpou : ''}${n.address ? ' · ' + esc(n.address) : ''}${n.phone_raw ? ' · тел. ' + esc(n.phone_raw) : ''}${n.foreign_code ? ' · код ' + n.foreign_code : ''}</div>`);
+      if (n.kind === 'person') parts.push(`<div>${(n.uids || []).map(u => `<a class="btn" href="/person/${u}">досьє uid ${u}</a>`).join(' ')} <button class="btn primary" data-research="${esc(n.name_key)}">дослідити глибше</button></div>`);
+      if (n.kind === 'person') parts.push(`<div><button class="btn" data-chesno-check="${esc(n.label)}">🔎 перевірити в ЧЕСНО</button><div class="chesno-box"></div></div>`);
+      if (fam) parts.push(`<div><b>У деклараціях фігуранта:</b> ${esc(fam.relation)}, роки ${fam.years.join(', ')}</div>`);
+      if (fi) parts.push(`<div><b>Доходи за деклараціями фігуранта:</b> ${money(fi.total)} грн; джерела: ${fi.employers.map(e => `${esc(e.name)} (${e.years[0]}–${e.years.at(-1)}, ${money(e.total)})`).join('; ')}</div>`);
+      if (nm && !fam) parts.push(`<div><b>Названий(-а) у деклараціях:</b> ${esc(nm.roles.join(', '))}, роки ${nm.years.join(', ')}</div>`);
+    }
+    const es = ego && ego.edges ? ego.edges : egoEdgesOf(id);
+    const nodesOf = ego && ego.nodes ? Object.fromEntries(ego.nodes.map(x => [x.id, x])) : egoNodes;
+    parts.push(`<div><b>${plural(es.length, 'звʼязок', 'звʼязки', 'звʼязків')} у базі</b>${ego && ego.truncated && Object.keys(ego.truncated).length ? ` <span class="warn">· не показано: ${Object.entries(ego.truncated).map(([k, v]) => `${k} +${v}`).join(', ')}</span>` : ''}</div>` +
+      es.map(e => { const oid = e.src === id ? e.dst : e.src, o = nodesOf[oid] || {}; const dir = e.kind === 'money' ? (e.src === id ? '→ платить ' : '← отримує від ') : '';
+        const wr = isWrongEdge(e.src, e.dst);
+        return `<div class="conn${wr ? ' wrong' : ''}"><div>${dir}<b data-open="${esc(oid)}">${esc(o.label || oid)}</b>${o.rel ? ` <span class="pill document">${esc(o.rel)}</span>` : ''}${o.n_declarants > 1 ? ` <span class="pill">×${o.n_declarants}</span>` : ''}${o.uncertain ? ' <span class="pill ambiguous">?</span>' : ''}${corruptPill(o)}${feePill(o)}${chesnoPill(o)}</div><div>${esc(e.label)} <span class="pill ${e.status}">${srcLabel(e)}</span> <span class="src-pill">${ORIGIN[e.kind] || ''}</span></div><div class="src">${srcHtml(e)}</div>${fbButtons(e.src, e.dst, e.kind, e.status, e.label, (nodesOf[e.src] || {}).label, (nodesOf[e.dst] || {}).label, e.evidence)}</div>`; }).join(''));
+    body.innerHTML = parts.join('');
+  }
+  const srcHtml = l => (l.evidence || []).map(x => x.uuid ? `<a href="https://public.nazk.gov.ua/documents/${x.uuid}" target="_blank" rel="noopener">${x.year || 'декл.'}${x.amount ? ' · ' + money(x.amount) : ''}${x.psz ? ' (ПСЗ)' : ''}${x.by && x.by !== UID ? ' · uid ' + x.by : ''}</a>` : (x.raw ? `<span title="${esc(x.raw)}">${esc(x.raw)}</span>${x.url ? ` <a href="${esc(x.url)}" target="_blank" rel="noopener">джерело</a>` : ''}` : '')).filter(Boolean).join(' · ');
+  // «дослідити глибше»: ПІБ → кандидати-декларанти (дзеркало, інакше live НАЗК) → окреме досьє
+  async function research(nameKey) {
+    const body = document.getElementById('m-body'); document.getElementById('m-title').textContent = 'Дослідити: ' + nameKey.split('|').join(' ');
+    body.innerHTML = '<p class="sub">шукаю декларанта в дзеркалі та НАЗК…</p>'; if (!modal.open) modal.showModal();
+    try {
+      const r = await api(`/resolve?name_key=${encodeURIComponent(nameKey)}`);
+      if (!r.candidates.length) { body.innerHTML = `<p>Декларанта з таким ПІБ не знайдено${r.live === 'failed' || r.error ? ` (live-пошук НАЗК недоступний: ${esc(r.error || 'немає виходу')} — запит поставлено в чергу)` : ' у реєстрі НАЗК'}. Окреме досьє можливе лише для декларанта; звʼязки цієї особи доступні через картку та граф.</p>`; return; }
+      body.innerHTML = `<p>${r.candidates.length > 1 ? 'Декілька декларантів з таким ПІБ — оберіть за місцем роботи:' : 'Знайдено декларанта:'}</p>` +
+        tbl(['uid', 'Місце роботи', 'Посада', 'Роки', ''], r.candidates.map(c => [c.uid, esc(c.work_place || '—'), esc(c.work_post || '—'), (c.years || []).length ? `${Math.min(...c.years)}–${Math.max(...c.years)}` : (c.y0 ? `${c.y0}–${c.y1}` : '—'), `<a class="btn primary" href="/person/${c.uid}">відкрити досьє</a>`])) +
+        `<p class="sub">Досьє будується ${r.candidates.some(c => c.origin === 'live') ? 'з документів НАЗК (перший раз — до хвилини)' : 'з дзеркала та кешу'}; граф, ризики й повʼязані особи — так само, як тут.</p>`;
+    } catch (e) { body.innerHTML = `<p class="warn">не вдалося: ${e.message}</p>`; }
+  }
+  document.addEventListener('click', e => {
+    const fb = e.target.closest('[data-fb]'); if (fb) { e.preventDefault(); e.stopPropagation(); sendFeedback(fb.dataset.fb, fb.dataset.k); return; }
+    const cc = e.target.closest('[data-chesno-check]'); if (cc) { e.preventDefault(); e.stopPropagation(); chesnoCheck(cc.dataset.chesnoCheck, cc.parentElement.querySelector('.chesno-box')); return; }
+    const cp = e.target.closest('[data-chesno]'); if (cp) { e.preventDefault(); e.stopPropagation(); openChesno(cp.dataset.chesno); return; }
+    const ff = e.target.closest('[data-fee]'); if (ff) { e.preventDefault(); e.stopPropagation(); openFee(ff.dataset.fee); return; }
+    const cf = e.target.closest('[data-corrupt]'); if (cf) { e.preventDefault(); e.stopPropagation(); openCorrupt(cf.dataset.corrupt); return; }
+    const o = e.target.closest('[data-open]'); if (o && !e.target.closest('[data-research]')) { e.preventDefault(); openCard(o.dataset.open); return; }
+    const r = e.target.closest('[data-research]'); if (r) { e.preventDefault(); research(r.dataset.research); }
+  });
+
+  // ── графіки (d3)
+  function drawCharts() {
+    const css = getComputedStyle(document.documentElement), col = v => css.getPropertyValue(v).trim();
+    const years = d.income_by_year.map(r => r.year);
+    const W = 560, H = 260, M = { t: 10, r: 16, b: 28, l: 56 };
+    const base = (el) => { const svg = d3.select(el).append('svg').attr('viewBox', [0, 0, W, H]); return svg; };
+    const fmt = v => v >= 1e6 ? (v / 1e6).toFixed(1).replace('.0', '') + ' млн' : v >= 1e3 ? Math.round(v / 1e3) + ' тис' : String(Math.round(v));
+    const axes = (svg, x, y) => { svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(x).tickSizeOuter(0)); svg.append('g').attr('class', 'axis').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(fmt)); svg.append('g').attr('class', 'gridl').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(W - M.l - M.r)).tickFormat('')).select('.domain').remove(); };
+    // 1) доходи: стек + лінія сімʼї
+    { const keys = ['salary', 'gift', 'sale', 'other'], colors = { salary: col('--c-salary'), gift: col('--c-gift'), sale: col('--c-sale'), other: col('--c-other') };
+      const svg = base('#ch-income'); const x = d3.scaleBand().domain(years).range([M.l, W - M.r]).padding(.25);
+      const maxY = d3.max(d.income_by_year, r => Math.max(r.self_total || 0, r.family_total || 0)) || 1; const y = d3.scaleLinear().domain([0, maxY * 1.1]).range([H - M.b, M.t]);
+      axes(svg, x, y); const stack = d3.stack().keys(keys)(d.income_by_year);
+      svg.append('g').selectAll('g').data(stack).join('g').attr('fill', s => colors[s.key]).selectAll('rect').data(s => s).join('rect').attr('x', r => x(r.data.year)).attr('y', r => y(r[1])).attr('height', r => Math.max(0, y(r[0]) - y(r[1]))).attr('width', x.bandwidth()).append('title').text(function (r) { const k = d3.select(this.parentNode.parentNode).datum().key; return `${r.data.year} · ${ ({ salary: 'зарплата', gift: 'подарунки', sale: 'продаж майна', other: 'інше' }[k])}: ${money(r[1] - r[0])} грн`; });
+      svg.append('path').datum(d.income_by_year).attr('fill', 'none').attr('stroke', col('--c-family')).attr('stroke-width', 2).attr('d', d3.line().x(r => x(r.year) + x.bandwidth() / 2).y(r => y(r.family_total || 0)));
+      svg.selectAll('circle.f').data(d.income_by_year).join('circle').attr('class', 'f').attr('cx', r => x(r.year) + x.bandwidth() / 2).attr('cy', r => y(r.family_total || 0)).attr('r', 3).attr('fill', col('--c-family')).append('title').text(r => `${r.year} · дохід сімʼї: ${money(r.family_total)} грн`);
+      d3.select('#ch-income').append('div').attr('class', 'legend').html(`<span><i class="sq" style="background:${colors.salary}"></i>зарплата</span><span><i class="sq" style="background:${colors.gift}"></i>подарунки</span><span><i class="sq" style="background:${colors.sale}"></i>продаж майна</span><span><i class="sq" style="background:${colors.other}"></i>інше</span><span><i class="ln" style="border-color:${col('--c-family')}"></i>сімʼя</span>`); }
+    // 2) готівка проти накопиченого доходу
+    { const rows = d.assets_by_year.map(a => { const inc = d.income_by_year.find(r => r.year === a.year) || {}; return { year: a.year, cash: a.cash_total || 0, inc: (inc.self_total || 0) + (inc.family_total || 0) }; }); let cum = 0; rows.forEach(r => { cum += r.inc; r.cum = cum; });
+      const svg = base('#ch-cash'); const x = d3.scalePoint().domain(rows.map(r => r.year)).range([M.l, W - M.r]).padding(.3); const y = d3.scaleLinear().domain([0, (d3.max(rows, r => Math.max(r.cash, r.cum)) || 1) * 1.1]).range([H - M.b, M.t]); axes(svg, x, y);
+      svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col('--c-other')).attr('stroke-width', 2).attr('stroke-dasharray', '5 3').attr('d', d3.line().x(r => x(r.year)).y(r => y(r.cum)));
+      svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col('--c-cash')).attr('stroke-width', 2.5).attr('d', d3.line().x(r => x(r.year)).y(r => y(r.cash)));
+      svg.selectAll('circle').data(rows).join('circle').attr('cx', r => x(r.year)).attr('cy', r => y(r.cash)).attr('r', 3.5).attr('fill', col('--c-cash')).append('title').text(r => `${r.year}: готівка й рахунки ${money(r.cash)} грн; дохід наростаючим підсумком ${money(r.cum)} грн`);
+      d3.select('#ch-cash').append('div').attr('class', 'legend').html(`<span><i class="ln" style="border-color:${col('--c-cash')}"></i>готівка й рахунки</span><span><i class="ln" style="border-top-style:dashed;border-color:${col('--c-other')}"></i>дохід наростаючим підсумком</span>`); }
+    // 3) нерухомість
+    { const rows = d.assets_by_year; const svg = base('#ch-realty'); const x = d3.scaleBand().domain(rows.map(r => r.year)).range([M.l, W - M.r]).padding(.25);
+      const y = d3.scaleLinear().domain([0, (d3.max(rows, r => r.realty_n) || 1) * 1.3]).range([H - M.b, M.t]); const y2 = d3.scaleLinear().domain([0, (d3.max(rows, r => r.realty_area) || 1) * 1.2]).range([H - M.b, M.t]);
+      svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - M.b})`).call(d3.axisBottom(x).tickSizeOuter(0)); svg.append('g').attr('class', 'axis').attr('transform', `translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5)); svg.append('g').attr('class', 'axis').attr('transform', `translate(${W - M.r},0)`).call(d3.axisRight(y2).ticks(5));
+      svg.selectAll('rect').data(rows).join('rect').attr('x', r => x(r.year)).attr('y', r => y(r.realty_n)).attr('height', r => (H - M.b) - y(r.realty_n)).attr('width', x.bandwidth()).attr('fill', col('--n-org')).append('title').text(r => `${r.year}: ${r.realty_n} обʼєктів, ${Math.round(r.realty_area)} м²; транспорт: ${r.vehicles.join('; ') || '—'}`);
+      svg.append('path').datum(rows).attr('fill', 'none').attr('stroke', col('--n-core')).attr('stroke-width', 2).attr('d', d3.line().x(r => x(r.year) + x.bandwidth() / 2).y(r => y2(r.realty_area)));
+      d3.select('#ch-realty').append('div').attr('class', 'legend').html(`<span><i class="sq" style="background:${col('--n-org')}"></i>обʼєктів нерухомості</span><span><i class="ln" style="border-color:${col('--n-core')}"></i>площа, м²</span>`); }
+  }
+
+  // ── Граф: безпосереднє коло, рівні — кліком (семантика «фокусу» з minions)
+  function initGraph() {
+    const css = getComputedStyle(document.documentElement), col = v => css.getPropertyValue(v).trim();
+    const ZONE = { party: { x: .82, y: .06, t: '★ Політичні партії' }, family: { x: .2, y: .22, t: 'Родина' }, named: { x: .2, y: .62, t: 'Співвласники та названі' }, namers: { x: .5, y: .1, t: 'Назвали в своїх деклараціях' }, money: { x: .5, y: .88, t: 'Гроші: платники доходу' },
+      company: { x: .82, y: .25, t: 'Компанії (ЄДР)' }, go: { x: .82, y: .58, t: 'Громадські формування' }, participant: { x: .82, y: .9, t: 'Учасники організацій' }, politics: { x: .18, y: .88, t: 'Депутати та помічники' }, center: { x: .5, y: .5, t: '' } };
+    const ZLABEL = { party: '★ Політичні партії', family: 'Родина', named: 'Співвласники та названі', namers: 'Назвали цю особу', money: 'Платники доходу', company: 'Компанії (ЄДР)', go: 'Громадські формування', participant: 'Учасники організацій', politics: 'Депутати та помічники', center: 'Фігурант' };
+    const FILTERS = [['party', '★ Політичні партії'], ['family', 'Родина'], ['named', 'Співвласники та названі'], ['money', 'Гроші (доходи, внески)'], ['role', 'Власність і посади (ЄДР)'], ['go', 'Громадські формування'], ['political', 'Помічники депутатів'], ['namers', 'Хто назвав цю особу'], ['contact', 'Спільні адреси/телефони']];
+    const nodes = [], links = [], byId = {}, meta = {}, level = {}, expanded = new Set(); window.__meta = meta;
+    let DEPTH = 2, selected = null, showAmb = true, showWrong = false, showLayer = true, autoNote = ''; const AUTO_CAP = 30;
+    // приховані вузли — налаштування переглядача (localStorage), не дані
+    const HKEY = 'links:hidden:' + UID; let hidden = new Set();
+    try { hidden = new Set(JSON.parse(localStorage.getItem(HKEY) || '[]')); } catch (e) { hidden = new Set(); }
+    const saveHidden = () => { try { localStorage.setItem(HKEY, JSON.stringify([...hidden])); } catch (e) {} };
+    // звʼязок із партією — окремий фільтр, незалежно від типу ребра (роль, внесок, контакт)
+    const fkind = e => { const a = e.source ? e.source.id : e.src, b = e.target ? e.target.id : e.dst; if ((meta[a] || {}).is_party || (meta[b] || {}).is_party) return 'party'; return fkind0(e); };
+    const fkind0 = e => e.kind === 'money' || e.kind === 'income_source' ? 'money' : e.kind === 'role' ? 'role' : e.kind === 'go_role' ? 'go' : e.kind === 'named_by' ? 'namers' : e.kind === 'family' ? 'family' : e.kind === 'contact' ? 'contact' : e.kind === 'political' ? 'political' : 'named';
+    const on = Object.fromEntries(FILTERS.map(([k]) => [k, true]));
+    const host = document.getElementById('canvas'), W = host.clientWidth || 900, H = host.clientHeight || 600;
+    const svg = d3.select(host).append('svg').attr('viewBox', [0, 0, W, H]).attr('role', 'img');
+    svg.append('defs').append('marker').attr('id', 'arr-money').attr('viewBox', '0 -4 8 8').attr('refX', 8).attr('refY', 0).attr('markerWidth', 7).attr('markerHeight', 7).attr('orient', 'auto').append('path').attr('d', 'M0,-4L8,0L0,4').attr('fill', col('--e-money'));
+    const g = svg.append('g'); const zoom = d3.zoom().scaleExtent([.2, 4]).on('zoom', e => g.attr('transform', e.transform)); svg.call(zoom).on('dblclick.zoom', null);
+    const zoneG = g.append('g'), linkG = g.append('g'), nodeG = g.append('g');
+    Object.entries(ZONE).forEach(([k, z]) => { if (z.t) zoneG.append('text').attr('class', 'zone').attr('x', z.x * W).attr('y', z.y * H - 110).attr('text-anchor', 'middle').text(z.t); });
+    const R = n => n.id === centerId ? 18 : n.level === 1 ? 9 : 6;
+    const fill = n => n.zone === 'center' || n.zone === 'family' ? col('--n-core') : (meta[n.id] || {}).is_party ? col('--n-party') : n.kind === 'company' ? col('--n-org') : n.kind === 'go' ? col('--n-go') : n.kind === 'org' ? col('--n-ext') : col('--n-person');
+    const ecol = l => l.layer ? col('--warn') : l.kind === 'money' || l.kind === 'income_source' ? col('--e-money') : l.kind === 'family' ? col('--e-family') : l.kind === 'contact' ? col('--e-contact') : col('--e-role');
+    const dash = l => isWrong(l) ? '1 5' : l.layer ? '2 3' : l.kind === 'manual' ? '4 3' : (l.status === 'name_match' || l.uncertain) ? '6 4' : l.status === 'ambiguous' ? '2 4' : null;
+    // підпис: ПІБ · статус із декларації самої особи · ×N тезок · «?» якщо ідентичність не встановлено
+    const nodeLabel = nd => { const m = meta[nd.id] || {}; return (m.is_party ? '★ ' : '') + short(nd.name) + (m.rel ? ' · ' + m.rel : '') + ((m.n_declarants || 0) > 1 ? ' ×' + m.n_declarants : '') + (m.uncertain ? ' ?' : ''); };
+    const isWrong = l => isWrongEdge(l.source.id, l.target.id);
+    const sim = d3.forceSimulation(nodes).force('link', d3.forceLink(links).id(x => x.id).distance(l => (l.source.level || 0) + (l.target.level || 0) > 1 ? 70 : 150).strength(.3))
+      .force('charge', d3.forceManyBody().strength(n => n.id === centerId ? -900 : n.level === 1 ? -380 : -160))
+      .force('x', d3.forceX(n => ZONE[n.zone].x * W).strength(n => n.level === 1 ? .14 : .06)).force('y', d3.forceY(n => ZONE[n.zone].y * H).strength(n => n.level === 1 ? .16 : .06))
+      .force('collide', d3.forceCollide().radius(n => R(n) + (n.level <= 1 ? 26 : 14)));
+    let linkSel = linkG.selectAll('line'), nodeSel = nodeG.selectAll('g.node'), fitted = false;
+    sim.on('end.fit', () => { if (!fitted) { fitted = true; fit(); } });
+    function fit() { const b = g.node().getBBox(); if (!b.width) return; const k = Math.min(W / (b.width + 80), H / (b.height + 60), 1.3); svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity.translate(W / 2 - k * (b.x + b.width / 2), H / 2 - k * (b.y + b.height / 2)).scale(k)); }
+    document.getElementById('fitbtn').onclick = fit;
+    const zoneFor = (n, e) => n.is_party ? 'party' : n.kind === 'company' ? 'company' : n.kind === 'go' ? 'go' : n.kind === 'org' ? 'money' : !e ? 'named' : e.kind === 'family' ? 'family' : e.kind === 'named_by' ? 'namers' : e.kind === 'political' ? 'politics' : (e.kind === 'role' || e.kind === 'go_role') ? 'participant' : 'named';
+    // злиття кола у граф: центр кола = вузол, який розгортали (інакше коло сина-тезки «прилипає» до фігуранта з тим самим ПІБ)
+    function merge(ego, anchorId) {
+      const lvl = (level[anchorId] ?? 0) + 1, A = byId[anchorId], rid = id => id === ego.center ? anchorId : id;
+      (ego.nodes || []).forEach(n0 => { const id = rid(n0.id), n = { ...n0, id };
+        if (byId[id]) { const fresh = id === anchorId ? Object.fromEntries(['address', 'phones', 'contacts_raw', 'prozorro'].filter(k => n[k] != null).map(k => [k, n[k]])) : {}; meta[id] = { ...n, ...meta[id], ...fresh, corrupt: meta[id].corrupt || n.corrupt }; return; }
+        const e = (ego.edges || []).find(x => rid(x.src) === id || rid(x.dst) === id);
+        const node = { id, kind: n.kind, name: n.label, level: lvl, zone: zoneFor(n, e), x: (A ? A.x : W / 2) + (Math.random() - .5) * 60, y: (A ? A.y : H / 2) + (Math.random() - .5) * 60 };
+        nodes.push(node); byId[id] = node; meta[id] = n; level[id] = lvl; });
+      (ego.edges || []).forEach(e0 => { const s = rid(e0.src), t = rid(e0.dst); if (s === t || !byId[s] || !byId[t]) return;
+        if (links.some(l => l.source.id === s && l.target.id === t && l.kind === e0.kind)) return;
+        links.push({ source: byId[s], target: byId[t], kind: e0.kind, label: e0.label, fee: !!e0.fee, status: e0.status || 'document', layer: e0.layer || null, layer_label: e0.layer_label || null, uncertain: !!e0.uncertain, uncertain_why: e0.uncertain_why, evidence: e0.evidence || [], years: e0.years || [], weight: e0.weight || 1 }); });
+      meta[anchorId].truncated = ego.truncated || {}; expanded.add(anchorId);
+    }
+    const egoItem = n => n.kind === 'company' ? { kind: 'company', edrpou: n.edrpou, go_ident: n.go_ident || null } : n.kind === 'go' ? { kind: 'go', ident: n.edrpou || n.reg_number }
+      : n.same_name_as_center ? { kind: 'person', name_key: n.name_key, uids: (n.uids || []).length ? n.uids : null, exclude_uids: n.exclude_uids || null, ambiguous: true }
+      : { kind: 'person', name_key: n.name_key, uids: n.pin_uids || null, ambiguous: !!n.uncertain };
+    const expandable = n => n && !expanded.has(n.id) && n.kind !== 'org' && !hidden.has(n.id);
+    const busy = t => { document.getElementById('busy')?.remove(); if (t) document.getElementById('panel').insertAdjacentHTML('afterbegin', `<p class="sub" id="busy">${t}</p>`); };
+    async function expand(id, { quiet = false } = {}) { const n = meta[id]; if (!n) return; if (!expandable(n)) { if (!quiet) select(id); return; }
+      if (!quiet) busy('завантажую коло…'); try { const [ego] = await post('/ego/batch', { items: [egoItem(n)] }); merge(ego, id); } catch (e) { if (!quiet) alert('не вдалося: ' + e.message); }
+      if (!quiet) { busy(false); render(); select(id); } }
+    async function autoExpand() { autoNote = '';
+      const PRI = { family: 0, named: 1, company: 2, go: 3, money: 4, namers: 5, politics: 6, participant: 7 };
+      for (let dd = 1; dd < Math.min(DEPTH, 8); dd++) { const { Nn } = visible(); let cands = Nn.filter(n => level[n.id] === dd && expandable(meta[n.id])).sort((a, b) => (PRI[a.zone] ?? 9) - (PRI[b.zone] ?? 9)); if (!cands.length) break;
+        // без лімітів (на прохання): розгортаємо всі вузли рівня пачками; масові хаби зрізає сервер (truncated)
+        busy(`розгортаю рівень ${dd + 1}: ${cands.length} вузлів…`);
+        for (let i = 0; i < cands.length; i += 20) { const chunk = cands.slice(i, i + 20); try { const egos = await post('/ego/batch', { items: chunk.map(n => egoItem(meta[n.id])) }); egos.forEach((ego, j) => { if (ego && ego.center) merge(ego, chunk[j].id); else expanded.add(chunk[j].id); }); } catch (e) { autoNote += `рівень ${dd + 1}: ${e.message}; `; break; } }
+        render(); }
+      busy(false); }
+    function collapse(id) { const drop = nodes.filter(n => n.id !== id && level[n.id] > level[id] && !expanded.has(n.id) && links.filter(l => l.source.id === n.id || l.target.id === n.id).every(l => { const o = l.source.id === n.id ? l.target.id : l.source.id; return o === id || !expanded.has(o); }));
+      const ids = new Set(drop.map(n => n.id)); for (let i = links.length - 1; i >= 0; i--) if (ids.has(links[i].source.id) || ids.has(links[i].target.id)) links.splice(i, 1);
+      for (let i = nodes.length - 1; i >= 0; i--) if (ids.has(nodes[i].id)) { delete byId[nodes[i].id]; delete meta[nodes[i].id]; delete level[nodes[i].id]; nodes.splice(i, 1); }
+      expanded.delete(id); render(); select(id); }
+    // видиме = розгорнуті вузли + їхні сусіди (як «фокус» у minions), без прихованих вузлів і позначених хибними ребер
+    function visible() {
+      const ok = l => !hidden.has(l.source.id) && !hidden.has(l.target.id) && (showWrong || !isWrong(l)) && (showLayer || !l.layer);
+      const seeds = new Set([...expanded].filter(id => !hidden.has(id))), vis = new Set(seeds);
+      links.forEach(l => { if (ok(l) && (seeds.has(l.source.id) || seeds.has(l.target.id))) { vis.add(l.source.id); vis.add(l.target.id); } });
+      // лише вузли, досяжні від фігуранта без прихованих вузлів і хибних звʼязків: приховування/позначка прибирає і «хвіст»
+      const adj = {}; links.forEach(l => { if (ok(l) && vis.has(l.source.id) && vis.has(l.target.id)) { (adj[l.source.id] = adj[l.source.id] || []).push(l.target.id); (adj[l.target.id] = adj[l.target.id] || []).push(l.source.id); } });
+      const reach = new Set([centerId]), stack = [centerId]; while (stack.length) { const x = stack.pop(); (adj[x] || []).forEach(y => { if (!reach.has(y)) { reach.add(y); stack.push(y); } }); }
+      const L = links.filter(l => ok(l) && on[fkind(l)] && (showAmb || (l.status !== 'ambiguous' && l.status !== 'name_match')) && reach.has(l.source.id) && reach.has(l.target.id));
+      const used = new Set([centerId]); L.forEach(l => { used.add(l.source.id); used.add(l.target.id); }); const Nn = nodes.filter(n => used.has(n.id));
+      document.getElementById('vcount').textContent = `${plural(Nn.length, 'вузол', 'вузли', 'вузлів')} · ${plural(L.length, 'звʼязок', 'звʼязки', 'звʼязків')} · розгорнуто ${expanded.size}${hidden.size ? ' · приховано ' + hidden.size : ''}`; return { L, Nn }; }
+    function render() { const { L, Nn } = visible();
+      linkSel = linkG.selectAll('line').data(L, x => x.source.id + '>' + x.target.id + x.kind).join('line').attr('stroke', x => isWrong(x) ? col('--bad') : ecol(x)).attr('stroke-width', x => x.kind === 'money' ? 1.8 : Math.min(3, .8 + .3 * x.weight)).attr('stroke-dasharray', dash).attr('marker-end', x => x.kind === 'money' ? 'url(#arr-money)' : null).attr('stroke-opacity', .8);
+      nodeSel = nodeG.selectAll('g.node').data(Nn, x => x.id).join(enter => { const ng = enter.append('g').attr('class', 'node').attr('tabindex', 0).style('cursor', 'pointer');
+        ng.each(function (nd) { const s = d3.select(this), r = R(nd);
+          s.append('circle').attr('class', 'ring').attr('r', r + 5).attr('fill', 'none').attr('stroke', col('--accent')).attr('stroke-width', 2.5).attr('display', 'none');
+          const unc = (meta[nd.id] || {}).uncertain;
+          const lay = ((meta[nd.id] || {}).layers || []).length;
+          if (nd.kind === 'person') s.append('circle').attr('r', r).attr('fill', fill(nd)).attr('fill-opacity', unc ? .45 : 1).attr('stroke', lay ? col('--warn') : unc ? fill(nd) : col('--surface')).attr('stroke-width', lay ? 3 : 2).attr('stroke-dasharray', unc ? '2 2' : null);
+          else if ((meta[nd.id] || {}).is_party) s.append('rect').attr('x', -(r + 2)).attr('y', -(r + 2)).attr('width', 2 * (r + 2)).attr('height', 2 * (r + 2)).attr('transform', 'rotate(45)').attr('fill', fill(nd)).attr('stroke', col('--fg')).attr('stroke-width', 1.5);
+          else s.append('rect').attr('x', -r).attr('y', -r).attr('width', 2 * r).attr('height', 2 * r).attr('rx', 3).attr('fill', fill(nd)).attr('stroke', lay ? col('--warn') : col('--surface')).attr('stroke-width', lay ? 3 : 2);
+          s.append('text').attr('class', 'lbl').attr('x', r + 4).attr('y', 4).style('font-weight', nd.level <= 1 ? 600 : 400).text(nodeLabel(nd));
+          if ((meta[nd.id].corrupt || []).length) s.append('circle').attr('class', 'cflag').attr('cx', r * .8).attr('cy', -r * .8).attr('r', 5.5).attr('fill', col('--bad')).attr('stroke', col('--surface')).attr('stroke-width', 1.5).style('cursor', 'pointer')
+            .on('click', e => { e.stopPropagation(); openCorrupt(nd.id); }).append('title').text('у Реєстрі корупціонерів — клік: справа');
+          if ((meta[nd.id].chesno || []).some(c => (c.flags || []).length)) s.append('text').attr('class', 'chflag').attr('x', r + 2).attr('y', r + 10).style('font-size', '10px').style('font-weight', 700).style('fill', col('--warn')).style('cursor', 'pointer').text('Ч')
+            .on('click', e => { e.stopPropagation(); openChesno(nd.id); }).append('title').text('ЧЕСНО: ' + (meta[nd.id].chesno || []).flatMap(c => c.flags || []).join(', '));
+          if ((meta[nd.id].fees || []).length) s.append('text').attr('class', 'feeflag').attr('x', -r - 13).attr('y', -r + 2).style('font-size', '13px').style('cursor', 'pointer').text('🧾')
+            .on('click', e => { e.stopPropagation(); openFee(nd.id); }).append('title').text('членський внесок — клік: дата і сума'); });
+        ng.on('click', (e, nd) => { if (expandable(meta[nd.id])) expand(nd.id); else if (expanded.has(nd.id) && selected === nd.id && nd.id !== centerId) collapse(nd.id); else select(nd.id); }).on('dblclick', e => e.stopPropagation()).on('keydown', (e, nd) => { if (e.key === 'Enter') expand(nd.id); });
+        ng.call(d3.drag().on('start', (e, nd) => { if (!e.active) sim.alphaTarget(.2).restart(); nd.fx = nd.x; nd.fy = nd.y; }).on('drag', (e, nd) => { nd.fx = e.x; nd.fy = e.y; }).on('end', (e, nd) => { if (!e.active) sim.alphaTarget(0); if (nd.id !== centerId) { nd.fx = null; nd.fy = null; } }));
+        ng.append('title').text(nd => nd.name + ((meta[nd.id] || {}).uncertain_why ? '\n' + meta[nd.id].uncertain_why : ''));
+        ng.on('mouseenter', function () { d3.select(this).select('text.lbl').attr('display', null); }).on('mouseleave', function (e, nd) { if (nd.level > 1 && selected !== nd.id && !expanded.has(nd.id)) d3.select(this).select('text.lbl').attr('display', 'none'); }); return ng; });
+      nodeSel.select('text.lbl').attr('display', nd => nd.level <= 1 || expanded.has(nd.id) || selected === nd.id || (meta[nd.id] || {}).is_party ? null : 'none');
+      sim.nodes(Nn); sim.force('link').links(L); sim.alpha(fitted ? .35 : .8).restart(); highlight(); renderPool(); renderTable(); }
+    sim.on('tick', () => { linkSel.attr('x1', x => x.source.x).attr('y1', x => x.source.y).attr('x2', x => { const dx = x.target.x - x.source.x, dy = x.target.y - x.source.y, l = Math.hypot(dx, dy) || 1; return x.target.x - dx / l * (R(x.target) + 2); }).attr('y2', x => { const dx = x.target.x - x.source.x, dy = x.target.y - x.source.y, l = Math.hypot(dx, dy) || 1; return x.target.y - dy / l * (R(x.target) + 2); }); nodeSel.attr('transform', x => `translate(${x.x},${x.y})`); });
+    // виділення: клікнуті (розгорнуті) вузли лишаються активними — з кільцем і повною яскравістю; виділений додає своїх сусідів
+    function highlight() {
+      const active = new Set([...expanded].filter(id => !hidden.has(id)));
+      nodeSel.select('circle.ring').attr('display', x => active.has(x.id) || x.id === selected ? null : 'none').attr('stroke-width', x => x.id === selected ? 3.5 : 2).attr('stroke-opacity', x => x.id === selected ? 1 : .55);
+      if (!selected) { nodeSel.attr('opacity', 1); linkSel.attr('opacity', 1); return; }
+      const nb = new Set([selected, ...active]); linkSel.each(l => { if (l.source.id === selected) nb.add(l.target.id); if (l.target.id === selected) nb.add(l.source.id); });
+      nodeSel.attr('opacity', x => nb.has(x.id) ? 1 : .2);
+      linkSel.attr('opacity', l => l.source.id === selected || l.target.id === selected ? 1 : (active.has(l.source.id) && active.has(l.target.id)) ? .7 : (active.has(l.source.id) || active.has(l.target.id)) ? .3 : .06);
+    }
+    function select(id) { selected = id; highlight(); const n = meta[id], nd = byId[id]; if (!n || !nd) return; const mine = links.filter(l => l.source.id === id || l.target.id === id);
+      const pills = [n.is_party ? '<span class="pill party">★ політична партія — обʼєкт особливого інтересу</span>' : '', n.rel ? `<span class="pill document">${esc(n.rel)} — за декларацією</span>` : '', n.uncertain ? '<span class="pill ambiguous">особу не встановлено ?</span>' : '', `<span class="pill">${ZLABEL[nd.zone] || nd.zone}</span>`, `<span class="pill">рівень ${level[id]}</span>`, n.kind === 'person' ? (n.n_declarants ? `<span class="pill">декларант ×${n.n_declarants}</span>` : '<span class="pill">не декларант</span>') : '', n.fop ? '<span class="pill">ФОП</span>' : '', n.terminated ? '<span class="pill">припинено</span>' : '', corruptPill(n)].join(' ');
+      const tr = n.truncated && Object.keys(n.truncated).length ? `<p class="warn">не показано: ${Object.entries(n.truncated).map(([k, v]) => `${k} +${v}`).join(', ')}</p>` : '';
+      document.getElementById('panel').innerHTML = `<h3>${esc(n.label)}</h3><div class="sub">${esc(n.sub || '')}${n.kind === 'company' ? ' · ЄДРПОУ ' + n.edrpou : ''}${n.kind === 'go' ? ' · ' + (n.edrpou ? 'ЄДРПОУ ' + n.edrpou : '№ ' + n.reg_number) : ''}${n.foreign_code ? ' · код ' + n.foreign_code : ''}</div><div>${pills}</div>
+        ${n.uncertain_why ? `<div class="caveat">${esc(n.uncertain_why)}</div>` : ''}
+        ${n.prozorro ? prozorroBlock(n) : ''}
+        ${(n.contacts_raw || []).length ? `<div class="sub">контакти: ${n.contacts_raw.map(esc).join(' · ')}</div>` : (n.kind === 'company' || n.kind === 'go' ? '<div class="sub">адреси й телефону цієї організації немає у відкритих джерелах (у дампі ЄДР адрес немає)</div>' : '')}
+        ${n.kind === 'company' || n.kind === 'go' ? `<details class="mc"><summary>додати адресу / телефон вручну</summary>
+          <input class="mc-in" data-mc="address" placeholder="65039, Одеса, вул. …, буд. …" value="">
+          <input class="mc-in" data-mc="phone" placeholder="телефон (необовʼязково)" value="">
+          <input class="mc-in" data-mc="note" placeholder="звідки відомо (витяг ЄДР, сайт…)" value="">
+          <button class="btn primary" data-mc-save="${esc(id)}">зберегти й знайти збіги</button>
+          <p class="sub">Зберігається в базі з позначкою «введено вручну»; пошук знайде ГО, партійні осередки й організації за тією ж адресою (будинок) чи телефоном.</p></details>` : ''}
+        <div>${expanded.has(id) ? (id !== centerId ? `<button class="btn" data-collapse="${esc(id)}">згорнути коло</button>` : '') : (n.kind === 'org' ? '' : `<button class="btn primary" data-expand="${esc(id)}">розгорнути коло</button>`)} <button class="btn" data-open="${esc(id)}">картка</button>${n.kind === 'person' && id !== centerId ? ` <button class="btn" data-research="${esc(n.name_key)}">дослідити</button>` : ''}${id !== centerId ? ` <button class="btn" data-hide="${esc(id)}" title="прибрати вузол з графа (лише для вас; відновлюється в пулі)">приховати</button>` : ''}</div>${tr}
+        <div class="sub">${plural(mine.length, 'звʼязок', 'звʼязки', 'звʼязків')}</div>` + mine.sort((a, b) => (isWrong(a) - isWrong(b)) || ((a.kind === 'money' ? 0 : 1) - (b.kind === 'money' ? 0 : 1))).map(l => { const o = l.source.id === id ? l.target : l.source; const dir = l.kind === 'money' ? (l.source.id === id ? '→ платить ' : '← отримує від ') : '';
+          return `<div class="conn${isWrong(l) ? ' wrong' : ''}"><div>${dir}<b data-sel="${esc(o.id)}">${esc(meta[o.id]?.label || o.name)}</b>${meta[o.id]?.uncertain ? ' <span class="pill ambiguous">?</span>' : ''}</div><div>${esc(l.label)} <span class="pill ${l.status}">${srcLabel(l)}</span>${l.layer ? ` <span class="pill" style="border-color:var(--warn);color:var(--warn)">шар: ${esc(l.layer_label || l.layer)}</span>` : ''}</div><div class="src">${srcHtml(l)}</div>${fbButtons(l.source.id, l.target.id, l.kind, l.status, l.label, meta[l.source.id]?.label, meta[l.target.id]?.label, l.evidence)}</div>`; }).join('') + `<button class="btn" id="clear">Показати весь граф</button>`;
+      document.getElementById('clear').onclick = () => { selected = null; highlight(); intro(); }; renderPool(); }
+    function intro() { const c = s => links.filter(l => l.status === s).length;
+      document.getElementById('panel').innerHTML = `<h3>${DEPTH >= 99 ? 'Усе розгорнуте' : DEPTH === 1 ? 'Безпосереднє коло' : 'Рівнів: ' + DEPTH}</h3><p>${plural(nodes.length, 'вузол', 'вузли', 'вузлів')}, ${plural(links.length, 'звʼязок', 'звʼязки', 'звʼязків')}, розгорнуто ${expanded.size}. За документами: ${c('document')}; за реєстрами (збіг ПІБ): ${c('registry')}; за збігом ПІБ з єдиним декларантом: ${c('name_match')}; тезки ×N: ${c('ambiguous')}.${wrongSet.size ? ` Позначено хибними: ${wrongSet.size}.` : ''}</p>${autoNote ? `<p class="warn">${esc(autoNote)}</p>` : ''}
+        <p class="sub">Клік по вузлу відкриває його коло поверх показаного; розгорнуті вузли лишаються підсвіченими (кільце). «Приховати» прибирає вузол лише з вашого перегляду; «✗ хибний» біля звʼязку — позначка в базі (для перевірки й навчання моделі зіставлення осіб). Вузли з «?» — особа, ідентичність якої не встановлено (тезки ×N).</p>`; }
+    function renderPool() { const q = (document.getElementById('q').value || '').toLowerCase(); const { Nn } = visible(); const groups = {}; Nn.forEach(n => (groups[n.zone] = groups[n.zone] || []).push(n));
+      document.getElementById('filters').innerHTML = FILTERS.map(([k, t]) => `<label><input type="checkbox" data-f="${k}" ${on[k] ? 'checked' : ''}> ${t}</label>`).join('') +
+        `<label><input type="checkbox" id="f-amb" ${showAmb ? 'checked' : ''}> Показувати збіги ПІБ і тезок (?)</label><label><input type="checkbox" id="f-wrong" ${showWrong ? 'checked' : ''}> Показувати позначені хибними${wrongSet.size ? ' · ' + wrongSet.size : ''}</label><label style="color:var(--warn)"><input type="checkbox" id="f-layer" ${showLayer ? 'checked' : ''}> Додатковий шар: «Експо-Грейн», «Інагро»${links.filter(l => l.layer).length ? ' · ' + links.filter(l => l.layer).length : ''}</label>`;
+      const item = n => `<a href="#" data-sel="${esc(n.id)}" class="${n.id === selected ? 'sel' : ''}${expanded.has(n.id) ? ' exp' : ''}">${esc(short(n.name))}${meta[n.id].rel ? ` <span class="sub">${esc(meta[n.id].rel)}</span>` : ''}${(meta[n.id].n_declarants || 0) > 1 ? ` <span class="pill">×${meta[n.id].n_declarants}</span>` : ''}${meta[n.id].uncertain ? ' <span class="pill ambiguous">?</span>' : ''}${corruptPill(meta[n.id])}${n.level > 1 ? ` <span class="pill">р.${n.level}</span>` : ''}${n.id !== centerId ? `<span class="hidex" data-hide="${esc(n.id)}" title="приховати вузол">×</span>` : ''}</a>`;
+      document.getElementById('poollist').innerHTML = (Object.keys(ZONE).filter(z => groups[z] && z !== 'center').map(z => { const items = groups[z].filter(n => !q || n.name.toLowerCase().includes(q)).sort((a, b) => a.level - b.level || a.name.localeCompare(b.name, 'uk'));
+        return items.length ? `<div class="pg"><b>${ZLABEL[z]} · ${items.length}</b>${items.map(item).join('')}</div>` : ''; }).join('') || '<p class="sub">нічого не знайдено</p>') +
+        (hidden.size ? `<div class="pg"><b>Приховано · ${hidden.size}</b>${[...hidden].map(id => `<a href="#" data-unhide="${esc(id)}" title="показати знову">↺ ${esc(short((meta[id] || {}).label || (byId[id] || {}).name || id.replace(/^[a-z]:/, '').split('|').join(' ')))}</a>`).join('')}<a href="#" data-unhide="*">↺ показати всі</a></div>` : ''); }
+    function renderTable() { document.getElementById('etbl').innerHTML = tbl(['Від', 'До', 'Тип', 'Що', 'Статус', 'Джерело'], links.filter(l => showWrong || !isWrong(l)).map(l => [esc(meta[l.source.id]?.label || ''), esc(meta[l.target.id]?.label || ''), KLABEL[l.kind] || l.kind, esc(l.label), (srcLabel(l)) + (isWrong(l) ? ' · <span class="bad">позначено хибним</span>' : ''), srcHtml(l)])); }
+    const gsec = root.querySelector('[data-panel="graph"]');
+    gsec.addEventListener('click', async e => {
+      const mc = e.target.closest('[data-mc-save]');
+      if (mc) { e.preventDefault(); e.stopPropagation(); const id = mc.dataset.mcSave, n = meta[id], box = mc.closest('.mc'); const v = k => (box.querySelector(`[data-mc="${k}"]`).value || '').trim();
+        const ident = n.edrpou || n.go_ident || n.reg_number; if (!ident || !(v('address') || v('phone'))) { alert('потрібна адреса або телефон'); return; }
+        try { await post('/manual-contact', { ident, label: n.label, address: v('address') || null, phone: v('phone') || null, note: v('note') || null, client_id: CID });
+          if (expanded.has(id)) { expanded.delete(id); } await expand(id); } catch (err) { alert('не вдалося зберегти: ' + err.message); } return; }
+      const t = e.target.closest('[data-hide],[data-unhide],[data-sel],[data-expand],[data-collapse]'); if (!t) return; e.preventDefault(); e.stopPropagation();
+      if (t.dataset.hide) { hidden.add(t.dataset.hide); saveHidden(); if (selected === t.dataset.hide) { selected = null; intro(); } render(); return; }
+      if (t.dataset.unhide) { if (t.dataset.unhide === '*') hidden.clear(); else hidden.delete(t.dataset.unhide); saveHidden(); render(); return; }
+      if (t.dataset.sel) { const id = t.dataset.sel, nd = byId[id]; if (nd) svg.transition().duration(300).call(zoom.translateTo, nd.x, nd.y); if (expandable(meta[id])) expand(id); else select(id); }
+      else if (t.dataset.expand) expand(t.dataset.expand); else collapse(t.dataset.collapse); });
+    gsec.addEventListener('change', async e => {
+      if (e.target.id === 'depth') { setDepth(+e.target.value); return; }
+      if (e.target.dataset.f) { on[e.target.dataset.f] = e.target.checked; render(); if (e.target.checked && DEPTH > 1) { await autoExpand(); if (!selected) intro(); } }
+      if (e.target.id === 'f-amb') { showAmb = e.target.checked; render(); }
+      if (e.target.id === 'f-wrong') { showWrong = e.target.checked; render(); }
+      if (e.target.id === 'f-layer') { showLayer = e.target.checked; render(); if (showLayer && DEPTH > 1) { await autoExpand(); if (!selected) intro(); } } });
+    document.getElementById('q').addEventListener('input', renderPool);
+    async function setDepth(dd) { DEPTH = dd;
+      [...expanded].filter(id => level[id] >= dd && id !== centerId).sort((a, b) => level[b] - level[a]).forEach(id => collapse(id)); render(); await autoExpand(); if (!selected) intro(); }
+    fbHooks.push(() => { render(); if (selected && byId[selected]) select(selected); else intro(); });
+    const cnode = { id: centerId, kind: 'person', name: p.display, level: 0, zone: 'center', x: W / 2, y: H / 2, fx: W / 2, fy: H / 2 }; nodes.push(cnode); byId[centerId] = cnode; level[centerId] = 0;
+    meta[centerId] = { id: centerId, kind: 'person', label: p.display, name_key: p.name_key, uids: [p.uid], n_declarants: 1, pin_uids: [p.uid] };
+    (async () => { if (ego0 && ego0.center) merge(ego0, centerId); else await expand(centerId, { quiet: true });
+      render(); intro(); await autoExpand(); intro();
+      window.__graphExpand = async () => { while ((window.__pendingExpand || []).length) { const id = window.__pendingExpand.shift(); const m = meta[id];
+          if (m && m.kind === 'person') { const zf = fkind({ kind: (links.find(l => l.source.id === id || l.target.id === id) || {}).kind }); if (!on[zf]) { on[zf] = true; render(); } await expand(id); const nd = byId[id]; if (nd) svg.transition().duration(400).call(zoom.translateTo, nd.x, nd.y); } } };
+      window.__graphExpand(); })();
+  }
+
+  const want = (location.hash || '').slice(1); if (want && TABS.some(t => t[0] === want)) showTab(want);
+})();
+
+// окремі звіти до досьє (будуються на ноутбуці й зберігаються в links.report)
+(async () => {
+  for (let i = 0; i < 240 && !document.getElementById('reports'); i++) await new Promise(r => setTimeout(r, 500));
+  const el = document.getElementById('reports'); if (!el || document.querySelector('.projnav')) return;  // є смуга проєкту — кнопки не дублюємо
+  try {
+    const rs = await fetch('/api/reports?uid=' + UID, { headers: hdr }).then(r => r.ok ? r.json() : []);
+    el.innerHTML = rs.map(r => `<a class="btn" href="/person/${UID}/report/${encodeURIComponent(r.kind)}">📄 ${esc(r.title)}</a>`).join('');
+  } catch (e) { /* звітів немає — нічого не показуємо */ }
+})();
+</script>
+</body>
+</html>

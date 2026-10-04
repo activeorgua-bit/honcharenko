@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Криворот О. В.</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Дизайн-система за артефактом «Мережа Гончаренка»; сторінка — вкладки: Огляд · Граф · Особи · Декларації · Організації · Звʼязність · Джерела */
+:root {
+  --bg: #f6f7f8; --surface: #fcfcfb; --fg: #15181c; --muted: #5a6068; --faint: #8a9099;
+  --rule: #dfe2e6; --grid: #eceef0; --accent: #1f4f8f; --warn: #9a6700; --bad: #b42318; --ok: #1baf7a;
+  --n-core: #eb6834; --n-person: #2a78d6; --n-org: #1baf7a; --n-ext: #8a9099; --n-go: #7c3aed; --n-party: #d99a00;
+  --e-money: #d03b3b; --e-role: #9aa1a9; --e-family: #eb6834; --e-contact: #0e7490;
+  --c-salary: #2a78d6; --c-gift: #eb6834; --c-sale: #1baf7a; --c-other: #8a9099; --c-family: #7c3aed; --c-cash: #d03b3b;
+  --f-display: "Unbounded", "Golos Text", system-ui, sans-serif; --f-body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif; --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121417; --surface: #1a1a19; --fg: #f1f2f3; --muted: #b3b8bf; --faint: #7f858d; --rule: #2c3036; --grid: #24272b; --accent: #86b6ef; --warn: #e3b341; --bad: #f08a7e; --ok: #199e70;
+  --n-core: #d95926; --n-person: #3987e5; --n-org: #199e70; --n-ext: #7f858d; --n-go: #9d6bff; --n-party: #f5b301; --e-money: #e66767; --e-role: #5b6168; --e-family: #d95926; --e-contact: #22b8d6;
+  --c-salary: #3987e5; --c-gift: #d95926; --c-sale: #199e70; --c-other: #7f858d; --c-family: #9d6bff; --c-cash: #e66767; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #121417; --surface: #1a1a19; --fg: #f1f2f3; --muted: #b3b8bf; --faint: #7f858d; --rule: #2c3036; --grid: #24272b; --accent: #86b6ef; --warn: #e3b341; --bad: #f08a7e; --ok: #199e70;
+  --n-core: #d95926; --n-person: #3987e5; --n-org: #199e70; --n-ext: #7f858d; --n-go: #9d6bff; --n-party: #f5b301; --e-money: #e66767; --e-role: #5b6168; --e-family: #d95926; --e-contact: #22b8d6;
+  --c-salary: #3987e5; --c-gift: #d95926; --c-sale: #199e70; --c-other: #7f858d; --c-family: #9d6bff; --c-cash: #e66767; color-scheme: dark; }
+* { box-sizing: border-box }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 14px; line-height: 1.5; }
+.wrap { max-width: 1480px; margin: 0 auto; padding: 28px 24px 64px; display: grid; gap: 22px; }
+@media (max-width: 760px) { .wrap { padding: 16px 12px 48px; gap: 16px; } }
+header.hd { display: grid; gap: 8px; padding: 22px 24px; background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(22px, 3.4vw, 30px); margin: 0; line-height: 1.2; }
+h2 { font-family: var(--f-display); font-weight: 500; font-size: 17px; margin: 0 0 10px; }
+h3 { font-size: 15px; margin: 0 0 6px; font-weight: 600; }
+p { margin: 0; } .lede { color: var(--muted); max-width: 90ch; } a { color: var(--accent); }
+.mut { color: var(--muted) } .warn { color: var(--warn) } .bad { color: var(--bad) } .ok { color: var(--ok) }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 8px; }
+.kpi { background: var(--bg); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 14px; }
+.kpi b { display: block; font-family: var(--f-display); font-size: 20px; font-weight: 500; } .kpi span { color: var(--muted); font-size: 12px; }
+.kpi.high b { color: var(--bad) } .kpi.medium b { color: var(--warn) } .kpi.low b { color: var(--ok) }
+.pill { font-family: var(--f-mono); font-size: 10.5px; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--rule); white-space: nowrap; display: inline-block; vertical-align: middle; line-height: 1.5; }
+.pill.document { border-color: var(--n-org) } .pill.registry { border-color: var(--n-person) } .pill.name_match { border-style: dashed } .pill.ambiguous { border-style: dotted; color: var(--warn) }
+.pill.high { border-color: var(--bad); color: var(--bad) } .pill.medium { border-color: var(--warn); color: var(--warn) } .pill.low { border-color: var(--rule) }
+.caveat { background: var(--surface); border-left: 3px solid var(--warn); padding: 8px 12px; font-size: 13px; border-radius: 0 6px 6px 0; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px 20px; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; } @media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 12.5px; } th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; overflow-wrap: break-word; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; position: sticky; top: 0; background: var(--surface); white-space: nowrap; } tr:last-child td { border-bottom: 0 } .num { text-align: right; white-space: nowrap; font-family: var(--f-mono); font-size: 12px }
+tr.rowlink { cursor: pointer } tr.rowlink:hover td { background: var(--grid) }
+details summary { cursor: pointer; color: var(--accent); } details { margin: 6px 0 }
+/* вкладки */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--rule); padding-bottom: 8px; }
+.tab { font: inherit; font-weight: 600; padding: 8px 14px; border: 1px solid transparent; border-radius: 999px; background: transparent; color: var(--muted); cursor: pointer; }
+.tab:hover { color: var(--fg) } .tab.on { background: var(--fg); color: var(--bg); border-color: var(--fg); } .tab small { font-weight: 400; margin-left: 4px; opacity: .7 }
+.panel-tab { display: none; gap: 16px; } .panel-tab.on { display: grid; }
+/* граф */
+.viewbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.vbtn { font: inherit; font-weight: 600; padding: 7px 14px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface); color: var(--fg); cursor: pointer; }
+.vbtn.on { background: var(--fg); color: var(--bg); border-color: var(--fg); } .vcount { font-size: 12.5px; color: var(--muted); }
+.btn { font: inherit; font-size: 12.5px; padding: 5px 12px; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--fg); cursor: pointer; }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); } .btn + .btn { margin-left: 6px }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--muted); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; } .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; } .sq { width: 10px; height: 10px; border-radius: 2px; display: inline-block; } .ln { width: 22px; height: 0; border-top: 2px solid var(--e-role); display: inline-block; }
+.main { display: grid; grid-template-columns: 270px minmax(0, 1fr) 350px; gap: 14px; } @media (max-width: 1100px) { .main { grid-template-columns: 1fr; } }
+.canvas { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; position: relative; height: min(76vh, 760px); min-height: 460px; overflow: hidden; }
+.canvas svg { width: 100%; height: 100%; display: block; cursor: grab; } .canvas .fit { position: absolute; right: 10px; top: 10px; }
+.panel, .pool { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; max-height: min(76vh, 760px); overflow: auto; min-width: 0; }
+.panel h3 { margin: 0; font-size: 16px; } .sub { color: var(--muted); font-size: 12px; font-family: var(--f-mono); }
+.conn { display: grid; gap: 2px; padding: 9px 0; border-top: 1px solid var(--grid); font-size: 13px; } .conn b { font-weight: 600; cursor: pointer; } .conn b:hover { color: var(--accent); } .conn .src { color: var(--faint); font-size: 11.5px; } .conn .src a { color: var(--faint); }
+.pool input[type=search], .filterbar input[type=search] { font: inherit; width: 100%; padding: 7px 10px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--fg); }
+.pool label { display: flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--muted); cursor: pointer; }
+.pg b { display: block; font-size: 11px; font-family: var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--faint); margin: 10px 0 3px; }
+.pg a { display: block; padding: 3px 6px; border-radius: 4px; color: var(--fg); text-decoration: none; font-size: 13px; } .pg a:hover, .pg a.sel { background: var(--grid); } .pg a.exp::after { content: " ▾"; color: var(--faint); }
+.node text { font-family: var(--f-body); font-size: 11px; fill: var(--fg); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
+.zone { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; fill: var(--faint); } .hint { font-size: 12px; color: var(--faint); }
+/* ризики, графіки, модалка */
+.risk { border-left: 3px solid var(--rule); padding: 10px 14px; background: var(--surface); border-radius: 0 8px 8px 0; display: grid; gap: 4px; } .risk.high { border-color: var(--bad) } .risk.medium { border-color: var(--warn) } .risk.low { border-color: var(--n-person) }
+.risk b { font-weight: 600 } .risk .src { font-size: 12px; color: var(--faint) }
+.chart { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px 6px; } .chart h3 { margin-bottom: 2px } .chart .sub { margin-bottom: 6px }
+.chart svg { width: 100%; height: auto; display: block; font-family: var(--f-mono); font-size: 10px; } .chart .axis line, .chart .axis path { stroke: var(--rule) } .chart .axis text { fill: var(--muted) } .chart .gridl line { stroke: var(--grid) }
+.bars { display: grid; gap: 4px; } .bar { display: grid; grid-template-columns: minmax(140px, 1fr) 3fr auto; gap: 8px; align-items: center; font-size: 12.5px; } .bar i { display: block; height: 10px; border-radius: 3px; background: var(--n-person); } .bar .num { color: var(--muted) }
+.filterbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; } .filterbar select { font: inherit; padding: 6px 10px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--fg); }
+dialog { border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); color: var(--fg); padding: 0; max-width: min(760px, 94vw); width: 100%; } dialog::backdrop { background: rgba(0,0,0,.45) }
+.modal-h { display: flex; justify-content: space-between; gap: 12px; align-items: start; padding: 18px 22px 10px; } .modal-b { padding: 0 22px 22px; display: grid; gap: 12px; max-height: 72vh; overflow: auto; }
+.modal-h h3 { font-family: var(--f-display); font-weight: 500; font-size: 18px; } .x { font: inherit; border: 0; background: transparent; color: var(--muted); font-size: 22px; cursor: pointer; line-height: 1 }
+.src-pill { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted) }
+.mc summary { font-size: 12.5px } .mc { display: grid; gap: 6px } .mc-in { font: inherit; font-size: 13px; width: 100%; padding: 6px 9px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--fg); margin-top: 4px }
+.pill.party { border-color: var(--n-party); color: var(--n-party); font-weight: 600 } .diamond { width: 10px; height: 10px; display: inline-block; transform: rotate(45deg); background: var(--n-party) }
+.sel { font: inherit; font-weight: 600; padding: 6px 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); color: var(--fg); }
+.btn.mini { padding: 1px 8px; font-size: 11.5px; margin-top: 4px } .btn.mini.wrongb:hover { border-color: var(--bad); color: var(--bad) } .btn.mini.okb:hover { border-color: var(--ok); color: var(--ok) }
+.fb { display: flex; gap: 6px; align-items: center; flex-wrap: wrap } .fbmark { font-family: var(--f-mono); font-size: 11px } .fbmark.wrong { color: var(--bad) } .fbmark.correct { color: var(--ok) }
+.conn.wrong { opacity: .55 } .conn.wrong b { text-decoration: line-through }
+.pg a { position: relative; padding-right: 22px } .hidex { position: absolute; right: 4px; top: 2px; color: var(--faint); font-size: 14px; line-height: 1; display: none; padding: 0 3px; border-radius: 3px } .pg a:hover .hidex { display: inline } .hidex:hover { color: var(--bad); background: var(--bg) }
+.flag { font-family: var(--f-mono); font-size: 10.5px; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--bad); color: var(--bad); cursor: pointer; display: inline-block; margin-left: 4px; background: transparent; vertical-align: middle; } .flag:hover { background: var(--bad); color: #fff }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; display: grid; gap: 16px; }
+.verdict { font-size: 15px; line-height: 1.55; border-left: 4px solid var(--warn); padding: 10px 14px; background: var(--surface); }
+table.rep { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.rep th { text-align: left; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--rule); padding: 7px 6px; }
+table.rep td { border-bottom: 1px solid var(--grid); padding: 7px 6px; vertical-align: top; }
+ul.ev { margin: 6px 0 0; padding-left: 18px; } ul.ev li { margin: 3px 0; }
+.mono { font-family: var(--f-mono); font-size: 12px; } .tablewrap { overflow-x: auto; }
+.lvl { font-family: var(--f-mono); font-size: 11px; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--rule); white-space: nowrap; }
+.hit { color: var(--bad); font-weight: 600 }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<style>
+.projnav { display: grid; gap: 6px; margin: 0 0 14px; }
+.projnav .pt { font-family: var(--f-mono); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.projnav .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.projnav .who { font-weight: 600; margin-right: 2px; }
+.projnav a.tab { text-decoration: none; font-size: 13px; padding: 6px 12px; border-color: var(--rule); }
+.projnav .sep { width: 1px; height: 22px; background: var(--rule); margin: 0 6px; }
+</style>
+<nav class="projnav" aria-label="вкладки проєкту">
+  <div class="pt">проєкт «Гончаренко»</div>
+  <div class="row">
+    <span class="who">Гончаренко О. О.</span>
+    <a class="tab" href="11651.html">досьє</a>
+    <a class="tab" href="11651-core.html" title="Головне: родина, найближчі помічники та їхні структури">★ Головне</a><a class="tab" href="11651-fees_vymova.html" title="Членські внески ГО «ВИ.МОВА» за 2023 рік">Внески ВИ.МОВА</a><a class="tab" href="11651-criminal_cases.html" title="Кримінальні справи в оточенні Гончаренка">Кримінальні справи</a><a class="tab" href="11651-es_odesa_pr.html" title="Одеський осередок «Європейської Солідарності» і Партія регіонів">ЄС Одеса і Партія регіонів</a><a class="tab on" href="11651-kryvorot.html" title="Криворот Олексій Васильович — досьє">Криворот О. В.</a>
+  <span class="sep"></span>
+    <span class="who">Паращенко С. В.</span>
+    <a class="tab" href="311873.html">досьє</a>
+    <a class="tab" href="311873-sbu_case.html" title="Паращенко С. В.: справа СБУ про фінансування армії РФ і звʼязки з Гончаренком">Справа СБУ</a>
+  <span class="sep"></span>
+    <span class="who">Дерев&#39;янко М. М.</span>
+    <a class="tab" href="689884.html">досьє</a>
+    <a class="tab" href="689884-lesya.html" title="Дерев&#39;янко Леся Володимирівна — вкладене досьє">Леся Дерев&#39;янко</a>
+  <span class="sep"></span>
+    <span class="who">Обухов П. Г.</span>
+    <a class="tab" href="1522224.html">досьє</a>
+    
+  </div>
+</nav>
+  
+  <header class="hd">
+    <div class="eyebrow"><a href="11651.html">← досьє 11651</a> · окреме досьє · зібрано 2026-10-04 17:16 UTC</div>
+    <h1>Криворот Олексій Васильович — досьє</h1>
+    <div class="kpis">
+      <div class="kpi"><b>32</b><span>компаній у файлах Clarity/Opendatabot (Clarity за ПІБ — 86)</span></div>
+      <div class="kpi high"><b>1</b><span>з них у графі Гончаренка (глибина 3: 1014 орг., 3648 осіб)</span></div>
+      <div class="kpi"><b>0</b><span>співвласників/керівників у графі</span></div>
+      <div class="kpi high"><b>1</b><span>вирок (реєстр корупціонерів, ч. 1 ст. 369 КК)</span></div>
+      <div class="kpi"><b>0 · 1</b><span>власних декларацій · згадка в чужій</span></div>
+    </div>
+  </header>
+
+  <section class="card">
+    <h2>Чи був засновником «Інагро»?</h2>
+    <p class="verdict">Ні. У документах Clarity та Opendatabot Криворот — колишній керівник (історичні дані) ТОВ «Інагро-Транс» (39096672) і харківського ТОВ «Ін-Агротранс» (32623061), але не засновник. Засновник «Інагро-Транс» — ТОВ «Камелот Транс» (41143152, Антоненко Г. О.), керівник — Позняк Л. М., яка також керує «Агро-Перевезенням» і «Форт-Агротрансом», де Криворот теж був засновником/керівником. З ДП «Інагро» (31125886, звʼязок Фефелової й «Експо-Грейну») Криворота не повʼязано.</p>
+    <div style="margin-top:8px"><b><a href="https://opendatabot.ua/c/39096672" target="_blank" rel="noopener">39096672</a> ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;ІНАГРО-ТРАНС&#34;</b> <span class="mut">· зареєстровано · з 2014-02-13</span>
+      <ul class="ev mono"><li>founder: ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;КАМЕЛОТ ТРАНС&#34;; 41143152; резиденство: Україна; розмір частки - 16000</li><li>head: ПОЗНЯК ЛЮДМИЛА МИХАЙЛІВНА; 15.02.2017; (згідно статуту) - керівник</li></ul></div><div style="margin-top:8px"><b><a href="https://opendatabot.ua/c/32623061" target="_blank" rel="noopener">32623061</a> ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;ІН-АГРОТРАНС&#34;</b> <span class="mut">· зареєстровано · з 2003-10-20</span>
+      <ul class="ev mono"><li>founder: ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;ТОРГІВЕЛЬНА ПРОМИСЛОВА КОМПАНІЯ УКРАЇНИ&#34;; 40655171; резиденство: Укра</li><li>head: УРСОЛ АЛЬОНА ЛЕОНТІЇВНА; (відповідно до статуту) - керівник</li></ul></div><div style="margin-top:8px"><b><a href="https://opendatabot.ua/c/41143152" target="_blank" rel="noopener">41143152</a> ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;КАМЕЛОТ ТРАНС&#34;</b> <span class="mut">· в стані припинення · з 2017-02-09</span>
+      <ul class="ev mono"><li>founder: АНТОНЕНКО ГЕННАДІЙ ОЛЕКСАНДРОВИЧ; громадянство: Україна; розмір частки - 100,00 грн.</li><li>founder: ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;КАМЕЛОТ ТРАНС&#34;; 41143152; резиденство: Україна; розмір частки - 900,0</li><li>head: АНТОНЕНКО ГЕННАДІЙ ОЛЕКСАНДРОВИЧ; (згідно статуту) - керівник</li></ul></div><div style="margin-top:8px"><b><a href="https://opendatabot.ua/c/31125886" target="_blank" rel="noopener">31125886</a> ДОЧІРНЄ ПІДПРИЄМСТВО АКЦІОНЕРНОГО ТОВАРИСТВА ЗАКРИТОГО ТИПУ &#34;ІНЗЕРНОПРОДУКТ&#34; &#34;ІНАГРО&#34;</b> <span class="mut">· припинено · з 2001-02-12</span>
+      <ul class="ev mono"><li>founder: АКЦІОНЕРНЕ ТОВАРИСТВО ЗАКРИТОГО ТИПУ&#34;ІНЗЕРНОПРОДУКТ&#34;; 25041843; розмір частки - 4000,00 грн.</li><li>head: ВОЛКОДАВ АНДРІЙ ВОЛОДИМИРОВИЧ - керівник</li><li>signer: ВОЛКОДАВ АНДРІЙ ВОЛОДИМИРОВИЧ; - представник</li></ul></div>
+  </section>
+
+  <section class="card">
+    <h2>Хто він</h2>
+    <ul class="ev"><li>Clarity за ПІБ: 86 організацій (керівник — 20, засновник — 28, підписант — 25, бенефіціар — 3), 14 записів у реєстрах боржників/банкрутств, 19 виконавчих проваджень, ФОП (Одеса, вантажні перевезення, припинений). Clarity попереджає: записи за збігом ПІБ можуть стосуватися різних людей.</li><li>Профіль — вантажні автоперевезення й оптова торгівля агропродукцією (Одеса, Черкащина, Київщина, Кіровоградщина, Харків). Багато фірм, що згодом банкрутували, і короткі строки керівництва — типова картина номінального директора, але це оцінка, не встановлений факт.</li><li>У картці ТОВ «ТД „Лана-Агротранс“» (Clarity) місце реєстрації засновника — м. Біла Церква Київської обл.</li><li>Реєстр корупціонерів НАЗК: вирок Переяславського міськрайонного суду Київської обл. від 12.06.2025 (справа 373/611/25) — ч. 1 ст. 369 КК: 13.02.2025 поклав 1 217 грн у службове авто поліцейських, щоб уникнути адмінвідповідальності; штраф 17 000 грн, вирок набрав сили 15.07.2025, штраф розстрочено. У вироку — уродженець м. Черкаси, офіційно не працевлаштований; пробація — Черкаська обл. Ототожнення з директором фірм — за ПІБ і регіоном (черкаські фірми), ймовірне.</li></ul>
+    <p class="mut" style="margin-top:8px">Судові документи: <a href="https://reyestr.court.gov.ua/Review/128062562" target="_blank" rel="noopener">вирок 12.06.2025 (373/611/25)</a> · <a href="https://reyestr.court.gov.ua/Review/129815633" target="_blank" rel="noopener">розстрочка штрафу 28.08.2025</a> · <a href="https://court.opendatabot.ua/cause/373%2F611%2F25" target="_blank" rel="noopener">справа 373/611/25 в Opendatabot</a> · <a href="https://reyestr.court.gov.ua/Review/28297172" target="_blank" rel="noopener">госпсправа 18/2632/12: ПП «Кобернюк І Н» (директор Криворот) — заява про банкрутство ТОВ «Камелот», 2012</a></p>
+  </section>
+
+  <section class="card">
+    <h2>Декларації</h2>
+    <ul class="ev">
+      <li>Сам Криворот декларацій НАЗК не подавав (пошук НАЗК за ПІБ — 0 документів).</li>
+      <li><b><a href="https://public.nazk.gov.ua/documents/fe803ad8-04d3-472f-8093-3f05169e2ec7" target="_blank" rel="noopener">Декларація fe803ad8</a></b> — Нечитайло Олена Миколаївна — головний спеціаліст УДКСУ у Снігурівському р-ні Миколаївської обл., щорічна декларація за 2020: її чоловік Нечитайло Володимир Миколайович отримав 2 457 грн зарплати від «ФОП Криворот Олексій Васильович» і 911 грн від «ФОП Криворт [так у декларації] Інна Олександрівна». <span class="mut">ФОП із декларації — збіг ПІБ; за даними декларації ФОП може бути іншою, старшою людиною (тезкою). Ототожнення не встановлено.</span></li>
+      <li>У дзеркалі декларацій (3,56 млн названих осіб) «Криворот Олексій Васильович» ніким не названий. Є «Криворот Олександр Васильович» — співвласник майна в декларанта uid 738482 (2022–2025); спорідненість (однакове по батькові) не встановлена.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Компанії</h2>
+    <p class="mut">Ролі — з Clarity (позначка «історичні» — роль у минулому); поточні ролі — з ЄДР. Записи зібрано за збігом ПІБ.</p>
+    <div class="tablewrap"><table class="rep"><thead><tr><th>Компанія</th><th>Місто</th><th>Роль (Clarity)</th><th>Зараз за ЄДР</th><th>Стан</th><th>Граф</th></tr></thead>
+      <tbody><tr><td><a href="https://opendatabot.ua/c/14130077" target="_blank" rel="noopener">14130077</a> СІЛЬСЬКОГОСПОДАРСЬКЕ ТОВАРИСТВО З ОБМЕЖЕНЮ ВІДПОВІДАЛЬНІСТЮ &#34;ГУДВІЛ&#34;</td>
+        <td>місто ГОЛА ПРИСТАНЬ ( ПН )</td><td>роль не вказана <span class="mut">(історичні)</span></td>
+        <td class="mono">founder, head, signer</td><td>Припинено</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/26419251" target="_blank" rel="noopener">26419251</a> ТОВ &#34;КИМСТРОЙ&#34;</td>
+        <td>смт ЗАТОКА</td><td>Засновник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/30709555" target="_blank" rel="noopener">30709555</a> ДОЧІРНЄ ПІДПРИЄМСТВО &#34;ПІВДЕНСПЕЦБУД&#34;</td>
+        <td>місто ІЛЛІЧІВСЬК ( П )</td><td>Засновник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/31110508" target="_blank" rel="noopener">31110508</a> ТОВ &#34;АГРОМЕЛ&#34;</td>
+        <td>місто ОДЕСА</td><td>роль не вказана <span class="mut">(історичні)</span></td>
+        <td class="mono">head, signer</td><td>Припинено</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/32288307" target="_blank" rel="noopener">32288307</a> ТОВ &#34;УКРФРУКТОПОСТАЧ&#34;</td>
+        <td>місто ОДЕСА</td><td>Засновник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/32623061" target="_blank" rel="noopener">32623061</a> ТОВ &#34;ІН-АГРОТРАНС&#34;</td>
+        <td>місто ХАРКІВ</td><td>Керівник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/32834810" target="_blank" rel="noopener">32834810</a> ТОВ &#34;АГРОПАРТНЕР&#34;</td>
+        <td>місто ОДЕСА</td><td>роль не вказана <span class="mut">(історичні)</span></td>
+        <td class="mono">founder, head, signer</td><td>Припинено</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/32971016" target="_blank" rel="noopener">32971016</a> ТОВ &#34;ФОРТ КОНСАЛТ&#34;</td>
+        <td>місто ОДЕСА</td><td>Засновник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>В стані припинення</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/32972198" target="_blank" rel="noopener">32972198</a> ТОВ &#34;ЛОГІСТ-ТРАНС2018&#34;</td>
+        <td>місто ОДЕСА</td><td>Керівник</td>
+        <td class="mono">founder, head</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/33647848" target="_blank" rel="noopener">33647848</a> ТОВ &#34;ПІВДЕНЬСПЕЦБУД-Б&#34;</td>
+        <td>місто ІЛЛІЧІВСЬК ( П )</td><td>Засновник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/33720241" target="_blank" rel="noopener">33720241</a> ТОВ &#34;ФОНДОВА КОМПАНІЯ &#34;АЛЬЯНС&#34;</td>
+        <td>місто БЛАГОВІЩЕНСЬКЕ</td><td>Засновник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/34515066" target="_blank" rel="noopener">34515066</a> ПРИВАТНЕ ПІДПРИЄМСТВО &#34;КОБЕРНЮК І Н&#34;</td>
+        <td>місто НОВОУКРАЇНКА</td><td>Засновник</td>
+        <td class="mono">founder</td><td>Припинено</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/34673968" target="_blank" rel="noopener">34673968</a> ТОВ &#34;АКВА-ГРУПП&#34;</td>
+        <td>місто БОРИСПІЛЬ</td><td>Засновник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Припинено</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/34800584" target="_blank" rel="noopener">34800584</a> ТОВ &#34;АЛЬЯНС ХІМПРОД&#34;</td>
+        <td>місто КИЇВ</td><td>Керівник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/34867586" target="_blank" rel="noopener">34867586</a> ТОВ &#34;КОМЮНІТІ ФУДЗ ІМПОРТ&#34;</td>
+        <td>місто КИЇВ</td><td>Керівник <span class="mut">(історичні)</span></td>
+        <td class="mono">founder, head</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/35357356" target="_blank" rel="noopener">35357356</a> ТОВ &#34;БЛАСКО БРИЗ ЛАЙН&#34;</td>
+        <td>місто ОДЕСА</td><td>роль не вказана <span class="mut">(історичні)</span></td>
+        <td class="mono">head, signer</td><td>Припинено</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/37114120" target="_blank" rel="noopener">37114120</a> ТОВ &#34;СПЕКТР СПАКС&#34;</td>
+        <td>місто ДНІПРО</td><td>Засновник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/37420150" target="_blank" rel="noopener">37420150</a> ТОВ &#34;АГРОТЕК АВ&#34;</td>
+        <td>місто ПОЛТАВА</td><td>Підписант <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Припинено</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/38095256" target="_blank" rel="noopener">38095256</a> ТОВ &#34;ТОРГОВИЙ ДІМ &#34;ЛАНА&#34;</td>
+        <td>місто КІРОВОГРАД ( П )</td><td>Підписант <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/38858355" target="_blank" rel="noopener">38858355</a> ТОВ &#34;ТОРГОВИЙ ДІМ &#34;ЛАНА-АГРОТРАНС&#34;</td>
+        <td>місто ОДЕСА</td><td>роль не вказана <span class="mut">(історичні)</span></td>
+        <td class="mono">founder, head, signer</td><td>Припинено</td><td><span class="hit">так</span></td></tr><tr><td><a href="https://opendatabot.ua/c/38975765" target="_blank" rel="noopener">38975765</a> ТОВ &#34;МОНОЛИТФОРТ&#34;</td>
+        <td>місто ОДЕСА</td><td>Керівник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/39096672" target="_blank" rel="noopener">39096672</a> ТОВ &#34;ІНАГРО-ТРАНС&#34;</td>
+        <td>місто ОДЕСА</td><td>Керівник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/39773299" target="_blank" rel="noopener">39773299</a> ТОВ &#34;ФОРТ-АГРОТРАНС&#34;</td>
+        <td>місто ОДЕСА</td><td>Керівник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/40370091" target="_blank" rel="noopener">40370091</a> ТОВ &#34;ПРОФІТ ВАН&#34;</td>
+        <td>місто КИЇВ</td><td>Засновник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/40448239" target="_blank" rel="noopener">40448239</a> ТОВ &#34;ВЕСТПОІНТ ГРУП&#34;</td>
+        <td>місто ОДЕСА</td><td>Керівник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/40530862" target="_blank" rel="noopener">40530862</a> ТОВ &#34;АГРО-ПЕРЕВЕЗЕННЯ&#34;</td>
+        <td>місто ОДЕСА</td><td>Засновник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/40547640" target="_blank" rel="noopener">40547640</a> ТОВ &#34;СЕЛЄНА ЛТД&#34;</td>
+        <td>місто ІРПІНЬ</td><td>Керівник <span class="mut">(історичні)</span></td>
+        <td class="mono">founder, head</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/40655171" target="_blank" rel="noopener">40655171</a> ТОВ &#34;ТОРГІВЕЛЬНА ПРОМИСЛОВА КОМПАНІЯ УКРАЇНИ&#34;</td>
+        <td>місто ХАРКІВ</td><td>Керівник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/40667061" target="_blank" rel="noopener">40667061</a> ТОВ &#34;ФЕНРІС ЛТД&#34;</td>
+        <td>місто КІРОВОГРАД ( П )</td><td>роль не вказана <span class="mut">(історичні)</span></td>
+        <td class="mono">founder, head, signer</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/41183625" target="_blank" rel="noopener">41183625</a> ТОВ &#34;АГРО - ПАРТНЕР&#34;</td>
+        <td>місто КИЇВ</td><td>Керівник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/41558166" target="_blank" rel="noopener">41558166</a> ТОВ &#34;ХІМІМПОРТ АГ&#34;</td>
+        <td>місто КИЇВ</td><td>Керівник <span class="mut">(історичні)</span></td>
+        <td class="mono">—</td><td>Зареєстровано</td><td><span class="mut">—</span></td></tr><tr><td><a href="https://opendatabot.ua/c/00371794" target="_blank" rel="noopener">00371794</a> ВІДКРИТЕ АКЦІОНЕРНЕ ТОВАРИСТВО &#34;СОКОЛІВСЬКИЙ ЦУКРОВИЙ ЗАВОД&#34;</td>
+        <td>село СОКОЛІВКА</td><td>роль не вказана <span class="mut">(історичні)</span></td>
+        <td class="mono">head, signer</td><td>Припинено</td><td><span class="mut">—</span></td></tr></tbody></table></div>
+  </section>
+
+  <section class="card">
+    <h2>ТОВ «Монолитфорт» (38975765)</h2>
+    <ul class="ev"><li>Засн. 13.11.2013; статутний капітал 60 000 грн; фарби, лаки, хімічна продукція. Власник 100% — ТОВ «Альфа»; кінцевий бенефіціар — Лесейонок Валерій Юрійович; директор — Ляшков Олег Вікторович (з 27.05.2019).</li><li>Криворот — директор і бенефіціар лише з 14.09.2018 до 21.11.2018 (≈2 місяці): прийшов на заміну Кошовому Р. В. і Тараненко Н. О., фірма тоді ж «переїхала» з Києва (Брест-Литовське шосе, 8-А) до Одеси (Прохорівська, 51 → Героїв Крут, 15); після нього — Жаріков В. І., з травня 2019 — Ляшков О. В.; у 2023 адресу знову змінено на київську й назад на Героїв Крут, 15.</li><li>Адреса масової реєстрації (разом з 69 компаніями); свідоцтво ПДВ анульоване; 1 виконавче провадження (стягувач — ТОВ «Нова пошта», 2022).</li><li>Prozorro: 15 тендерів; продажі 2024 — 8,53 млн грн: РФ «Львівська залізниця» (5,26 млн), ВП «Аварійно-технічний центр» НАЕК «Енергоатом» (1,73 млн), КП «Київський метрополітен» (0,92 млн), «Львівська залізниця» (0,62 млн), ПАТ «Турбоатом» (2021, 87 тис.).</li><li>Суди: адмінсправи 640/19150/19 і 826/16302/15 (ОАСК), госпсправа 910/13452/17 (Госпсуд Києва).</li></ul>
+    <p class="mut" style="margin-top:6px">Джерело: <a href="https://opendatabot.ua/c/38975765" target="_blank" rel="noopener">Opendatabot, сторінка 38975765 (збережена користувачкою 04.10.2026)</a></p>
+    <div style="margin-top:8px"><b><a href="https://opendatabot.ua/c/38975765" target="_blank" rel="noopener">38975765</a> ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;МОНОЛИТФОРТ&#34;</b> <span class="mut">· зареєстровано · з 2013-11-13</span>
+      <ul class="ev mono"><li>founder: ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;АЛЬФА&#34;; 30588036; резиденство: Україна; розмір частки - 60000,00 грн.</li><li>head: ЛЯШКОВ ОЛЕГ ВІКТОРОВИЧ; (відповідно до статуту) - керівник</li></ul></div><div style="margin-top:8px"><b><a href="https://opendatabot.ua/c/30588036" target="_blank" rel="noopener">30588036</a> ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;АЛЬФА&#34;</b> <span class="mut">· зареєстровано · з 1999-09-28</span>
+      <ul class="ev mono"><li>beneficiary: причина відсутності: Відсутні фізичні особи, які відповідають статусу кінцевого бенефіціарного власника</li><li>founder: ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;КАМЕЛОТ 3&#34;; 42750287; резиденство: Україна; розмір частки - 7400,00 г</li><li>head: Сирокваш Денис Геннадійович; Директор; 17.09.2020 - керівник</li></ul></div><div style="margin-top:8px"><b><a href="https://opendatabot.ua/c/42750287" target="_blank" rel="noopener">42750287</a> ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;КАМЕЛОТ 3&#34;</b> <span class="mut">· зареєстровано · з 2019-01-11</span>
+      <ul class="ev mono"><li>founder: КІРІК ЮРІЙ ВОЛОДИМИРОВИЧ; громадянство: Україна; розмір частки - 1,00 грн.</li><li>founder: ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;БЕКФОРД&#34;; 42196823; резиденство: Україна; розмір частки - 99,00 грн.</li><li>head: КІРІК ЮРІЙ ВОЛОДИМИРОВИЧ - керівник</li><li>signer: КІРІК ЮРІЙ ВОЛОДИМИРОВИЧ; - представник</li></ul></div><div style="margin-top:8px"><b><a href="https://opendatabot.ua/c/31309501" target="_blank" rel="noopener">31309501</a> ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;КАМЕЛОТ&#34;</b> <span class="mut">· зареєстровано · з 2001-01-03</span>
+      <ul class="ev mono"><li>founder: КРОПОВ ОЛЕГ ЮРІЙОВИЧ; громадянство: Україна; розмір частки - 11800,00 грн.</li><li>head: КРОПОВ ОЛЕГ ЮРІЙОВИЧ; 28.04.2012; (не має) - керівник</li><li>signer: КРОПОВ ОЛЕГ ЮРІЙОВИЧ; 28.04.2012 (Повноваження: Вчиняти дії від імені юридичної особи, у тому числі підписуват</li></ul></div>
+  </section>
+
+  <section class="card">
+    <h2>Перетини з колами Гончаренка</h2>
+    <div class="tablewrap"><table class="rep"><thead><tr><th>Рівень</th><th>Що</th></tr></thead>
+      <tbody><tr><td><span class="lvl">звʼязок за адресою (слабкий)</span></td><td>ТОВ «ТД „Лана-Агротранс“» (38858355; 100% і керівник Криворот з 02.07.2014; банкрут, припинено 18.08.2015) зареєстроване на вул. Канатній, 10 в Одесі — за адресою Одеської організації «Європейської Солідарності» (39607381, зареєстрована 28.01.2015). Там само ГО «Думська», кооператив «Автопромсервіс», «Привид», «Старк Індастріз», «Таксі Бонд» — 7 субʼєктів. У 2015-му обидві організації могли існувати за адресою одночасно (січень—серпень), але чи адреса «Лана-Агротрансу» була Канатна, 10 саме тоді, з картки не видно. · <a href="https://clarity-project.info/edr/39607381" target="_blank" rel="noopener">Clarity: компанії за адресою Канатна, 10</a></td></tr><tr><td><span class="lvl">немає перетину</span></td><td>Граф Гончаренка на глибину 3 (1014 організацій, 3648 осіб), досьє Паращенка й Дерев&#39;янків, кандидати ЦВК від ЄС, помічники Гончаренка, платники внесків ГО «ВИ.МОВА», ручні звʼязки — серед 38 компаній Криворота і 31 їх співвласника/керівника збігів немає, крім «Лана-Агротрансу».</td></tr><tr><td><span class="lvl">опосередковано, не коло Гончаренка</span></td><td>Коломійченко А. Л. — співзасновник ТОВ «Південьспецбуд-Б» (Іллічівськ), де Криворот, за Clarity, був історичним засновником; Коломійченко — кандидат до Одеської облради 2015 і помічник нардепів Зарубінський Олег Олександрович, Гриневецький Сергій Рафаїлович, Продивус Володимир Степанович. Головна особа цього кластера — Залєвський Г. Є. («Кимстрой» у Затоці, «Укрфруктопостач», «Південспецбуд»).</td></tr><tr><td><span class="lvl">збіг місця, не звʼязок</span></td><td>«Кимстрой» (26419251) зареєстроване в Затоці, де відбувався епізод справи Дерев&#39;янків з базою «Укрпошти»; у текстах ухвал цієї справи «Кимстрой», Залєвський чи Криворот не згадуються.</td></tr><tr><td><span class="lvl">мережа «Камелот»</span></td><td>ТОВ «Монолитфорт» (38975765; Криворот — колишній керівник) належить ТОВ «Альфа» (30588036), а та — ТОВ «Камелот 3» (42750287); «Інагро-Транс» належить ТОВ «Камелот Транс»; у 2012 фірма Криворота подавала на банкрутство ТОВ «Камелот» (Полтавщина). Чи це одна група — за назвами не встановити; у графі Гончаренка жодного «Камелота» немає.</td></tr></tbody></table></div>
+    <h3 style="margin-top:12px">Канатна, 10</h3>
+    <div style="margin-top:6px"><b><a href="https://opendatabot.ua/c/38858355" target="_blank" rel="noopener">38858355</a> ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;ТОРГОВИЙ ДІМ &#34;ЛАНА-АГРОТРАНС&#34;</b> <span class="mut">· припинено · з 2013-09-06</span>
+      <ul class="ev mono"><li>founder: КРИВОРОТ ОЛЕКСІЙ ВАСИЛЬОВИЧ; громадянство: Україна; розмір частки - 5000,00 грн.</li><li>head: КРИВОРОТ ОЛЕКСІЙ ВАСИЛЬОВИЧ; 02.07.2014 - керівник</li><li>signer: КРИВОРОТ ОЛЕКСІЙ ВАСИЛЬОВИЧ; 02.07.2014 - представник</li></ul></div><div style="margin-top:6px"><b><a href="https://opendatabot.ua/c/39607381" target="_blank" rel="noopener">39607381</a> ОДЕСЬКА ТЕРИТОРІАЛЬНА ОРГАНІЗАЦІЯ ПОЛІТИЧНОЇ ПАРТІЇ &#34;ЄВРОПЕЙСЬКА СОЛІДАРНІСТЬ&#34;</b> <span class="mut">· зареєстровано · з 2015-01-28</span>
+      <ul class="ev mono"><li>head: Гончаренко Олексій Олексійович; Голова; 07.06.2021; (відповідно до статуту) - керівник</li></ul></div>
+    <h3 style="margin-top:12px">Кластер Залєвського (Затока, Іллічівськ, Одеса)</h3>
+    <div style="margin-top:6px"><b><a href="https://opendatabot.ua/c/26419251" target="_blank" rel="noopener">26419251</a> ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;КИМСТРОЙ&#34;</b> <span class="mut">· зареєстровано</span>
+      <ul class="ev mono"><li>beneficiary: ЗАЛЄВСЬКИЙ ГЕННАДІЙ ЄВГЕНОВИЧ; громадянство: Україна; Прямий вирішальний вплив; відсоток частки - 50</li><li>beneficiary: АЙЗІКОВИЧ МИХАЙЛО; громадянство: Ізраїль; Прямий вирішальний вплив; відсоток частки - 50</li><li>founder: ЗАЛЄВСЬКИЙ ГЕННАДІЙ ЄВГЕНОВИЧ; громадянство: Україна; розмір частки - 140000,00 грн.</li><li>founder: АЙЗІКОВИЧ МИХАЙЛО; громадянство: Ізраїль; розмір частки - 140000,00 грн.</li><li>head: ЗАЛЄВСЬКИЙ ГЕННАДІЙ ЄВГЕНОВИЧ - керівник</li><li>signer: ЗАЛЄВСЬКИЙ ГЕННАДІЙ ЄВГЕНОВИЧ; - представник</li></ul></div><div style="margin-top:6px"><b><a href="https://opendatabot.ua/c/33647848" target="_blank" rel="noopener">33647848</a> ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;ПІВДЕНЬСПЕЦБУД-Б&#34;</b> <span class="mut">· зареєстровано</span>
+      <ul class="ev mono"><li>founder: КОЛОМІЙЧЕНКО АНДРІЙ ЛЕОНІДОВИЧ; громадянство: Україна; розмір частки - 375000,00 грн.</li><li>founder: ЗАЛЄВСЬКИЙ ГЕННАДІЙ ЄВГЕНОВИЧ; громадянство: Україна; розмір частки - 562500,00 грн.</li><li>founder: РЕУС ОЛЕКСАНДР ПАВЛОВИЧ; громадянство: Україна; розмір частки - 562500,00 грн.</li><li>head: ЗАЛЄВСЬКИЙ ГЕННАДІЙ ЄВГЕНОВИЧ; (згідно статуту) - керівник</li></ul></div><div style="margin-top:6px"><b><a href="https://opendatabot.ua/c/30709555" target="_blank" rel="noopener">30709555</a> ДОЧІРНЄ ПІДПРИЄМСТВО &#34;ПІВДЕНСПЕЦБУД&#34;</b> <span class="mut">· зареєстровано</span>
+      <ul class="ev mono"><li>founder: ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;ПІВДЕНЬСПЕЦБУД-Б&#34;; 33647848; резиденство: Україна; розмір частки - 15</li><li>head: ЗАЛЄВСЬКИЙ ГЕННАДІЙ ЄВГЕНОВИЧ; (згідно статуту) - керівник</li></ul></div><div style="margin-top:6px"><b><a href="https://opendatabot.ua/c/32288307" target="_blank" rel="noopener">32288307</a> ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;УКРФРУКТОПОСТАЧ&#34;</b> <span class="mut">· зареєстровано</span>
+      <ul class="ev mono"><li>founder: ЗАЛЄВСЬКИЙ ГЕННАДІЙ ЄВГЕНОВИЧ; громадянство: Україна; розмір частки - 710000,00 грн.</li><li>head: ЗАЛЄВСЬКИЙ ГЕННАДІЙ ЄВГЕНОВИЧ; (ЗГІДНО СТАТУТУ) - керівник</li><li>signer: ЗАЛЄВСЬКИЙ ГЕННАДІЙ ЄВГЕНОВИЧ; (Повноваження: Вчиняти дії від імені юридичної особи, у тому числі підписувати </li></ul></div>
+  </section>
+
+  <section class="card">
+    <h2>Що ще перевірити</h2>
+    <ul class="ev"><li>Повний список 86 організацій з Clarity (у PDF — 32): решта може містити перетини.</li><li>Історію адрес «Лана-Агротрансу» (коли зареєстровано на Канатній, 10) — Clarity «Історія ЄДРПОУ (6)».</li><li>Чи ФОП Криворот О. В. із декларації Нечитайло і директор фірм — одна людина (РНОКПП/дата народження у платних реєстрах).</li><li>Судові справи за ПІБ (Clarity: 6) і виконавчі провадження (19) — хто стягувачі.</li></ul>
+    <p class="mut" style="margin-top:8px">Файли: Desktop\People\Honcharenko: Entities\Криворот… (Clarity, Opendatabot, PDF); moscow\Криворот… та «38975765 — ТОВ МОНОЛИТФОРТ» (Opendatabot, HTML); moscow\Зв&#39;язки — Clarity Project.pdf</p>
+  </section>
+</div>
+</body>
+</html>

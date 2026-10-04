@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Справа СБУ і Паращенко</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Дизайн-система за артефактом «Мережа Гончаренка»; сторінка — вкладки: Огляд · Граф · Особи · Декларації · Організації · Звʼязність · Джерела */
+:root {
+  --bg: #f6f7f8; --surface: #fcfcfb; --fg: #15181c; --muted: #5a6068; --faint: #8a9099;
+  --rule: #dfe2e6; --grid: #eceef0; --accent: #1f4f8f; --warn: #9a6700; --bad: #b42318; --ok: #1baf7a;
+  --n-core: #eb6834; --n-person: #2a78d6; --n-org: #1baf7a; --n-ext: #8a9099; --n-go: #7c3aed; --n-party: #d99a00;
+  --e-money: #d03b3b; --e-role: #9aa1a9; --e-family: #eb6834; --e-contact: #0e7490;
+  --c-salary: #2a78d6; --c-gift: #eb6834; --c-sale: #1baf7a; --c-other: #8a9099; --c-family: #7c3aed; --c-cash: #d03b3b;
+  --f-display: "Unbounded", "Golos Text", system-ui, sans-serif; --f-body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif; --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121417; --surface: #1a1a19; --fg: #f1f2f3; --muted: #b3b8bf; --faint: #7f858d; --rule: #2c3036; --grid: #24272b; --accent: #86b6ef; --warn: #e3b341; --bad: #f08a7e; --ok: #199e70;
+  --n-core: #d95926; --n-person: #3987e5; --n-org: #199e70; --n-ext: #7f858d; --n-go: #9d6bff; --n-party: #f5b301; --e-money: #e66767; --e-role: #5b6168; --e-family: #d95926; --e-contact: #22b8d6;
+  --c-salary: #3987e5; --c-gift: #d95926; --c-sale: #199e70; --c-other: #7f858d; --c-family: #9d6bff; --c-cash: #e66767; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #121417; --surface: #1a1a19; --fg: #f1f2f3; --muted: #b3b8bf; --faint: #7f858d; --rule: #2c3036; --grid: #24272b; --accent: #86b6ef; --warn: #e3b341; --bad: #f08a7e; --ok: #199e70;
+  --n-core: #d95926; --n-person: #3987e5; --n-org: #199e70; --n-ext: #7f858d; --n-go: #9d6bff; --n-party: #f5b301; --e-money: #e66767; --e-role: #5b6168; --e-family: #d95926; --e-contact: #22b8d6;
+  --c-salary: #3987e5; --c-gift: #d95926; --c-sale: #199e70; --c-other: #7f858d; --c-family: #9d6bff; --c-cash: #e66767; color-scheme: dark; }
+* { box-sizing: border-box }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 14px; line-height: 1.5; }
+.wrap { max-width: 1480px; margin: 0 auto; padding: 28px 24px 64px; display: grid; gap: 22px; }
+@media (max-width: 760px) { .wrap { padding: 16px 12px 48px; gap: 16px; } }
+header.hd { display: grid; gap: 8px; padding: 22px 24px; background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(22px, 3.4vw, 30px); margin: 0; line-height: 1.2; }
+h2 { font-family: var(--f-display); font-weight: 500; font-size: 17px; margin: 0 0 10px; }
+h3 { font-size: 15px; margin: 0 0 6px; font-weight: 600; }
+p { margin: 0; } .lede { color: var(--muted); max-width: 90ch; } a { color: var(--accent); }
+.mut { color: var(--muted) } .warn { color: var(--warn) } .bad { color: var(--bad) } .ok { color: var(--ok) }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 8px; }
+.kpi { background: var(--bg); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 14px; }
+.kpi b { display: block; font-family: var(--f-display); font-size: 20px; font-weight: 500; } .kpi span { color: var(--muted); font-size: 12px; }
+.kpi.high b { color: var(--bad) } .kpi.medium b { color: var(--warn) } .kpi.low b { color: var(--ok) }
+.pill { font-family: var(--f-mono); font-size: 10.5px; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--rule); white-space: nowrap; display: inline-block; vertical-align: middle; line-height: 1.5; }
+.pill.document { border-color: var(--n-org) } .pill.registry { border-color: var(--n-person) } .pill.name_match { border-style: dashed } .pill.ambiguous { border-style: dotted; color: var(--warn) }
+.pill.high { border-color: var(--bad); color: var(--bad) } .pill.medium { border-color: var(--warn); color: var(--warn) } .pill.low { border-color: var(--rule) }
+.caveat { background: var(--surface); border-left: 3px solid var(--warn); padding: 8px 12px; font-size: 13px; border-radius: 0 6px 6px 0; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px 20px; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; } @media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 12.5px; } th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; overflow-wrap: break-word; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; position: sticky; top: 0; background: var(--surface); white-space: nowrap; } tr:last-child td { border-bottom: 0 } .num { text-align: right; white-space: nowrap; font-family: var(--f-mono); font-size: 12px }
+tr.rowlink { cursor: pointer } tr.rowlink:hover td { background: var(--grid) }
+details summary { cursor: pointer; color: var(--accent); } details { margin: 6px 0 }
+/* вкладки */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--rule); padding-bottom: 8px; }
+.tab { font: inherit; font-weight: 600; padding: 8px 14px; border: 1px solid transparent; border-radius: 999px; background: transparent; color: var(--muted); cursor: pointer; }
+.tab:hover { color: var(--fg) } .tab.on { background: var(--fg); color: var(--bg); border-color: var(--fg); } .tab small { font-weight: 400; margin-left: 4px; opacity: .7 }
+.panel-tab { display: none; gap: 16px; } .panel-tab.on { display: grid; }
+/* граф */
+.viewbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.vbtn { font: inherit; font-weight: 600; padding: 7px 14px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface); color: var(--fg); cursor: pointer; }
+.vbtn.on { background: var(--fg); color: var(--bg); border-color: var(--fg); } .vcount { font-size: 12.5px; color: var(--muted); }
+.btn { font: inherit; font-size: 12.5px; padding: 5px 12px; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--fg); cursor: pointer; }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); } .btn + .btn { margin-left: 6px }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--muted); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; } .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; } .sq { width: 10px; height: 10px; border-radius: 2px; display: inline-block; } .ln { width: 22px; height: 0; border-top: 2px solid var(--e-role); display: inline-block; }
+.main { display: grid; grid-template-columns: 270px minmax(0, 1fr) 350px; gap: 14px; } @media (max-width: 1100px) { .main { grid-template-columns: 1fr; } }
+.canvas { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; position: relative; height: min(76vh, 760px); min-height: 460px; overflow: hidden; }
+.canvas svg { width: 100%; height: 100%; display: block; cursor: grab; } .canvas .fit { position: absolute; right: 10px; top: 10px; }
+.panel, .pool { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; max-height: min(76vh, 760px); overflow: auto; min-width: 0; }
+.panel h3 { margin: 0; font-size: 16px; } .sub { color: var(--muted); font-size: 12px; font-family: var(--f-mono); }
+.conn { display: grid; gap: 2px; padding: 9px 0; border-top: 1px solid var(--grid); font-size: 13px; } .conn b { font-weight: 600; cursor: pointer; } .conn b:hover { color: var(--accent); } .conn .src { color: var(--faint); font-size: 11.5px; } .conn .src a { color: var(--faint); }
+.pool input[type=search], .filterbar input[type=search] { font: inherit; width: 100%; padding: 7px 10px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--fg); }
+.pool label { display: flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--muted); cursor: pointer; }
+.pg b { display: block; font-size: 11px; font-family: var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--faint); margin: 10px 0 3px; }
+.pg a { display: block; padding: 3px 6px; border-radius: 4px; color: var(--fg); text-decoration: none; font-size: 13px; } .pg a:hover, .pg a.sel { background: var(--grid); } .pg a.exp::after { content: " ▾"; color: var(--faint); }
+.node text { font-family: var(--f-body); font-size: 11px; fill: var(--fg); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
+.zone { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; fill: var(--faint); } .hint { font-size: 12px; color: var(--faint); }
+/* ризики, графіки, модалка */
+.risk { border-left: 3px solid var(--rule); padding: 10px 14px; background: var(--surface); border-radius: 0 8px 8px 0; display: grid; gap: 4px; } .risk.high { border-color: var(--bad) } .risk.medium { border-color: var(--warn) } .risk.low { border-color: var(--n-person) }
+.risk b { font-weight: 600 } .risk .src { font-size: 12px; color: var(--faint) }
+.chart { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px 6px; } .chart h3 { margin-bottom: 2px } .chart .sub { margin-bottom: 6px }
+.chart svg { width: 100%; height: auto; display: block; font-family: var(--f-mono); font-size: 10px; } .chart .axis line, .chart .axis path { stroke: var(--rule) } .chart .axis text { fill: var(--muted) } .chart .gridl line { stroke: var(--grid) }
+.bars { display: grid; gap: 4px; } .bar { display: grid; grid-template-columns: minmax(140px, 1fr) 3fr auto; gap: 8px; align-items: center; font-size: 12.5px; } .bar i { display: block; height: 10px; border-radius: 3px; background: var(--n-person); } .bar .num { color: var(--muted) }
+.filterbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; } .filterbar select { font: inherit; padding: 6px 10px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--fg); }
+dialog { border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); color: var(--fg); padding: 0; max-width: min(760px, 94vw); width: 100%; } dialog::backdrop { background: rgba(0,0,0,.45) }
+.modal-h { display: flex; justify-content: space-between; gap: 12px; align-items: start; padding: 18px 22px 10px; } .modal-b { padding: 0 22px 22px; display: grid; gap: 12px; max-height: 72vh; overflow: auto; }
+.modal-h h3 { font-family: var(--f-display); font-weight: 500; font-size: 18px; } .x { font: inherit; border: 0; background: transparent; color: var(--muted); font-size: 22px; cursor: pointer; line-height: 1 }
+.src-pill { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted) }
+.mc summary { font-size: 12.5px } .mc { display: grid; gap: 6px } .mc-in { font: inherit; font-size: 13px; width: 100%; padding: 6px 9px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--fg); margin-top: 4px }
+.pill.party { border-color: var(--n-party); color: var(--n-party); font-weight: 600 } .diamond { width: 10px; height: 10px; display: inline-block; transform: rotate(45deg); background: var(--n-party) }
+.sel { font: inherit; font-weight: 600; padding: 6px 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); color: var(--fg); }
+.btn.mini { padding: 1px 8px; font-size: 11.5px; margin-top: 4px } .btn.mini.wrongb:hover { border-color: var(--bad); color: var(--bad) } .btn.mini.okb:hover { border-color: var(--ok); color: var(--ok) }
+.fb { display: flex; gap: 6px; align-items: center; flex-wrap: wrap } .fbmark { font-family: var(--f-mono); font-size: 11px } .fbmark.wrong { color: var(--bad) } .fbmark.correct { color: var(--ok) }
+.conn.wrong { opacity: .55 } .conn.wrong b { text-decoration: line-through }
+.pg a { position: relative; padding-right: 22px } .hidex { position: absolute; right: 4px; top: 2px; color: var(--faint); font-size: 14px; line-height: 1; display: none; padding: 0 3px; border-radius: 3px } .pg a:hover .hidex { display: inline } .hidex:hover { color: var(--bad); background: var(--bg) }
+.flag { font-family: var(--f-mono); font-size: 10.5px; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--bad); color: var(--bad); cursor: pointer; display: inline-block; margin-left: 4px; background: transparent; vertical-align: middle; } .flag:hover { background: var(--bad); color: #fff }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; display: grid; gap: 16px; }
+.verdict { font-size: 16px; line-height: 1.55; border-left: 4px solid var(--bad); padding: 10px 14px; background: var(--surface); }
+.lvl { font-family: var(--f-mono); font-size: 11px; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--rule); white-space: nowrap; }
+.lvl.ok { border-color: var(--bad); color: var(--bad); font-weight: 600 } .lvl.mid { border-color: var(--warn); color: var(--warn) } .lvl.low { border-style: dashed; color: var(--muted) }
+table.rep { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.rep th { text-align: left; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--rule); padding: 7px 6px; }
+table.rep td { border-bottom: 1px solid var(--grid); padding: 8px 6px; vertical-align: top; }
+ul.ev { margin: 6px 0 0; padding-left: 18px; } ul.ev li { margin: 3px 0; }
+.mono { font-family: var(--f-mono); font-size: 12px; }
+.tablewrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<style>
+.projnav { display: grid; gap: 6px; margin: 0 0 14px; }
+.projnav .pt { font-family: var(--f-mono); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.projnav .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.projnav .who { font-weight: 600; margin-right: 2px; }
+.projnav a.tab { text-decoration: none; font-size: 13px; padding: 6px 12px; border-color: var(--rule); }
+.projnav .sep { width: 1px; height: 22px; background: var(--rule); margin: 0 6px; }
+</style>
+<nav class="projnav" aria-label="вкладки проєкту">
+  <div class="pt">проєкт «Гончаренко»</div>
+  <div class="row">
+    <span class="who">Гончаренко О. О.</span>
+    <a class="tab" href="11651.html">досьє</a>
+    <a class="tab" href="11651-core.html" title="Головне: родина, найближчі помічники та їхні структури">★ Головне</a><a class="tab" href="11651-fees_vymova.html" title="Членські внески ГО «ВИ.МОВА» за 2023 рік">Внески ВИ.МОВА</a><a class="tab" href="11651-criminal_cases.html" title="Кримінальні справи в оточенні Гончаренка">Кримінальні справи</a><a class="tab" href="11651-es_odesa_pr.html" title="Одеський осередок «Європейської Солідарності» і Партія регіонів">ЄС Одеса і Партія регіонів</a><a class="tab" href="11651-kryvorot.html" title="Криворот Олексій Васильович — досьє">Криворот О. В.</a>
+  <span class="sep"></span>
+    <span class="who">Паращенко С. В.</span>
+    <a class="tab" href="311873.html">досьє</a>
+    <a class="tab on" href="311873-sbu_case.html" title="Паращенко С. В.: справа СБУ про фінансування армії РФ і звʼязки з Гончаренком">Справа СБУ</a>
+  <span class="sep"></span>
+    <span class="who">Дерев&#39;янко М. М.</span>
+    <a class="tab" href="689884.html">досьє</a>
+    <a class="tab" href="689884-lesya.html" title="Дерев&#39;янко Леся Володимирівна — вкладене досьє">Леся Дерев&#39;янко</a>
+  <span class="sep"></span>
+    <span class="who">Обухов П. Г.</span>
+    <a class="tab" href="1522224.html">досьє</a>
+    
+  </div>
+</nav>
+  <header class="hd">
+    <div class="eyebrow"><a href="311873.html">← досьє 311873</a> · окремий звіт · зібрано 2026-10-04 15:39 UTC</div>
+    <h1>Паращенко С. В.: справа СБУ про фінансування армії РФ і звʼязки з Гончаренком</h1>
+    <p class="verdict">Так, це той самий Паращенко Сергій Володимирович (uid 311873, депутат Одеської облради, ексголова облради). В ухвалі слідчого судді він — рідний брат засудженого засновника російської фірми, що переказала 100 000 рос. руб. «представнику оперативного штабу допомоги військовослужбовцям РФ», і особа, яка, за версією слідства, «можливо причетна» та «здійснює фактичний контроль» цієї фірми. Підозру йому не повідомлено.</p>
+    <div class="kpis">
+      <div class="kpi"><b>34 264 570 грн</b><span>власний дохід за декларацією 2025</span></div>
+      <div class="kpi"><b>1 634 804 грн</b><span>подарунки 2025 (переважно від Паращенка О. В.)</span></div>
+      <div class="kpi"><b>6</b><span>повідомлень про суттєві зміни у 2025 (дивіденди)</span></div>
+      <div class="kpi high"><b>0</b><span>повідомлених підозр Паращенкам С. В. і С. С. (у відкритих джерелах)</span></div>
+    </div>
+  </header>
+
+  <section class="card">
+    <h2>1. Чи це той самий Паращенко — ідентифікація осіб з ухвал</h2>
+    <p class="mut">Імена в ухвалах знеособлені («ОСОБА_N»). Особи встановлено за кодами ЄДРПОУ й описами з ухвал, звіреними з ЄДР і деклараціями НАЗК.</p>
+    
+    <div style="margin-top:12px"><b>ОСОБА_6 (ухвала 127517699) = Паращенко Сергій Володимирович</b> <span class="lvl ok">підтверджено</span>
+      <ul class="ev"><li>Ухвала називає ОСОБА_6 засновником ПП «Агрофірма Ташлик» (код 34922395), депутатом Одеської обласної ради і рідним братом підозрюваного.</li><li>ЄДР: засновник і 100% бенефіціар 34922395 — Паращенко Сергій Володимирович.</li><li>Його власні декларації НАЗК: дивіденди від ПП «Агрофірма Ташлик» (34922395), зокрема 1 860 464 грн 05–07.03.2025 (повідомлення 8d110222).</li><li>Депутат Одеської облради VIII скликання (декларації 2016–2025).</li></ul>
+      <div class="mut"><a href="https://reyestr.court.gov.ua/Review/127517699" target="_blank" rel="noopener">ухвала 127517699</a> · <a href="https://public.nazk.gov.ua/documents/8d110222-77ef-4bfc-a946-dcb2f00eafee" target="_blank" rel="noopener">повідомлення НАЗК 8d110222</a></div></div>
+    
+    <div style="margin-top:12px"><b>ОСОБА_7 (ухвала 127517699) = Паращенко Сергій Сергійович, син</b> <span class="lvl ok">підтверджено</span>
+      <ul class="ev"><li>Ухвала: син ОСОБА_6, засновник і голова ФГ «Агрофірма Бургуджі» (32009355), депутат облради; «допомагає в керівництві всіма належними їх сім&#39;ї підприємствами».</li><li>ЄДР: засновник, бенефіціар і голова 32009355 з 15.03.2019 — Паращенко Сергій Сергійович.</li><li>Декларації С. В.: Паращенко С. С. — син.</li></ul>
+      <div class="mut"><a href="https://reyestr.court.gov.ua/Review/127517699" target="_blank" rel="noopener">ухвала 127517699</a></div></div>
+    
+    <div style="margin-top:12px"><b>Засуджений (вирок 128680596) = Паращенко Олександр Володимирович, брат</b> <span class="lvl mid">ймовірно (непряма ідентифікація)</span>
+      <ul class="ev"><li>Вирок: обвинувачений — уродженець м. Нурек (Таджикистан), «керівник ФГ „Паращенко О.В.“»; з 2017 — 100% засновник ТОВ «СП им. Димитрова».</li><li>ЄДР: ФГ «Паращенко А» (36027645, припинене) — засновник і керівник Паращенко Олександр Володимирович; по батькові збігається з С. В.</li><li>Декларація С. В. за 2025: подарунки від Паращенка Олександра Володимировича — 15 записів на 768 080 грн.</li><li>Назва ФГ у вироку («Паращенко О.В.») і в ЄДР («Паращенко А») не збігаються дослівно.</li></ul>
+      <div class="mut"><a href="https://reyestr.court.gov.ua/Review/128680596" target="_blank" rel="noopener">вирок 128680596</a> · <a href="https://public.nazk.gov.ua/documents/cd90da79-2814-462c-9f37-c6360482dc77" target="_blank" rel="noopener">декларація С. В. за 2025</a></div></div>
+    
+    <div style="margin-top:12px"><b>Директор ТОВ «СП им. Димитрова» — уродженець с. Виноградівка Арцизького р-ну</b> <span class="lvl low">встановлено частково</span>
+      <ul class="ev"><li>Ухвала 129396540 (06.08.2025): дозвіл на спеціальне (заочне) розслідування щодо директора, уродженця с. Виноградівка.</li><li>Виноградівка — село народження Паращенка С. В. і місце реєстрації «Агрофірми Ташлик» та «Агрофірми Бургуджі».</li><li>За пакетом користувачки (російські реєстри) — Деордієв Василь Миколайович; ім&#39;я в ухвалі знеособлене.</li></ul>
+      <div class="mut"><a href="https://reyestr.court.gov.ua/Review/129396540" target="_blank" rel="noopener">ухвала 129396540</a> · <a href="https://reyestr.court.gov.ua/Review/130519747" target="_blank" rel="noopener">ухвала 130519747</a></div></div>
+    
+    <div style="margin-top:12px"><b>Директор ПСПО «ОКІЛОК» і ТОВ «АГРО АКОРД» (ухвала 125894660, ОСОБА_7) — за ЄДР керівник обох фірм Терзі О. Г.</b> <span class="lvl mid">ймовірно (за ЄДР)</span>
+      <ul class="ev"><li>Ухвала: директор ПСПО «ОКІЛОК» і ТОВ «АГРОАКОРД», які «фактично підконтрольні» рідному братові засновника ТОВ «СП им. Димитрова»; його рідний брат — уродженець Виноградівки, нині в РФ, працює в ТОВ «СП им. Димитрова».</li><li>ЄДР: ПСПО «ОКІЛОК» (03747024) і ТОВ «АГРО АКОРД» (43755587) — 100% Паращенко С. С., керівник обох — Терзі Олександр Георгійович.</li><li>26.02.2025 обшук за місцем його проживання, яке, за ухвалою, «перебуває у володінні СВК „Дружба народів“»; вилучено телефон. Про підозру чи причетність щодо нього самого в ухвалі не йдеться.</li><li>Номери ОСОБА_N у кожній ухвалі свої: в ухвалі 125894660 ОСОБА_8 (брат засновника, що «фактично контролює» фірми) — не той ОСОБА_8, що в ухвалі 127517699.</li></ul>
+      <div class="mut"><a href="https://reyestr.court.gov.ua/Review/125894660" target="_blank" rel="noopener">ухвала 125894660</a> · <a href="https://opendatabot.ua/c/03747024" target="_blank" rel="noopener">Opendatabot 03747024</a> · <a href="https://opendatabot.ua/c/43755587" target="_blank" rel="noopener">Opendatabot 43755587</a></div></div>
+    
+  </section>
+
+  <section class="card">
+    <h2>2. Справа СБУ</h2>
+    <p><b>Провадження 22023240000000123 від 10.07.2023 (СБУ в Одеській обл., нагляд — Одеська обласна прокуратура).</b> 23.01.2023 ТОВ «СП им. Димитрова» (Калузька обл., РФ) перерахувало 100 000 рос. руб. на рахунок у ПАТ «Сбербанк» «представника оперативного штабу допомоги військовослужбовцям РФ» як «матеріальну допомогу учасникам СВО».</p>
+    <div class="tablewrap"><table class="rep" style="margin-top:10px">
+      <thead><tr><th>Дата</th><th>Подія</th><th>Ухвала</th></tr></thead>
+      <tbody><tr><td class="mono">2025-01-10</td><td>Слідчий СБУ отримує доступ до документів, вилучених ДФС під час обшуку 10.12.2020 у закритому провадженні 32017160000000074 (податкова справа)</td><td><a href="https://reyestr.court.gov.ua/Review/124331186" target="_blank" rel="noopener">124331186</a></td></tr><tr><td class="mono">2025-02-25</td><td>8 ухвал Приморського суду, закритих від оприлюднення (за датою — дозволи на обшуки 26.02)</td><td><a href="https://court.opendatabot.ua/cause/522%2F23280%2F24" target="_blank" rel="noopener">522%2F23280%2F24</a></td></tr><tr><td class="mono">2025-02-26</td><td>Затримання й підозра засновнику ТОВ «СП им. Димитрова» (ч.2 ст.28, ч.1 ст.111-2 КК)</td><td><a href="https://reyestr.court.gov.ua/Review/125473410" target="_blank" rel="noopener">125473410</a></td></tr><tr><td class="mono">2025-02-26</td><td>Обшук на земельній ділянці у володінні СВК «Дружба народів» (Подільський р-н, біля с. Нестоїта), де «періодично проживає» особа, «можливо причетна»; вилучено печатки ЛЕК Подільської ЦРЛ і печатку лікаря</td><td><a href="https://reyestr.court.gov.ua/Review/125894639" target="_blank" rel="noopener">125894639</a></td></tr><tr><td class="mono">2025-02-26</td><td>Обшук житла директора ПСПО «ОКІЛОК» / ТОВ «АГРО АКОРД» (за ухвалою — у володінні СВК «Дружба народів») і житла особи, що «відповідає за організацію діяльності» агропідприємств родини, зокрема в РФ</td><td><a href="https://reyestr.court.gov.ua/Review/125894660" target="_blank" rel="noopener">125894660</a></td></tr><tr><td class="mono">2025-02-27</td><td>Тримання під вартою</td><td><a href="https://reyestr.court.gov.ua/Review/125473410" target="_blank" rel="noopener">125473410</a></td></tr><tr><td class="mono">2025-05-14</td><td>Обшук у ФГ «Агрофірма Бургуджі» (с. Виноградівка): довіреності, накази, печатка</td><td><a href="https://reyestr.court.gov.ua/Review/127517699" target="_blank" rel="noopener">127517699</a></td></tr><tr><td class="mono">2025-05-19</td><td>Арешт майна після обшуків (Бургуджі, Ташлик); в ухвалі описано ролі брата, сина й депутатів облради</td><td><a href="https://reyestr.court.gov.ua/Review/127517699" target="_blank" rel="noopener">127517699</a></td></tr><tr><td class="mono">2025-06-13</td><td>Запобіжний захід змінено на нічний домашній арешт</td><td><a href="https://reyestr.court.gov.ua/Review/128103178" target="_blank" rel="noopener">128103178</a></td></tr><tr><td class="mono">2025-06-13</td><td>Виділено провадження 22025160000000354 щодо директора російської фірми</td><td><a href="https://reyestr.court.gov.ua/Review/130519747" target="_blank" rel="noopener">130519747</a></td></tr><tr><td class="mono">2025-06-26</td><td>Вирок за угодою: ч.2 ст.28, ч.4 ст.111-1 КК, штраф 170 000 грн, 10 років заборони обіймати посади</td><td><a href="https://reyestr.court.gov.ua/Review/128680596" target="_blank" rel="noopener">128680596</a></td></tr><tr><td class="mono">2025-08-06</td><td>Дозвіл на спеціальне (заочне) розслідування щодо директора</td><td><a href="https://reyestr.court.gov.ua/Review/129396540" target="_blank" rel="noopener">129396540</a></td></tr><tr><td class="mono">2026-05-13</td><td>Клопотання про тримання під вартою іншого підозрюваного (особа не встановлена з ухвали) залишено без розгляду</td><td><a href="https://reyestr.court.gov.ua/Review/136537345" target="_blank" rel="noopener">136537345</a></td></tr></tbody>
+    </table></div>
+  </section>
+
+  <section class="card" id="courts">
+    <h2>2а. Номери судових справ і де їх читати онлайн</h2>
+    <p class="verdict" style="border-left-color:var(--warn)"><b>Якого року справа.</b> Кримінальне провадження СБУ внесено до ЄРДР 10.07.2023 (№ 22023240000000123). Судова справа слідчих суддів — 522/23280/24: номер присвоєно Приморським судом у 2024, перша опублікована ухвала — 10.01.2025; варіант «522/23280/25» у кількох ухвалах — описка. З травня 2025 — Пересипський суд (523/8486/25), вирок брату — 26.06.2025 (523/12120/25), виділене провадження щодо директора — 13.06.2025 (523/14183/25). Обшуки 10.12.2020 — інша, податкова справа ДФС 2017 року (№ 32017160000000074, судова справа 522/14204/18), закрита 29.03.2022.</p>
+    <p class="mut">Документи кожної справи — на сторінці Opendatabot (відкрита, без входу) і окремо в ЄДРСР (reyestr.court.gov.ua). Ухвали, закриті від оприлюднення, в обох джерелах мають лише заголовок.</p>
+    <div class="tablewrap"><table class="rep">
+      <thead><tr><th>Справа</th><th>Епізод / провадження</th><th>Документи</th><th>Що в ній</th></tr></thead>
+      <tbody><tr>
+        <td class="mono"><b><a href="https://court.opendatabot.ua/cause/522%2F23280%2F24" target="_blank" rel="noopener">522/23280/24</a></b><br><span class="mut">Одеський апеляційний суд; Пересипський районний суд м. Одеси; Приморський районний суд м. Одеси</span></td>
+        <td>2023–2025 · СБУ<br><span class="mono mut">22023240000000123 від 10.07.2023</span></td>
+        <td class="mono">30 <span class="mut">(закритих 8)</span><br>10.01.2025 — 22.07.2025</td>
+        <td>Слідчі судді Приморського суду (і апеляція): доступ до документів, у т. ч. вилучених ДФС у 2020; дозволи на обшуки 26.02.2025 (8 ухвал закриті); арешт майна після обшуків; тримання під вартою засновника ТОВ «СП им. Димитрова».<br><span class="mut">Номер присвоєно у 2024 (суфікс /24), перша опублікована ухвала — 10.01.2025. У текстах кількох ухвал написано «522/23280/25» — це описка.</span>
+          <details style="margin-top:6px"><summary class="mut">усі документи (30)</summary><ul class="ev mono"><li>22.07.2025 · <a href="https://reyestr.court.gov.ua/Review/129001251" target="_blank" rel="noopener">129001251</a> · арешт майна</li><li>20.06.2025 · <a href="https://reyestr.court.gov.ua/Review/128282970" target="_blank" rel="noopener">128282970</a> · арешт майна</li><li>04.06.2025 · <a href="https://reyestr.court.gov.ua/Review/127885504" target="_blank" rel="noopener">127885504</a> · скарга адвоката</li><li>19.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127710739" target="_blank" rel="noopener">127710739</a> · апеляція</li><li>19.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127710740" target="_blank" rel="noopener">127710740</a> · апеляція</li><li>09.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127228550" target="_blank" rel="noopener">127228550</a> · підсудність <span class="mut">(у тексті: 522/23280/25)</span></li><li>09.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127228551" target="_blank" rel="noopener">127228551</a> · підсудність <span class="mut">(у тексті: 522/23280/25)</span></li><li>06.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127124808" target="_blank" rel="noopener">127124808</a> · апеляція</li><li>06.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127124807" target="_blank" rel="noopener">127124807</a> · апеляція</li><li>24.04.2025 · <a href="https://reyestr.court.gov.ua/Review/126843421" target="_blank" rel="noopener">126843421</a> · обшук</li><li>24.04.2025 · <a href="https://reyestr.court.gov.ua/Review/126843422" target="_blank" rel="noopener">126843422</a> · запобіжний захід</li><li>25.03.2025 · <a href="https://reyestr.court.gov.ua/Review/126095993" target="_blank" rel="noopener">126095993</a> · арешт майна</li><li>17.03.2025 · <a href="https://reyestr.court.gov.ua/Review/125894654" target="_blank" rel="noopener">125894654</a> · тимчасовий доступ до документів</li><li>17.03.2025 · <a href="https://reyestr.court.gov.ua/Review/125894655" target="_blank" rel="noopener">125894655</a> · тимчасовий доступ до документів</li><li>17.03.2025 · <a href="https://reyestr.court.gov.ua/Review/125894657" target="_blank" rel="noopener">125894657</a> · тимчасовий доступ до документів</li><li>17.03.2025 · <a href="https://reyestr.court.gov.ua/Review/125894658" target="_blank" rel="noopener">125894658</a> · тимчасовий доступ до документів</li><li>17.03.2025 · <a href="https://reyestr.court.gov.ua/Review/125894692" target="_blank" rel="noopener">125894692</a> · тимчасовий доступ до документів</li><li>17.03.2025 · <a href="https://reyestr.court.gov.ua/Review/125894643" target="_blank" rel="noopener">125894643</a> · арешт майна</li><li>17.03.2025 · <a href="https://reyestr.court.gov.ua/Review/125894660" target="_blank" rel="noopener">125894660</a> · арешт майна</li><li>17.03.2025 · <a href="https://reyestr.court.gov.ua/Review/125894639" target="_blank" rel="noopener">125894639</a> · арешт майна</li><li>27.02.2025 · <a href="https://reyestr.court.gov.ua/Review/125473410" target="_blank" rel="noopener">125473410</a> · запобіжний захід <span class="mut">(у тексті: 522/23280/25)</span></li><li>25.02.2025 · <a href="https://reyestr.court.gov.ua/Review/125404140" target="_blank" rel="noopener">125404140</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>25.02.2025 · <a href="https://reyestr.court.gov.ua/Review/125404134" target="_blank" rel="noopener">125404134</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>25.02.2025 · <a href="https://reyestr.court.gov.ua/Review/125404136" target="_blank" rel="noopener">125404136</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>25.02.2025 · <a href="https://reyestr.court.gov.ua/Review/125404137" target="_blank" rel="noopener">125404137</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>25.02.2025 · <a href="https://reyestr.court.gov.ua/Review/125404135" target="_blank" rel="noopener">125404135</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>25.02.2025 · <a href="https://reyestr.court.gov.ua/Review/125404138" target="_blank" rel="noopener">125404138</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>25.02.2025 · <a href="https://reyestr.court.gov.ua/Review/125404139" target="_blank" rel="noopener">125404139</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>25.02.2025 · <a href="https://reyestr.court.gov.ua/Review/125404141" target="_blank" rel="noopener">125404141</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>10.01.2025 · <a href="https://reyestr.court.gov.ua/Review/124331186" target="_blank" rel="noopener">124331186</a> · тимчасовий доступ до документів</li></ul></details></td>
+      </tr><tr>
+        <td class="mono"><b><a href="https://court.opendatabot.ua/cause/522%2F23280%2F25" target="_blank" rel="noopener">522/23280/25</a></b><br><span class="mut">Одеський апеляційний суд</span></td>
+        <td>2023–2025 · СБУ<br><span class="mono mut">22023240000000123</span></td>
+        <td class="mono">4<br>31.03.2025 — 27.05.2025</td>
+        <td>Ухвали апеляційного суду, де номер справи записано з опискою (/25): апеляції на тримання під вартою, передача клопотань до Пересипського суду.<br><span class="mut">Під цим номером у реєстрі є й інша справа — адмінпротокол від 27.10.2025, не повʼязаний.</span>
+          <details style="margin-top:6px"><summary class="mut">усі документи (4)</summary><ul class="ev mono"><li>27.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127657183" target="_blank" rel="noopener">127657183</a> · підсудність</li><li>27.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127657195" target="_blank" rel="noopener">127657195</a> · підсудність</li><li>31.03.2025 · <a href="https://reyestr.court.gov.ua/Review/126925855" target="_blank" rel="noopener">126925855</a> · апеляція</li><li>31.03.2025 · <a href="https://reyestr.court.gov.ua/Review/126925854" target="_blank" rel="noopener">126925854</a> · апеляція</li></ul></details></td>
+      </tr><tr>
+        <td class="mono"><b><a href="https://court.opendatabot.ua/cause/522%2F10954%2F25" target="_blank" rel="noopener">522/10954/25</a></b><br><span class="mut">Приморський районний суд м. Одеси</span></td>
+        <td>2023–2025 · СБУ<br><span class="mono mut">22023240000000123</span></td>
+        <td class="mono">1<br>20.05.2025 — 20.05.2025</td>
+        <td>Окрема ухвала Приморського суду (20.05.2025).
+          <details style="margin-top:6px"><summary class="mut">усі документи (1)</summary><ul class="ev mono"><li>20.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127471351" target="_blank" rel="noopener">127471351</a> · ухвала</li></ul></details></td>
+      </tr><tr>
+        <td class="mono"><b><a href="https://court.opendatabot.ua/cause/523%2F8486%2F25" target="_blank" rel="noopener">523/8486/25</a></b><br><span class="mut">Пересипський районний суд м. Одеси</span></td>
+        <td>2023–2025 · СБУ<br><span class="mono mut">22023240000000123</span></td>
+        <td class="mono">22 <span class="mut">(закритих 9)</span><br>13.05.2025 — 15.05.2026</td>
+        <td>Пересипський суд після зміни підсудності: дозволи на обшуки 14.05.2025 (9 ухвал закриті), арешт майна з обшуків ФГ «Агрофірма Бургуджі» й ПП «АФ Ташлик», скарги адвокатів, запобіжний захід (до 15.05.2026).
+          <details style="margin-top:6px"><summary class="mut">усі документи (22)</summary><ul class="ev mono"><li>15.05.2026 · <a href="https://reyestr.court.gov.ua/Review/136537345" target="_blank" rel="noopener">136537345</a> · запобіжний захід</li><li>18.06.2025 · <a href="https://reyestr.court.gov.ua/Review/128196472" target="_blank" rel="noopener">128196472</a> · скарга адвоката</li><li>13.06.2025 · <a href="https://reyestr.court.gov.ua/Review/128103178" target="_blank" rel="noopener">128103178</a> · запобіжний захід</li><li>12.06.2025 · <a href="https://reyestr.court.gov.ua/Review/128072463" target="_blank" rel="noopener">128072463</a> · скарга адвоката</li><li>04.06.2025 · <a href="https://reyestr.court.gov.ua/Review/127852268" target="_blank" rel="noopener">127852268</a> · скарга адвоката</li><li>26.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127596125" target="_blank" rel="noopener">127596125</a> · виправлення описки</li><li>26.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127596123" target="_blank" rel="noopener">127596123</a> · скарга адвоката</li><li>21.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127517703" target="_blank" rel="noopener">127517703</a> · арешт майна</li><li>21.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127517702" target="_blank" rel="noopener">127517702</a> · арешт майна</li><li>21.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127517701" target="_blank" rel="noopener">127517701</a> · арешт майна</li><li>21.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127517700" target="_blank" rel="noopener">127517700</a> · арешт майна</li><li>21.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127517699" target="_blank" rel="noopener">127517699</a> · арешт майна</li><li>21.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127517698" target="_blank" rel="noopener">127517698</a> · арешт майна</li><li>15.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127346892" target="_blank" rel="noopener">127346892</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>13.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127296762" target="_blank" rel="noopener">127296762</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>13.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127296759" target="_blank" rel="noopener">127296759</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>13.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127296758" target="_blank" rel="noopener">127296758</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>13.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127296757" target="_blank" rel="noopener">127296757</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>13.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127296754" target="_blank" rel="noopener">127296754</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>13.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127296753" target="_blank" rel="noopener">127296753</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>13.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127296752" target="_blank" rel="noopener">127296752</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>13.05.2025 · <a href="https://reyestr.court.gov.ua/Review/127296749" target="_blank" rel="noopener">127296749</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li></ul></details></td>
+      </tr><tr>
+        <td class="mono"><b><a href="https://court.opendatabot.ua/cause/523%2F12120%2F25" target="_blank" rel="noopener">523/12120/25</a></b><br><span class="mut">Пересипський районний суд м. Одеси</span></td>
+        <td>2023–2025 · СБУ<br><span class="mono mut">22023240000000123</span></td>
+        <td class="mono">3<br>30.06.2025 — 08.07.2025</td>
+        <td>Обвинувальний акт і угода про визнання винуватості засновника ТОВ «СП им. Димитрова»: вирок 26.06.2025 (ч. 2 ст. 28, ч. 4 ст. 111-1 КК).
+          <details style="margin-top:6px"><summary class="mut">усі документи (3)</summary><ul class="ev mono"><li>08.07.2025 · <a href="https://reyestr.court.gov.ua/Review/128680607" target="_blank" rel="noopener">128680607</a> · виправлення описки</li><li>08.07.2025 · <a href="https://reyestr.court.gov.ua/Review/128680596" target="_blank" rel="noopener">128680596</a> · вирок за угодою</li><li>30.06.2025 · <a href="https://reyestr.court.gov.ua/Review/128476199" target="_blank" rel="noopener">128476199</a> · призначення підготовчого засідання</li></ul></details></td>
+      </tr><tr>
+        <td class="mono"><b><a href="https://court.opendatabot.ua/cause/523%2F14183%2F25" target="_blank" rel="noopener">523/14183/25</a></b><br><span class="mut">Пересипський районний суд м. Одеси</span></td>
+        <td>2025 · СБУ, виділене провадження<br><span class="mono mut">22025160000000354 від 13.06.2025</span></td>
+        <td class="mono">4<br>07.08.2025 — 26.09.2025</td>
+        <td>Спеціальне (заочне) досудове розслідування щодо директора ТОВ «СП им. Димитрова», уродженця с. Виноградівка.
+          <details style="margin-top:6px"><summary class="mut">усі документи (4)</summary><ul class="ev mono"><li>26.09.2025 · <a href="https://reyestr.court.gov.ua/Review/130519747" target="_blank" rel="noopener">130519747</a> · тимчасовий доступ до документів</li><li>08.08.2025 · <a href="https://reyestr.court.gov.ua/Review/129396540" target="_blank" rel="noopener">129396540</a> · спеціальне (заочне) розслідування</li><li>08.08.2025 · <a href="https://reyestr.court.gov.ua/Review/129396539" target="_blank" rel="noopener">129396539</a> · спеціальне (заочне) розслідування</li><li>07.08.2025 · <a href="https://reyestr.court.gov.ua/Review/129381614" target="_blank" rel="noopener">129381614</a> · спеціальне (заочне) розслідування</li></ul></details></td>
+      </tr><tr>
+        <td class="mono"><b><a href="https://court.opendatabot.ua/cause/522%2F14204%2F18" target="_blank" rel="noopener">522/14204/18</a></b><br><span class="mut">Одеський апеляційний суд; Приморський районний суд м. Одеси</span></td>
+        <td>2017–2022 · ДФС (обшуки 2020)<br><span class="mono mut">32017160000000074 від 28.08.2017</span></td>
+        <td class="mono">25 <span class="mut">(закритих 1)</span><br>06.11.2018 — 24.12.2020</td>
+        <td>Податкова справа ГУ ДФС в Одеській обл. щодо СВК «Дружба народів» (ч. 3 ст. 212 КК, ухилення від ПДВ 6 270 383 грн за 2017): доступ до банківських документів (2018, 2020), арешт вилученого під час обшуків 10.01.2020, апеляції прокурора.<br><span class="mut">Провадження закрито 29.03.2022 (ч. 1 ст. 284 КПК). В ухвалах 04.11.2020 номер записано як «522/14204/20».</span>
+          <details style="margin-top:6px"><summary class="mut">усі документи (25)</summary><ul class="ev mono"><li>24.12.2020 · <a href="https://reyestr.court.gov.ua/Review/93808698" target="_blank" rel="noopener">93808698</a> · тимчасовий доступ до документів <span class="mut">(у тексті: 522/14204/20)</span></li><li>02.12.2020 · <a href="https://reyestr.court.gov.ua/Review/93233200" target="_blank" rel="noopener">93233200</a> · тимчасовий доступ до документів <span class="mut">(у тексті: 522/14204/20)</span></li><li>02.12.2020 · <a href="https://reyestr.court.gov.ua/Review/93233202" target="_blank" rel="noopener">93233202</a> · тимчасовий доступ до документів <span class="mut">(у тексті: 522/14204/20)</span></li><li>02.12.2020 · <a href="https://reyestr.court.gov.ua/Review/93233522" target="_blank" rel="noopener">93233522</a> · тимчасовий доступ до документів <span class="mut">(у тексті: 522/14204/20)</span></li><li>02.12.2020 · <a href="https://reyestr.court.gov.ua/Review/93233205" target="_blank" rel="noopener">93233205</a> · тимчасовий доступ до документів <span class="mut">(у тексті: 522/14204/20)</span></li><li>02.12.2020 · <a href="https://reyestr.court.gov.ua/Review/93233210" target="_blank" rel="noopener">93233210</a> · тимчасовий доступ до документів <span class="mut">(у тексті: 522/14204/20)</span></li><li>02.12.2020 · <a href="https://reyestr.court.gov.ua/Review/93233207" target="_blank" rel="noopener">93233207</a> · тимчасовий доступ до документів <span class="mut">(у тексті: 522/14204/20)</span></li><li>11.03.2020 · <a href="https://reyestr.court.gov.ua/Review/88136397" target="_blank" rel="noopener">88136397</a> · самовідвід судді</li><li>14.02.2020 · <a href="https://reyestr.court.gov.ua/Review/87583487" target="_blank" rel="noopener">87583487</a> · тимчасовий доступ до документів</li><li>14.02.2020 · <a href="https://reyestr.court.gov.ua/Review/87582974" target="_blank" rel="noopener">87582974</a> · тимчасовий доступ до документів</li><li>14.02.2020 · <a href="https://reyestr.court.gov.ua/Review/87583485" target="_blank" rel="noopener">87583485</a> · тимчасовий доступ до документів</li><li>14.02.2020 · <a href="https://reyestr.court.gov.ua/Review/87582975" target="_blank" rel="noopener">87582975</a> · тимчасовий доступ до документів</li><li>14.02.2020 · <a href="https://reyestr.court.gov.ua/Review/87582976" target="_blank" rel="noopener">87582976</a> · тимчасовий доступ до документів</li><li>14.02.2020 · <a href="https://reyestr.court.gov.ua/Review/87583488" target="_blank" rel="noopener">87583488</a> · тимчасовий доступ до документів</li><li>14.02.2020 · <a href="https://reyestr.court.gov.ua/Review/87582977" target="_blank" rel="noopener">87582977</a> · тимчасовий доступ до документів</li><li>14.02.2020 · <a href="https://reyestr.court.gov.ua/Review/87583489" target="_blank" rel="noopener">87583489</a> · тимчасовий доступ до документів</li><li>14.02.2020 · <a href="https://reyestr.court.gov.ua/Review/87582978" target="_blank" rel="noopener">87582978</a> · тимчасовий доступ до документів</li><li>14.02.2020 · <a href="https://reyestr.court.gov.ua/Review/87583490" target="_blank" rel="noopener">87583490</a> · тимчасовий доступ до документів</li><li>14.02.2020 · <a href="https://reyestr.court.gov.ua/Review/87605066" target="_blank" rel="noopener">87605066</a> · апеляція</li><li>14.02.2020 · <a href="https://reyestr.court.gov.ua/Review/87604861" target="_blank" rel="noopener">87604861</a> · апеляція</li><li>04.02.2020 · <a href="https://reyestr.court.gov.ua/Review/87342452" target="_blank" rel="noopener">87342452</a> · самовідвід судді</li><li>27.01.2020 · <a href="https://reyestr.court.gov.ua/Review/87177909" target="_blank" rel="noopener">87177909</a> · арешт майна</li><li>23.01.2020 · <a href="https://reyestr.court.gov.ua/Review/87087004" target="_blank" rel="noopener">87087004</a> · закрита від оприлюднення (ст. 7 Закону про доступ до судових рішень)</li><li>06.11.2018 · <a href="https://reyestr.court.gov.ua/Review/77641977" target="_blank" rel="noopener">77641977</a> · тимчасовий доступ до документів</li><li>06.11.2018 · <a href="https://reyestr.court.gov.ua/Review/77641963" target="_blank" rel="noopener">77641963</a> · тимчасовий доступ до документів</li></ul></details></td>
+      </tr><tr>
+        <td class="mono"><b><a href="https://court.opendatabot.ua/cause/522%2F21971%2F19" target="_blank" rel="noopener">522/21971/19</a></b><br><span class="mut">Приморський районний суд м. Одеси</span></td>
+        <td>2017–2022 · ДФС<br><span class="mono mut">див. текст ухвали</span></td>
+        <td class="mono">1<br>23.01.2020 — 23.01.2020</td>
+        <td>Арешт майна (20.01.2020) — знайдено пошуком Opendatabot за номером провадження 32017160000000074; стосується ТОВ «Скайторг».<br><span class="mut">Звʼязок з Паращенками з тексту прямо не видно.</span>
+          <details style="margin-top:6px"><summary class="mut">усі документи (1)</summary><ul class="ev mono"><li>23.01.2020 · <a href="https://reyestr.court.gov.ua/Review/87097947" target="_blank" rel="noopener">87097947</a> · арешт майна</li></ul></details></td>
+      </tr></tbody>
+    </table></div>
+  </section>
+
+  <section class="card" id="ep2020">
+    <h2>2б. Епізод 2020: податкова справа ДФС і обшуки 10.12.2020</h2>
+    <p><b>Провадження 32017160000000074 від 28.08.2017 · слідче управління ГУ ДФС в Одеській області · ч. 3 ст. 212 КК (ухилення від сплати податків в особливо великих розмірах).</b> Судова справа <a href="https://court.opendatabot.ua/cause/522%2F14204%2F18" target="_blank" rel="noopener">522/14204/18 (Приморський районний суд м. Одеси; апеляція — 11-сс/813/194/20)</a>.</p>
+    <p>За версією ДФС, службові особи СВК «Дружба народів» (03766990) у 2017 році ухилилися від сплати ПДВ на 6 270 383 грн: податковий кредит за неіснуючими закупівлями пального й добрив у ТОВ «Атлант-Оіл ЛТД», «Нафтопромтрейд», «Тир-Буд 1», «Мега Старт», «Полісся 2016», «Грейс Трейд», «Барата» та продаж урожаю без звітності. До кола підприємств «під управлінням третіх осіб» слідство віднесло й ФГ «Агрофірма Бургуджі» (32009355).</p>
+    <div class="tablewrap"><table class="rep" style="margin-top:10px">
+      <thead><tr><th>Дата</th><th>Подія</th><th>Документ</th></tr></thead>
+      <tbody><tr><td class="mono">2017-08-28</td><td>Провадження внесено до ЄРДР (ДФС)</td><td><span class="mut">медіа</span></td></tr><tr><td class="mono">2018-10-10</td><td>Перші ухвали про тимчасовий доступ до документів</td><td><a href="https://reyestr.court.gov.ua/Review/77641977" target="_blank" rel="noopener">77641977</a></td></tr><tr><td class="mono">2020-01-10</td><td>Обшуки в приміщеннях СВК «Дружба народів» (зокрема біля с. Нестоїта, де були й керівники ДП «ДГ „Южний“» НААН) та в офісі ФГ «Агрофірма Бургуджі»</td><td><a href="https://reyestr.court.gov.ua/Review/87177909" target="_blank" rel="noopener">87177909</a></td></tr><tr><td class="mono">2020-01-17</td><td>Арешт вилучених документів і дисків; в арешті 12 100 т зерна (пшениця, кукурудза, соняшник) відмовлено</td><td><a href="https://reyestr.court.gov.ua/Review/87177909" target="_blank" rel="noopener">87177909</a></td></tr><tr><td class="mono">2020-02-14</td><td>Апеляційний суд залишає відмову в арешті зерна без змін (скарга прокурора)</td><td><a href="https://reyestr.court.gov.ua/Review/87605066" target="_blank" rel="noopener">87605066</a></td></tr><tr><td class="mono">2020-11-04</td><td>Доступ до банківських документів СВК «Дружба народів» за 2017–2020</td><td><a href="https://reyestr.court.gov.ua/Review/93233205" target="_blank" rel="noopener">93233205</a></td></tr><tr><td class="mono">2020-12-10</td><td>Обшуки СБУ й ДФС у будинку Паращенка С. В. на Французькому бульварі та за місцем роботи (через 6 днів після завершення його повноважень голови облради)</td><td><span class="mut">медіа</span></td></tr><tr><td class="mono">2022-03-29</td><td>Провадження закрито (ч. 1 ст. 284 КПК)</td><td><a href="https://reyestr.court.gov.ua/Review/124331186" target="_blank" rel="noopener">124331186</a></td></tr><tr><td class="mono">2025-01-10</td><td>Документи, вилучені 10.12.2020, СБУ витребовує для справи 22023240000000123 (пособництво державі-агресору)</td><td><a href="https://reyestr.court.gov.ua/Review/124331186" target="_blank" rel="noopener">124331186</a></td></tr></tbody>
+    </table></div>
+    <h3 style="margin-top:14px">Публікації 2020 року (PDF у теці користувачки)</h3>
+    <ul class="ev"><li><b>Цензор.НЕТ, 10.12.2020 — «СБУ обшукує офіс і житло ексголови Одеської облради Паращенка»</b> — <span class="mut">СБУ і ДФС; «можливі порушення податкового законодавства» (з посиланням на Укрінформ); Паращенко підтвердив обшуки у фейсбуці</span></li><li><b>LB.ua, 10.12.2020 — «СБУ прийшло з обшуком до колишнього голови Одеської облради»</b> — <span class="mut">з посиланням на Інтерфакс-Україна; облрадою керував 21.08.2019–04.12.2020</span></li><li><b>Одеське життя, 11.12.2020 — «Агрофирмы и политика: кто такой Сергей Паращенко…»</b> — <span class="mut">СБУ: обшуки за 10 адресами у справі про договори агрофірм з підприємствами НААН — урожай на державній землі, 80% — собі</span></li><li><b>«Одесса как она есть» (Facebook), 10.12.2020</b> — <span class="mut">фото маєтку; «відмивання бюджетних коштів і податкові махінації» — оцінка сторінки, не офіційна</span></li></ul>
+    <p class="mut" style="margin-top:8px">Медіа 2020 року пишуть про договори з підприємствами НААН (СБУ), а відкриті ухвали ДФС — про ПДВ «Дружби народів»; ухвал про обшук 10.12.2020 у реєстрі не знайдено (ймовірно, закриті). Що обшук 10.12.2020 проводили саме в провадженні 32017160000000074, прямо сказано лише в ухвалі 2025 року (124331186).</p>
+  </section>
+
+  <section class="card">
+    <h2>3. Гроші Паращенка С. В. на тлі справи (повідомлення НАЗК про суттєві зміни, 2025)</h2>
+    <p class="mut">Затримання засновника фірми — 26.02.2025, вирок — 26.06.2025. Нижче — дивіденди, які Паращенко С. В. сам задекларував у ці тижні. Збіг у часі — факт хронології, не доказ мети.</p>
+    <div class="tablewrap"><table class="rep">
+      <thead><tr><th>Період</th><th>Сума</th><th>Джерело</th><th>Документ</th></tr></thead>
+      <tbody><tr><td class="mono">2025-02-14 — 2025-02-17</td>
+        <td><b>931 040 грн</b></td><td>СІЛЬСЬКОГОСПОДАРСЬКЕ ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;ПАВЛІВКА-АГРО ТРЕЙД&#34; (37473417)</td>
+        <td><a href="https://public.nazk.gov.ua/documents/e6675051-e3e6-4240-a8f7-20edae312286" target="_blank" rel="noopener">e6675051</a></td></tr><tr><td class="mono">2025-02-19 — 2025-02-21</td>
+        <td><b>931 040 грн</b></td><td>СІЛЬСЬКОГОСПОДАРСЬКЕ ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;ПАВЛІВКА-АГРО ТРЕЙД&#34; (37473417)</td>
+        <td><a href="https://public.nazk.gov.ua/documents/75ade0e1-69ee-4dff-9bc8-a2e97a3381d3" target="_blank" rel="noopener">75ade0e1</a></td></tr><tr><td class="mono">2025-02-26 — 2025-02-27</td>
+        <td><b>465 520 грн</b></td><td>СІЛЬСЬКОГОСПОДАРСЬКЕ ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ &#34;ПАВЛІВКА-АГРО ТРЕЙД&#34; (37473417)</td>
+        <td><a href="https://public.nazk.gov.ua/documents/d47adad7-0d33-421d-bb07-c1c134ba3e48" target="_blank" rel="noopener">d47adad7</a></td></tr><tr><td class="mono">2025-03-05 — 2025-03-07</td>
+        <td><b>1 860 464 грн</b></td><td>ПРИВАТНЕ ПІДПРИЄМСТВО &#34;АГРОФІРМА ТАШЛИК&#34; (34922395)</td>
+        <td><a href="https://public.nazk.gov.ua/documents/8d110222-77ef-4bfc-a946-dcb2f00eafee" target="_blank" rel="noopener">8d110222</a></td></tr><tr><td class="mono">2025-03-12 — 2025-03-18</td>
+        <td><b>1 627 906 грн</b></td><td>ПРИВАТНЕ ПІДПРИЄМСТВО &#34;АГРОФІРМА ТАШЛИК&#34; (34922395)</td>
+        <td><a href="https://public.nazk.gov.ua/documents/7bcc9752-8e17-4a3d-ac66-2738a9b609cc" target="_blank" rel="noopener">7bcc9752</a></td></tr><tr><td class="mono">2025-03-24</td>
+        <td><b>232 558 грн</b></td><td>ПРИВАТНЕ ПІДПРИЄМСТВО &#34;АГРОФІРМА ТАШЛИК&#34; (34922395)</td>
+        <td><a href="https://public.nazk.gov.ua/documents/c7ee6ba6-4a1a-46b7-ae47-32cd29124984" target="_blank" rel="noopener">c7ee6ba6</a></td></tr></tbody>
+    </table></div>
+    <p class="mut" style="margin-top:8px">Власний дохід за деклараціями: 2024 — 8 630 087 грн, 2025 — 34 264 570 грн.</p>
+  </section>
+
+  <section class="card">
+    <h2>4. Звʼязки з Гончаренком</h2>
+    <p class="mut">Ланцюжок: брат засудженого Паращенко С. В. → його син Паращенко С. С. (49% СВК «Дружба народів») → співвласники Обухов і Потапський (по 25%), помічники Гончаренка → «Дружба народів» — заявлений спонсор «Гончаренко центрів», які очолює Потапський. Гончаренко, Обухов і Потапський у справі СБУ не фігурують.</p>
+    
+    <div style="margin-top:12px"><b>26.02.2025 у справі СБУ обшукано два обʼєкти, які, за ухвалами, перебувають у володінні СВК «Дружба народів» — кооперативу, де по 25% у помічників Гончаренка Обухова і Потапського</b> <span class="lvl ok">підтверджено</span>
+      <div class="mut">джерело: ухвали ЄДРСР 125894639, 125894660 + ЄДР 03766990 · <a href="https://reyestr.court.gov.ua/Review/125894639" target="_blank" rel="noopener">ухвала 125894639</a> · <a href="https://reyestr.court.gov.ua/Review/125894660" target="_blank" rel="noopener">ухвала 125894660</a></div>
+      </div>
+    
+    <div style="margin-top:12px"><b>СВК «Дружба народів» — головний фігурант податкової справи ДФС 2017–2022 (ПДВ 6,27 млн грн за 2017; обшуки 10.01.2020 і 10.12.2020); документи з неї СБУ у 2025 долучає до справи про пособництво РФ</b> <span class="lvl ok">підтверджено</span>
+      <div class="mut">джерело: ухвали ЄДРСР 87177909, 93233205, 124331186 · <a href="https://reyestr.court.gov.ua/Review/87177909" target="_blank" rel="noopener">ухвала 87177909</a> · <a href="https://reyestr.court.gov.ua/Review/124331186" target="_blank" rel="noopener">ухвала 124331186</a></div>
+      </div>
+    
+    <div style="margin-top:12px"><b>Син Паращенка С. В. — Паращенко С. С. — 49% і кінцевий бенефіціар СВК «Дружба народів» (03766990); ще 1% — Паращенко Майя Х. (колишня дружина С. В.)</b> <span class="lvl ok">підтверджено</span>
+      <div class="mut">джерело: ЄДР · <a href="https://opendatabot.ua/c/03766990" target="_blank" rel="noopener">Opendatabot 03766990</a></div>
+      <ul class="ev mono"><li>beneficiary: ОБУХОВ ПЕТРО ГЕННАДІЙОВИЧ; громадянство: Україна; Прямий вирішальний вплив; відсоток частки - 25</li><li>beneficiary: ПОТАПСЬКИЙ ОЛЕКСІЙ ЮРІЙОВИЧ; громадянство: Україна; Прямий вирішальний вплив; відсоток частки - 25</li><li>beneficiary: ПАРАЩЕНКО СЕРГІЙ СЕРГІЙОВИЧ; громадянство: Україна; Прямий вирішальний вплив; відсоток частки - 49</li><li>founder: ПОТАПСЬКИЙ ОЛЕКСІЙ ЮРІЙОВИЧ; громадянство: Україна; розмір частки - 5375,00 грн.</li><li>founder: ПАРАЩЕНКО СЕРГІЙ СЕРГІЙОВИЧ; громадянство: Україна; розмір частки - 10535,00 грн.</li><li>founder: ОБУХОВ ПЕТРО ГЕННАДІЙОВИЧ; громадянство: Україна; розмір частки - 5375,00 грн.</li><li>founder: ПАРАЩЕНКО МАЙЯ ХРИСТОФОРІВНА; громадянство: Україна; розмір частки - 215,00 грн.</li><li>head: ГРЕКОВ РУСЛАН КОСТЯНТИНОВИЧ; (згідно статуту) - керівник</li></ul></div>
+    
+    <div style="margin-top:12px"><b>Співвласники «Дружби народів» — Обухов П. Г. і Потапський О. Ю. (по 25%) — помічники нардепа Гончаренка (9 скликання)</b> <span class="lvl ok">підтверджено</span>
+      <div class="mut">джерело: ЄДР; база помічників (data.rada.gov.ua)</div>
+      <ul class="ev mono"><li>Потапський Олексій Юрійович — помічник Гончаренко Олексій Олексійович</li><li>Обухов Петро Геннадійович — помічник Гончаренко Олексій Олексійович</li></ul></div>
+    
+    <div style="margin-top:12px"><b>«Дружба народів» — у блоці «Спонсори» на сайті мережі «Гончаренко центрів» (ГО «ВИ.МОВА»)</b> <span class="lvl mid">самозаява мережі</span>
+      <div class="mut">джерело: goncharenkocentre.com.ua · <a href="https://goncharenkocentre.com.ua/" target="_blank" rel="noopener">сайт мережі</a> · <a href="https://claude.ai/artifact/2hqqjB1MN1CwYGVb4ak7DK" target="_blank" rel="noopener">аналіз фінансування</a></div>
+      </div>
+    
+    <div style="margin-top:12px"><b>ГО «ВИ.МОВА» заснували Гончаренко і Донець М. О.; з 08.08.2023 голова — Потапський О. Ю. (співвласник «Дружби народів»)</b> <span class="lvl ok">підтверджено</span>
+      <div class="mut">джерело: ЄДР</div>
+      <ul class="ev mono"><li>beneficiary: причина відсутності: Відсутні фізичні особи, які відповідають статусу кінцевого бенефіціарного власника юридич</li><li>founder: ГОНЧАРЕНКО ОЛЕКСІЙ ОЛЕКСІЙОВИЧ; громадянство: Україна; розмір частки - 0,00 грн.</li><li>founder: ДОНЕЦЬ МАРІЯ ОЛЕГІВНА; громадянство: Україна; розмір частки - 0,00 грн.</li><li>head: ПОТАПСЬКИЙ ОЛЕКСІЙ ЮРІЙОВИЧ; ГОЛОВА; 08.08.2023; (відповідно до статуту) - керівник</li></ul></div>
+    
+    <div style="margin-top:12px"><b>Паращенко С. В. у 2015 — кандидат і голова фракції «Блок Петра Порошенка „Солідарність“» в Одеській облраді (партія, від якої тоді був у Раді Гончаренко; нині «Європейська Солідарність»)</b> <span class="lvl ok">підтверджено</span>
+      <div class="mut">джерело: ЦВК 2015; «Слово і Діло» · <a href="https://www.cvk.gov.ua/pls/vm2015/wm001pt001f01=100.html" target="_blank" rel="noopener">ЦВК 2015</a></div>
+      </div>
+    
+    <div style="margin-top:12px"><b>Дивіденди «Дружби народів» Паращенку С. С. — 3,14 млн грн (кінець 2024 — початок 2025), разом з Обуховим і Потапським як бенефіціарами</b> <span class="lvl mid">медіа + декларації</span>
+      <div class="mut">джерело: Центр публічних розслідувань, 18.01.2025</div>
+      </div>
+    
+    <div style="margin-top:12px"><b>За пакетом користувачки: «Агрофірма Бургуджі» надавала приміщення громадській приймальні одеської «ЄС»; Паращенко-батько дрібно жертвував «ЄС» у 2016–2018</b> <span class="lvl low">не перевірено нашими даними</span>
+      <div class="mut">джерело: ЧЕСНО, 25.02.2025 (за пакетом); POLITDATA-скрейп ще триває — внесків Паращенків поки не знайдено</div>
+      </div>
+    
+    <h3 style="margin-top:16px">Партійний шлях за ЧЕСНО</h3>
+    <ul class="ev"><li><a href="https://www.chesno.org/politician/26396/" target="_blank" rel="noopener">Обухов Петро Геннадійович</a> (1984): 2010 ПАРТІЯ РЕГІОНІВ → 2014 ПОЛІТИЧНА ПАРТІЯ &#34;ЄВРОПЕЙСЬКА СОЛІДАРНІСТЬ&#34; <span class="mut">· минуле в Партії регіонів</span></li><li><a href="https://www.chesno.org/politician/121401/" target="_blank" rel="noopener">Паращенко Сергій Сергійович</a> (1995): 2020 ПОЛІТИЧНА ПАРТІЯ &#34;ЗА МАЙБУТНЄ&#34;</li><li><a href="https://www.chesno.org/politician/49644/" target="_blank" rel="noopener">Потапський Олексій Юрійович</a> (1981): 2010 ПАРТІЯ РЕГІОНІВ → 2015 ПОЛІТИЧНА ПАРТІЯ &#34;ЄВРОПЕЙСЬКА СОЛІДАРНІСТЬ&#34; <span class="mut">· минуле в Партії регіонів</span></li><li><a href="https://www.chesno.org/politician/20598/" target="_blank" rel="noopener">Гончаренко Олексій Олексійович</a> (1980): 2006 ПАРТІЯ РЕГІОНІВ → 2014 ПОЛІТИЧНА ПАРТІЯ &#34;ЄВРОПЕЙСЬКА СОЛІДАРНІСТЬ&#34; → 2019 САМОВИСУВАННЯ → 2020 ПОЛІТИЧНА ПАРТІЯ &#34;ЄВРОПЕЙСЬКА СОЛІДАРНІСТЬ&#34; <span class="mut">· кнопкодав, гречкосій, минуле в Партії регіонів, змінював партії: 3</span></li><li><a href="https://www.chesno.org/politician/23569/" target="_blank" rel="noopener">Паращенко Сергій Володимирович</a> (1972): 2010 ПАРТІЯ РЕГІОНІВ → 2014 ПОЛІТИЧНА ПАРТІЯ &#34;ЄВРОПЕЙСЬКА СОЛІДАРНІСТЬ&#34; → 2020 ПОЛІТИЧНА ПАРТІЯ &#34;ЗА МАЙБУТНЄ&#34; <span class="mut">· гречкосій, минуле в Партії регіонів, змінював партії: 3</span></li></ul>
+  </section>
+
+  <section class="card">
+    <h2>5. Реєстрові записи (ЄДР)</h2>
+    <div style="margin-top:8px"><b><a href="https://opendatabot.ua/c/03747024" target="_blank" rel="noopener">03747024</a></b>
+      <ul class="ev mono"><li>beneficiary: ПАРАЩЕНКО СЕРГІЙ СЕРГІЙОВИЧ; громадянство: Україна; Прямий вирішальний вплив; відсоток частки - 100</li><li>founder: ПАРАЩЕНКО СЕРГІЙ СЕРГІЙОВИЧ; громадянство: Україна; розмір частки - 4500,00 грн.</li><li>head: ТЕРЗІ ОЛЕКСАНДР ГЕОРГІЙОВИЧ - керівник</li></ul></div><div style="margin-top:8px"><b><a href="https://opendatabot.ua/c/03766990" target="_blank" rel="noopener">03766990</a></b>
+      <ul class="ev mono"><li>beneficiary: ОБУХОВ ПЕТРО ГЕННАДІЙОВИЧ; громадянство: Україна; Прямий вирішальний вплив; відсоток частки - 25</li><li>beneficiary: ПОТАПСЬКИЙ ОЛЕКСІЙ ЮРІЙОВИЧ; громадянство: Україна; Прямий вирішальний вплив; відсоток частки - 25</li><li>beneficiary: ПАРАЩЕНКО СЕРГІЙ СЕРГІЙОВИЧ; громадянство: Україна; Прямий вирішальний вплив; відсоток частки - 49</li><li>founder: ПОТАПСЬКИЙ ОЛЕКСІЙ ЮРІЙОВИЧ; громадянство: Україна; розмір частки - 5375,00 грн.</li><li>founder: ПАРАЩЕНКО СЕРГІЙ СЕРГІЙОВИЧ; громадянство: Україна; розмір частки - 10535,00 грн.</li><li>founder: ОБУХОВ ПЕТРО ГЕННАДІЙОВИЧ; громадянство: Україна; розмір частки - 5375,00 грн.</li><li>founder: ПАРАЩЕНКО МАЙЯ ХРИСТОФОРІВНА; громадянство: Україна; розмір частки - 215,00 грн.</li><li>head: ГРЕКОВ РУСЛАН КОСТЯНТИНОВИЧ; (згідно статуту) - керівник</li></ul></div><div style="margin-top:8px"><b><a href="https://opendatabot.ua/c/32009355" target="_blank" rel="noopener">32009355</a></b>
+      <ul class="ev mono"><li>beneficiary: ПАРАЩЕНКО СЕРГІЙ СЕРГІЙОВИЧ; громадянство: Україна; Прямий вирішальний вплив; відсоток частки - 100</li><li>founder: ПАРАЩЕНКО СЕРГІЙ СЕРГІЙОВИЧ; громадянство: Україна; розмір частки - 0,00 грн.</li><li>head: ПАРАЩЕНКО СЕРГІЙ СЕРГІЙОВИЧ; 15.03.2019; (голова) - керівник</li><li>signer: ПАРАЩЕНКО СЕРГІЙ СЕРГІЙОВИЧ; 15.03.2019 - представник</li></ul></div><div style="margin-top:8px"><b><a href="https://opendatabot.ua/c/34922395" target="_blank" rel="noopener">34922395</a></b>
+      <ul class="ev mono"><li>beneficiary: Паращенко Сергій Володимирович; громадянство: Україна; Прямий вирішальний вплив; відсоток частки - 100</li><li>founder: ПАРАЩЕНКО СЕРГІЙ ВОЛОДИМИРОВИЧ; громадянство: Україна; розмір частки - 100000,00 грн.</li><li>head: ПАДУРА ІВАН ВОЛОДИМИРОВИЧ; 20.03.2018; (згідно статуту) - керівник</li><li>signer: ПАДУРА ІВАН ВОЛОДИМИРОВИЧ; 20.03.2018 - представник</li></ul></div><div style="margin-top:8px"><b><a href="https://opendatabot.ua/c/36027645" target="_blank" rel="noopener">36027645</a></b>
+      <ul class="ev mono"><li>beneficiary: Паращенко Олександр Володимирович; громадянство: Україна; Прямий вирішальний вплив; відсоток частки - 100</li><li>founder: ПАРАЩЕНКО ОЛЕКСАНДР ВОЛОДИМИРОВИЧ</li><li>head: ПАРАЩЕНКО ОЛЕКСАНДР ВОЛОДИМИРОВИЧ - керівник</li><li>signer: ПАРАЩЕНКО ОЛЕКСАНДР ВОЛОДИМИРОВИЧ; - представник</li></ul></div><div style="margin-top:8px"><b><a href="https://opendatabot.ua/c/43755587" target="_blank" rel="noopener">43755587</a></b>
+      <ul class="ev mono"><li>beneficiary: Паращенко Сергій Сергійович; громадянство: Україна; Прямий вирішальний вплив; відсоток частки - 100</li><li>founder: ПАРАЩЕНКО СЕРГІЙ СЕРГІЙОВИЧ; громадянство: Україна; розмір частки - 8767,00 грн.</li><li>head: Терзі Олександр Георгійович - керівник</li></ul></div>
+  </section>
+
+  <section class="card">
+    <h2>6. Чого це НЕ доводить</h2>
+    <ul class="ev"><li>Паращенкам С. В. і С. С. підозру не повідомлено; в ухвалі вони «можливо причетні» — це опис слідства в клопотанні про арешт майна.</li><li>Ні Гончаренко, ні Обухов, ні Потапський у справі СБУ не фігурують; звʼязок із ними — лише бізнесовий і партійний (через сина Паращенка).</li><li>Ухвали знеособлені; особи встановлено за кодами ЄДРПОУ (С. В., С. С. — надійно) і за назвою ФГ та по батькові (брат — непрямо).</li><li>Збіг дат дивідендів (лютий–березень 2025) з арештом брата — факт хронології, не доказ мети.</li><li>Справа ДБР № 62025000000000423 про експорт зерна (Дружба народів, Бургуджі) — інша справа; підозр не знайдено.</li><li>Обшуки на обʼєктах «Дружби народів» у 2025 не означають підозри кооперативу, його співвласникам чи Гончаренку; у відкритих ухвалах співвласників не названо.</li><li>Податкова справа ДФС 2017–2022 закрита 29.03.2022 за ч. 1 ст. 284 КПК (пункт в ухвалі не вказано) — вироку не було; хто був співвласником «Дружби народів» у 2017–2020, наша копія ЄДР (лише поточний стан) не показує.</li><li>8 ухвал від 25.02.2025 і 9 ухвал від 13–15.05.2025 закриті від оприлюднення; що вони дозволяли — висновок з дат, не з текстів.</li></ul>
+    <h3 style="margin-top:12px">Перед публікацією</h3>
+    <ul class="ev"><li>Запит на коментар Паращенку С. В., С. С., Обухову, Потапському, Гончаренку.</li><li>Запит до СБУ / Одеської обласної прокуратури щодо стану проваджень 22023240000000123 і 22025160000000354.</li><li>Юридична перевірка формулювань щодо осіб без підозри.</li></ul>
+    <p class="mut" style="margin-top:8px">Джерела: пакет «Справа СБУ і родина Паращенків» (ухвали ЄДРСР, ЄДР) — документ користувачки · <a href="https://reyestr.court.gov.ua/">ЄДРСР</a> · <a href="311873.html">досьє uid 311873</a> · <a href="11651.html">досьє Гончаренка uid 11651</a></p>
+  </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Кримінальні справи</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Дизайн-система за артефактом «Мережа Гончаренка»; сторінка — вкладки: Огляд · Граф · Особи · Декларації · Організації · Звʼязність · Джерела */
+:root {
+  --bg: #f6f7f8; --surface: #fcfcfb; --fg: #15181c; --muted: #5a6068; --faint: #8a9099;
+  --rule: #dfe2e6; --grid: #eceef0; --accent: #1f4f8f; --warn: #9a6700; --bad: #b42318; --ok: #1baf7a;
+  --n-core: #eb6834; --n-person: #2a78d6; --n-org: #1baf7a; --n-ext: #8a9099; --n-go: #7c3aed; --n-party: #d99a00;
+  --e-money: #d03b3b; --e-role: #9aa1a9; --e-family: #eb6834; --e-contact: #0e7490;
+  --c-salary: #2a78d6; --c-gift: #eb6834; --c-sale: #1baf7a; --c-other: #8a9099; --c-family: #7c3aed; --c-cash: #d03b3b;
+  --f-display: "Unbounded", "Golos Text", system-ui, sans-serif; --f-body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif; --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121417; --surface: #1a1a19; --fg: #f1f2f3; --muted: #b3b8bf; --faint: #7f858d; --rule: #2c3036; --grid: #24272b; --accent: #86b6ef; --warn: #e3b341; --bad: #f08a7e; --ok: #199e70;
+  --n-core: #d95926; --n-person: #3987e5; --n-org: #199e70; --n-ext: #7f858d; --n-go: #9d6bff; --n-party: #f5b301; --e-money: #e66767; --e-role: #5b6168; --e-family: #d95926; --e-contact: #22b8d6;
+  --c-salary: #3987e5; --c-gift: #d95926; --c-sale: #199e70; --c-other: #7f858d; --c-family: #9d6bff; --c-cash: #e66767; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #121417; --surface: #1a1a19; --fg: #f1f2f3; --muted: #b3b8bf; --faint: #7f858d; --rule: #2c3036; --grid: #24272b; --accent: #86b6ef; --warn: #e3b341; --bad: #f08a7e; --ok: #199e70;
+  --n-core: #d95926; --n-person: #3987e5; --n-org: #199e70; --n-ext: #7f858d; --n-go: #9d6bff; --n-party: #f5b301; --e-money: #e66767; --e-role: #5b6168; --e-family: #d95926; --e-contact: #22b8d6;
+  --c-salary: #3987e5; --c-gift: #d95926; --c-sale: #199e70; --c-other: #7f858d; --c-family: #9d6bff; --c-cash: #e66767; color-scheme: dark; }
+* { box-sizing: border-box }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 14px; line-height: 1.5; }
+.wrap { max-width: 1480px; margin: 0 auto; padding: 28px 24px 64px; display: grid; gap: 22px; }
+@media (max-width: 760px) { .wrap { padding: 16px 12px 48px; gap: 16px; } }
+header.hd { display: grid; gap: 8px; padding: 22px 24px; background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(22px, 3.4vw, 30px); margin: 0; line-height: 1.2; }
+h2 { font-family: var(--f-display); font-weight: 500; font-size: 17px; margin: 0 0 10px; }
+h3 { font-size: 15px; margin: 0 0 6px; font-weight: 600; }
+p { margin: 0; } .lede { color: var(--muted); max-width: 90ch; } a { color: var(--accent); }
+.mut { color: var(--muted) } .warn { color: var(--warn) } .bad { color: var(--bad) } .ok { color: var(--ok) }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 8px; }
+.kpi { background: var(--bg); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 14px; }
+.kpi b { display: block; font-family: var(--f-display); font-size: 20px; font-weight: 500; } .kpi span { color: var(--muted); font-size: 12px; }
+.kpi.high b { color: var(--bad) } .kpi.medium b { color: var(--warn) } .kpi.low b { color: var(--ok) }
+.pill { font-family: var(--f-mono); font-size: 10.5px; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--rule); white-space: nowrap; display: inline-block; vertical-align: middle; line-height: 1.5; }
+.pill.document { border-color: var(--n-org) } .pill.registry { border-color: var(--n-person) } .pill.name_match { border-style: dashed } .pill.ambiguous { border-style: dotted; color: var(--warn) }
+.pill.high { border-color: var(--bad); color: var(--bad) } .pill.medium { border-color: var(--warn); color: var(--warn) } .pill.low { border-color: var(--rule) }
+.caveat { background: var(--surface); border-left: 3px solid var(--warn); padding: 8px 12px; font-size: 13px; border-radius: 0 6px 6px 0; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px 20px; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; } @media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 12.5px; } th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; overflow-wrap: break-word; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; position: sticky; top: 0; background: var(--surface); white-space: nowrap; } tr:last-child td { border-bottom: 0 } .num { text-align: right; white-space: nowrap; font-family: var(--f-mono); font-size: 12px }
+tr.rowlink { cursor: pointer } tr.rowlink:hover td { background: var(--grid) }
+details summary { cursor: pointer; color: var(--accent); } details { margin: 6px 0 }
+/* вкладки */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--rule); padding-bottom: 8px; }
+.tab { font: inherit; font-weight: 600; padding: 8px 14px; border: 1px solid transparent; border-radius: 999px; background: transparent; color: var(--muted); cursor: pointer; }
+.tab:hover { color: var(--fg) } .tab.on { background: var(--fg); color: var(--bg); border-color: var(--fg); } .tab small { font-weight: 400; margin-left: 4px; opacity: .7 }
+.panel-tab { display: none; gap: 16px; } .panel-tab.on { display: grid; }
+/* граф */
+.viewbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.vbtn { font: inherit; font-weight: 600; padding: 7px 14px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface); color: var(--fg); cursor: pointer; }
+.vbtn.on { background: var(--fg); color: var(--bg); border-color: var(--fg); } .vcount { font-size: 12.5px; color: var(--muted); }
+.btn { font: inherit; font-size: 12.5px; padding: 5px 12px; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--fg); cursor: pointer; }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); } .btn + .btn { margin-left: 6px }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--muted); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; } .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; } .sq { width: 10px; height: 10px; border-radius: 2px; display: inline-block; } .ln { width: 22px; height: 0; border-top: 2px solid var(--e-role); display: inline-block; }
+.main { display: grid; grid-template-columns: 270px minmax(0, 1fr) 350px; gap: 14px; } @media (max-width: 1100px) { .main { grid-template-columns: 1fr; } }
+.canvas { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; position: relative; height: min(76vh, 760px); min-height: 460px; overflow: hidden; }
+.canvas svg { width: 100%; height: 100%; display: block; cursor: grab; } .canvas .fit { position: absolute; right: 10px; top: 10px; }
+.panel, .pool { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; max-height: min(76vh, 760px); overflow: auto; min-width: 0; }
+.panel h3 { margin: 0; font-size: 16px; } .sub { color: var(--muted); font-size: 12px; font-family: var(--f-mono); }
+.conn { display: grid; gap: 2px; padding: 9px 0; border-top: 1px solid var(--grid); font-size: 13px; } .conn b { font-weight: 600; cursor: pointer; } .conn b:hover { color: var(--accent); } .conn .src { color: var(--faint); font-size: 11.5px; } .conn .src a { color: var(--faint); }
+.pool input[type=search], .filterbar input[type=search] { font: inherit; width: 100%; padding: 7px 10px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--fg); }
+.pool label { display: flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--muted); cursor: pointer; }
+.pg b { display: block; font-size: 11px; font-family: var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--faint); margin: 10px 0 3px; }
+.pg a { display: block; padding: 3px 6px; border-radius: 4px; color: var(--fg); text-decoration: none; font-size: 13px; } .pg a:hover, .pg a.sel { background: var(--grid); } .pg a.exp::after { content: " ▾"; color: var(--faint); }
+.node text { font-family: var(--f-body); font-size: 11px; fill: var(--fg); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
+.zone { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; fill: var(--faint); } .hint { font-size: 12px; color: var(--faint); }
+/* ризики, графіки, модалка */
+.risk { border-left: 3px solid var(--rule); padding: 10px 14px; background: var(--surface); border-radius: 0 8px 8px 0; display: grid; gap: 4px; } .risk.high { border-color: var(--bad) } .risk.medium { border-color: var(--warn) } .risk.low { border-color: var(--n-person) }
+.risk b { font-weight: 600 } .risk .src { font-size: 12px; color: var(--faint) }
+.chart { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px 6px; } .chart h3 { margin-bottom: 2px } .chart .sub { margin-bottom: 6px }
+.chart svg { width: 100%; height: auto; display: block; font-family: var(--f-mono); font-size: 10px; } .chart .axis line, .chart .axis path { stroke: var(--rule) } .chart .axis text { fill: var(--muted) } .chart .gridl line { stroke: var(--grid) }
+.bars { display: grid; gap: 4px; } .bar { display: grid; grid-template-columns: minmax(140px, 1fr) 3fr auto; gap: 8px; align-items: center; font-size: 12.5px; } .bar i { display: block; height: 10px; border-radius: 3px; background: var(--n-person); } .bar .num { color: var(--muted) }
+.filterbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; } .filterbar select { font: inherit; padding: 6px 10px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--fg); }
+dialog { border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); color: var(--fg); padding: 0; max-width: min(760px, 94vw); width: 100%; } dialog::backdrop { background: rgba(0,0,0,.45) }
+.modal-h { display: flex; justify-content: space-between; gap: 12px; align-items: start; padding: 18px 22px 10px; } .modal-b { padding: 0 22px 22px; display: grid; gap: 12px; max-height: 72vh; overflow: auto; }
+.modal-h h3 { font-family: var(--f-display); font-weight: 500; font-size: 18px; } .x { font: inherit; border: 0; background: transparent; color: var(--muted); font-size: 22px; cursor: pointer; line-height: 1 }
+.src-pill { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted) }
+.mc summary { font-size: 12.5px } .mc { display: grid; gap: 6px } .mc-in { font: inherit; font-size: 13px; width: 100%; padding: 6px 9px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--fg); margin-top: 4px }
+.pill.party { border-color: var(--n-party); color: var(--n-party); font-weight: 600 } .diamond { width: 10px; height: 10px; display: inline-block; transform: rotate(45deg); background: var(--n-party) }
+.sel { font: inherit; font-weight: 600; padding: 6px 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); color: var(--fg); }
+.btn.mini { padding: 1px 8px; font-size: 11.5px; margin-top: 4px } .btn.mini.wrongb:hover { border-color: var(--bad); color: var(--bad) } .btn.mini.okb:hover { border-color: var(--ok); color: var(--ok) }
+.fb { display: flex; gap: 6px; align-items: center; flex-wrap: wrap } .fbmark { font-family: var(--f-mono); font-size: 11px } .fbmark.wrong { color: var(--bad) } .fbmark.correct { color: var(--ok) }
+.conn.wrong { opacity: .55 } .conn.wrong b { text-decoration: line-through }
+.pg a { position: relative; padding-right: 22px } .hidex { position: absolute; right: 4px; top: 2px; color: var(--faint); font-size: 14px; line-height: 1; display: none; padding: 0 3px; border-radius: 3px } .pg a:hover .hidex { display: inline } .hidex:hover { color: var(--bad); background: var(--bg) }
+.flag { font-family: var(--f-mono); font-size: 10.5px; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--bad); color: var(--bad); cursor: pointer; display: inline-block; margin-left: 4px; background: transparent; vertical-align: middle; } .flag:hover { background: var(--bad); color: #fff }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; display: grid; gap: 16px; }
+.stage { border-left: 4px solid var(--warn); padding: 8px 12px; background: var(--surface); margin: 10px 0; }
+table.rep { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.rep th { text-align: left; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--rule); padding: 7px 6px; }
+table.rep td { border-bottom: 1px solid var(--grid); padding: 8px 6px; vertical-align: top; }
+ul.ev { margin: 6px 0 0; padding-left: 18px; } ul.ev li { margin: 3px 0; }
+.mono { font-family: var(--f-mono); font-size: 12px; } .tablewrap { overflow-x: auto; }
+dl.kv { display: grid; grid-template-columns: minmax(120px, 190px) 1fr; gap: 6px 14px; margin: 8px 0 0; } dl.kv dt { color: var(--muted); } dl.kv dd { margin: 0; }
+@media (max-width: 640px) { dl.kv { grid-template-columns: 1fr; } }
+nav.toc a { margin-right: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<style>
+.projnav { display: grid; gap: 6px; margin: 0 0 14px; }
+.projnav .pt { font-family: var(--f-mono); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.projnav .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.projnav .who { font-weight: 600; margin-right: 2px; }
+.projnav a.tab { text-decoration: none; font-size: 13px; padding: 6px 12px; border-color: var(--rule); }
+.projnav .sep { width: 1px; height: 22px; background: var(--rule); margin: 0 6px; }
+</style>
+<nav class="projnav" aria-label="вкладки проєкту">
+  <div class="pt">проєкт «Гончаренко»</div>
+  <div class="row">
+    <span class="who">Гончаренко О. О.</span>
+    <a class="tab" href="11651.html">досьє</a>
+    <a class="tab" href="11651-core.html" title="Головне: родина, найближчі помічники та їхні структури">★ Головне</a><a class="tab" href="11651-fees_vymova.html" title="Членські внески ГО «ВИ.МОВА» за 2023 рік">Внески ВИ.МОВА</a><a class="tab on" href="11651-criminal_cases.html" title="Кримінальні справи в оточенні Гончаренка">Кримінальні справи</a><a class="tab" href="11651-es_odesa_pr.html" title="Одеський осередок «Європейської Солідарності» і Партія регіонів">ЄС Одеса і Партія регіонів</a><a class="tab" href="11651-kryvorot.html" title="Криворот Олексій Васильович — досьє">Криворот О. В.</a>
+  <span class="sep"></span>
+    <span class="who">Паращенко С. В.</span>
+    <a class="tab" href="311873.html">досьє</a>
+    <a class="tab" href="311873-sbu_case.html" title="Паращенко С. В.: справа СБУ про фінансування армії РФ і звʼязки з Гончаренком">Справа СБУ</a>
+  <span class="sep"></span>
+    <span class="who">Дерев&#39;янко М. М.</span>
+    <a class="tab" href="689884.html">досьє</a>
+    <a class="tab" href="689884-lesya.html" title="Дерев&#39;янко Леся Володимирівна — вкладене досьє">Леся Дерев&#39;янко</a>
+  <span class="sep"></span>
+    <span class="who">Обухов П. Г.</span>
+    <a class="tab" href="1522224.html">досьє</a>
+    
+  </div>
+</nav>
+  <header class="hd">
+    <div class="eyebrow"><a href="11651.html">← досьє 11651</a> · окремий звіт · зібрано 2026-10-04 16:15 UTC</div>
+    <h1>Кримінальні справи в оточенні Гончаренка</h1>
+    <p class="lede">Справи, у яких фігурують родичі, помічники й бізнес-партнери з оточення Олексія Гончаренка. Самого Гончаренка в жодній із цих справ не обвинувачено і не названо підозрюваним. Імена в ухвалах знеособлені; особи встановлено за описами в ухвалах, ЄДР і деклараціями, рівень певності вказано.</p>
+    <nav class="toc"><a href="#land">1. Землі Цебриківської громади й база «Зв&#39;язківець»…</a><a href="#ukrposhta">2. Окремий епізод «Укрпошти»: вирок підставній особ…</a><a href="#lighting">3. Вуличне освітлення й ремонти в Цебриківській гро…</a><a href="#sbu">4. Справа СБУ про фінансування армії РФ (родина Пар…</a></nav>
+  </header>
+
+  <section class="card" id="land">
+    <h2>1. Землі Цебриківської громади й база «Зв&#39;язківець» АТ «Укрпошта» в Затоці</h2>
+    
+    <div class="stage"><b>Стадія зараз.</b> Судовий розгляд у Приморському районному суді м. Одеси (справа 522/5707/24) триває з 2024 року; вироку немає. Останнє відоме рішення — 11.09.2026, засідання призначено на 28.09.2026. Леся — обвинувачена, вироку щодо неї немає (презумпція невинуватості).</div>
+    <dl class="kv">
+      <dt>Хто фігурує</dt><dd>Дерев&#39;янко Микола Миколайович (тоді депутат Одеської облради від «ЄС»), Дерев&#39;янко Леся Володимирівна, директор ТОВ «Укрмежбуд», директорка ТОВ «Українська обласна агенція з питань садівництва» та ще одна особа</dd>
+      <dt>Леся Дерев'янко</dt><dd>обвинувачена (ОСОБА_4 в ухвалі 03.02.2025: «уродженка м. Сміла Черкаської області»; у 2023 — «співорганізатор» організованої групи за версією слідства) · <a href="689884-lesya.html">досьє</a></dd>
+      <dt>У чому звинувачують</dt><dd>За версією обвинувачення, організована група у 2019–2023 роках за підробленими документами й через «підконтрольного» державного реєстратора/нотаріуса оформила права на 78 земельних ділянок сільгосппризначення (271 га) Цебриківської громади та на майно бази відпочинку «Зв&#39;язківець» АТ «Укрпошта» в Затоці, після чого передала майно підконтрольним фірмам. Керівником групи слідство вважає депутата облради (Миколу), який діяв через дружину; Лесі відведено роль співорганізаторки.</dd>
+      <dt>Статті КК</dt><dd>Лесі: ч. 4 ст. 190 (шахрайство в особливо великих розмірах), ч. 3 ст. 28 ч. 3 ст. 358 і ч. 2 ст. 28 ч. 4 ст. 358 (підроблення документів і використання), ч. 3 ст. 28 ч. 2 ст. 366 (службове підроблення), ч. 3 ст. 209 (легалізація) КК. Миколі — ті самі, крім ст. 209.</dd>
+      <dt>Провадження (ЄРДР)</dt><dd class="mono">12020160240001094 від 24.06.2020 (СУ ГУНП в Одеській обл., нагляд — Одеська обласна прокуратура; СБУ супроводжувала); об&#39;єднано з 12023160000001408 від 01.11.2023 і 12024160000000314 від 11.03.2024 (ухвала 07.02.2025)</dd>
+    </dl>
+    <h3 style="margin-top:12px">Судові справи онлайн</h3>
+    <div class="tablewrap"><table class="rep"><thead><tr><th>Справа</th><th>Суд</th><th>Що в ній</th><th>Док.</th></tr></thead>
+      <tbody><tr><td class="mono"><a href="https://court.opendatabot.ua/cause/522%2F5707%2F24" target="_blank" rel="noopener">522/5707/24</a></td><td>Приморський районний суд м. Одеси (+ Одеський апеляційний)</td><td>судовий розгляд обвинувального акта</td><td class="mono">65</td></tr><tr><td class="mono"><a href="https://court.opendatabot.ua/cause/947%2F13174%2F23" target="_blank" rel="noopener">947/13174/23</a></td><td>Київський районний суд м. Одеси</td><td>слідчі судді 2023: запобіжні заходи (Леся — СІЗО з заставою 8 001 004 грн, 29.04.2023)</td><td class="mono">5</td></tr><tr><td class="mono"><a href="https://court.opendatabot.ua/cause/947%2F8704%2F24" target="_blank" rel="noopener">947/8704/24</a></td><td>Київський районний суд м. Одеси</td><td>слідчі судді 2024</td><td class="mono">14</td></tr></tbody></table></div>
+    <h3 style="margin-top:12px">Хронологія</h3>
+    <div class="tablewrap"><table class="rep"><thead><tr><th>Дата</th><th>Подія</th><th>Документ</th></tr></thead>
+      <tbody><tr><td class="mono">2020-06-24</td><td>Провадження внесено до ЄРДР</td><td><span class="mut">—</span></td></tr><tr><td class="mono">2023-04-29</td><td>Лесі змінено заставу на тримання під вартою з альтернативою застави 8 001 004 грн (раніше внесена застава 2 013 000 грн — повернута заставодавцю)</td><td><a href="https://reyestr.court.gov.ua/Review/110532097" target="_blank" rel="noopener">110532097</a></td></tr><tr><td class="mono">2023-05-01</td><td>СБУ публічно повідомляє про «рейдерське захоплення» 280 га і бази «Укрпошти»; Гончаренко називає це тиском на себе</td><td><a href="https://www.slovoidilo.ua/2023/05/01/novyna/polityka/sbu-zakydayut-rodycham-nardepa-honcharenka-rejderstvo-deputat-vidreahuvav" target="_blank" rel="noopener">sbu-zakydayut-rodycham-n</a></td></tr><tr><td class="mono">2023-05-16</td><td>Апеляційний суд розглядає скаргу захисту на тримання Лесі під вартою</td><td><a href="https://reyestr.court.gov.ua/Review/110876892" target="_blank" rel="noopener">110876892</a></td></tr><tr><td class="mono">2024-04-12</td><td>Обвинувальний акт щодо 5 осіб надійшов до Приморського суду; призначено підготовче засідання</td><td><a href="https://reyestr.court.gov.ua/Review/118322776" target="_blank" rel="noopener">118322776</a></td></tr><tr><td class="mono">2025-03-20</td><td>Миколі (у справі — «головний інженер ТОВ „Укрмежбуд“, депутат Одеської обласної ради») продовжено тримання під вартою до 19.05.2025</td><td><a href="https://reyestr.court.gov.ua/Review/126002270" target="_blank" rel="noopener">126002270</a></td></tr><tr><td class="mono">2024-11-26</td><td>Провадження щодо одного обвинуваченого зупинено до звільнення з військової служби</td><td><a href="https://reyestr.court.gov.ua/Review/123335525" target="_blank" rel="noopener">123335525</a></td></tr><tr><td class="mono">2025-02-07</td><td>Суд розглядає об&#39;єднані обвинувальні акти (три провадження)</td><td><a href="https://reyestr.court.gov.ua/Review/125005408" target="_blank" rel="noopener">125005408</a></td></tr><tr><td class="mono">2025-03-11</td><td>Апеляційний суд: справа «на стадії судового розгляду»; скаргу захисту на продовження тримання під вартою відхилено</td><td><a href="https://reyestr.court.gov.ua/Review/125906395" target="_blank" rel="noopener">125906395</a></td></tr><tr><td class="mono">2026-09-11</td><td>Суд доручає призначити безоплатного захисника одній з обвинувачених (уродженка с. Червона Гребля); наступне засідання — 28.09.2026</td><td><a href="https://reyestr.court.gov.ua/Review/139685001" target="_blank" rel="noopener">139685001</a></td></tr></tbody></table></div>
+    <p class="mut" style="margin-top:8px">Медіа: <a href="https://www.slovoidilo.ua/2023/05/01/novyna/polityka/sbu-zakydayut-rodycham-nardepa-honcharenka-rejderstvo-deputat-vidreahuvav" target="_blank" rel="noopener">Слово і Діло, 01.05.2023</a> · <a href="https://www.pravda.com.ua/news/2023/05/1/7400201/" target="_blank" rel="noopener">Українська правда, 01.05.2023</a> · <a href="https://lb.ua/society/2023/05/01/553714_sud_priznachiv_pidozryuvaniy.html" target="_blank" rel="noopener">LB.ua, 01.05.2023 — застава 8 млн</a> · <a href="https://focus.ua/uk/ukraine/563717-posadili-u-sizo-rodichku-nardepa-goncharenka-pidozryuyut-u-privlasnenni-zemli-u-zatoci-foto" target="_blank" rel="noopener">Фокус, 2023</a> · <a href="https://lb.ua/society/2023/05/10/554588_sbu_i_politsiya_priyshli_z_obshukami.html" target="_blank" rel="noopener">LB.ua, 10.05.2023 — обшуки у справі (приміщення з офісом «Думської»)</a></p>
+  </section><section class="card" id="ukrposhta">
+    <h2>2. Окремий епізод «Укрпошти»: вирок підставній особі</h2>
+    
+    <div class="stage"><b>Стадія зараз.</b> Вирок набрав сили; щодо організатора й інших учасників матеріали виділено (див. основну справу 522/5707/24).</div>
+    <dl class="kv">
+      <dt>Хто фігурує</dt><dd>Підставна особа (багатодітний батько з малозабезпеченої родини, на якого оформили підроблені документи); «Особа 1» (організатор із вищою юридичною освітою), «Особа 2» (директор ТОВ «Лідер-Метал»), «Особа 3» (реєстратор) — матеріали щодо них виділено</dd>
+      <dt>Леся Дерев'янко</dt><dd>у вироку не названа; «Особа 1 — організатор з вищою юридичною освітою» описана так само, як роль Лесі в основній справі, але ототожнення — висновок, не текст вироку · <a href="689884-lesya.html">досьє</a></dd>
+      <dt>У чому звинувачують</dt><dd>2019–2020: за підробленими документами на підставну особу зареєстровано право власності на майно бази відпочинку «Зв&#39;язківець» АТ «Укрпошта» (Затока, вул. Лазурна, 96) і право на ділянку 0,208 га громади, після чого майно внесли до статутного капіталу ТОВ «Лідер-Метал» (42561489). Сума — 4 082 647,88 грн.</dd>
+      <dt>Статті КК</dt><dd>Підставній особі: ч. 5 ст. 27 ч. 3 ст. 358, ч. 2 ст. 27 ч. 4 ст. 190 КК.</dd>
+      <dt>Провадження (ЄРДР)</dt><dd class="mono">12023160000000214 від 22.02.2023 (виділене)</dd>
+    </dl>
+    <h3 style="margin-top:12px">Судові справи онлайн</h3>
+    <div class="tablewrap"><table class="rep"><thead><tr><th>Справа</th><th>Суд</th><th>Що в ній</th><th>Док.</th></tr></thead>
+      <tbody><tr><td class="mono"><a href="https://court.opendatabot.ua/cause/522%2F4888%2F23" target="_blank" rel="noopener">522/4888/23</a></td><td>Приморський районний суд м. Одеси; виконання вироку — Іванівський районний суд Одеської обл.</td><td>угода про визнання винуватості, вирок, виконання</td><td class="mono">12</td></tr></tbody></table></div>
+    <h3 style="margin-top:12px">Хронологія</h3>
+    <div class="tablewrap"><table class="rep"><thead><tr><th>Дата</th><th>Подія</th><th>Документ</th></tr></thead>
+      <tbody><tr><td class="mono">2023-05-03</td><td>Підготовче засідання щодо угоди про визнання винуватості</td><td><a href="https://reyestr.court.gov.ua/Review/110596009" target="_blank" rel="noopener">110596009</a></td></tr><tr><td class="mono">2023-12-18</td><td>Вирок: 5 років позбавлення волі з іспитовим строком 3 роки</td><td><a href="https://reyestr.court.gov.ua/Review/115741321" target="_blank" rel="noopener">115741321</a></td></tr><tr><td class="mono">2026-06-22</td><td>Суд відмовив пробації скасувати звільнення від покарання з випробуванням</td><td><a href="https://reyestr.court.gov.ua/Review/137696546" target="_blank" rel="noopener">137696546</a></td></tr></tbody></table></div>
+    
+  </section><section class="card" id="lighting">
+    <h2>3. Вуличне освітлення й ремонти в Цебриківській громаді (НАБУ/САП, ВАКС)</h2>
+    
+    <div class="stage"><b>Стадія зараз.</b> Вирок першої інстанції (12.06.2026) не набрав законної сили — триває апеляція в Апеляційній палаті ВАКС.</div>
+    <dl class="kv">
+      <dt>Хто фігурує</dt><dd>Дерев&#39;янко М. М. (організатор, за вироком), директор ТОВ «Укрмежбуд» Герасимчук В. І., Цебриківський селищний голова Барнасевич В. (угода)</dd>
+      <dt>Леся Дерев'янко</dt><dd>у вироку ВАКС не обвинувачена. За медіа (УНІАН, 06.07.2023), «троюрідній сестрі Гончаренка» повідомлено про підозру в заволодінні бюджетними коштами на ремонтах і освітленні (ст. 191, 366, 358 КК), запобіжний захід — нічний домашній арешт. У вироку ВАКС згадано, що з поліцейського провадження 12020160000000950 виділено матеріали щодо підозрюваних, зокрема особи з підозрою за ч. 5 ст. 191, ст. 366 і ст. 358 — чи це Леся, з тексту не видно; стан її підозри в цьому епізоді відкритими документами не встановлено. · <a href="689884-lesya.html">досьє</a></dd>
+      <dt>У чому звинувачують</dt><dd>2018–2020: договори на облаштування вуличного освітлення в смт Цебрикове з ТОВ «Укрмежбуд» штучно поділили на частини до 1,5 млн грн, щоб уникнути тендерів; ціни на світильники завищено більш ніж у 6 разів; акти виконаних робіт підроблено. Збитки громаді — 16,4 млн грн.</dd>
+      <dt>Статті КК</dt><dd>Миколі: ч. 3 ст. 27 ч. 3 ст. 28 ч. 2 ст. 364 (організація зловживання службовим становищем), ч. 3 ст. 27 ч. 3 ст. 28 ч. 1 ст. 366 КК.</dd>
+      <dt>Провадження (ЄРДР)</dt><dd class="mono">12020160000000950 від 25.08.2020 (СУ ГУНП) → 52023000000000537 і 52023000000000538 від 24.10.2023 (НАБУ/САП)</dd>
+    </dl>
+    <h3 style="margin-top:12px">Судові справи онлайн</h3>
+    <div class="tablewrap"><table class="rep"><thead><tr><th>Справа</th><th>Суд</th><th>Що в ній</th><th>Док.</th></tr></thead>
+      <tbody><tr><td class="mono"><a href="https://court.opendatabot.ua/cause/991%2F637%2F25" target="_blank" rel="noopener">991/637/25</a></td><td>Вищий антикорупційний суд; Апеляційна палата ВАКС</td><td>вирок 12.06.2026, апеляція</td><td class="mono">48</td></tr><tr><td class="mono"><a href="https://court.opendatabot.ua/cause/991%2F1726%2F25" target="_blank" rel="noopener">991/1726/25</a></td><td>Вищий антикорупційний суд</td><td>угода селищного голови, вирок 21.03.2025</td><td class="mono">1</td></tr><tr><td class="mono"><a href="https://court.opendatabot.ua/cause/947%2F30493%2F22" target="_blank" rel="noopener">947/30493/22</a></td><td>Київський районний суд м. Одеси</td><td>слідчі судді 2022–2024 (поліцейська стадія)</td><td class="mono">42</td></tr></tbody></table></div>
+    <h3 style="margin-top:12px">Хронологія</h3>
+    <div class="tablewrap"><table class="rep"><thead><tr><th>Дата</th><th>Подія</th><th>Документ</th></tr></thead>
+      <tbody><tr><td class="mono">2022-11-16</td><td>Обшук і підозра директору ТОВ «Укрмежбуд»</td><td><a href="https://reyestr.court.gov.ua/Review/137346228" target="_blank" rel="noopener">137346228</a></td></tr><tr><td class="mono">2023-07-04</td><td>Запобіжні заходи в поліцейському провадженні 12020160000000950 (нічний домашній арешт селищному голові)</td><td><a href="https://reyestr.court.gov.ua/Review/112001998" target="_blank" rel="noopener">112001998</a></td></tr><tr><td class="mono">2023-10-24</td><td>Справу передано НАБУ/САП (52023000000000537/538)</td><td><span class="mut">—</span></td></tr><tr><td class="mono">2025-03-21</td><td>Вирок за угодою селищному голові: 5 років позбавлення волі</td><td><a href="https://reyestr.court.gov.ua/Review/126016390" target="_blank" rel="noopener">126016390</a></td></tr><tr><td class="mono">2026-06-12</td><td>Вирок ВАКС: Миколі — 4 роки 6 місяців позбавлення волі і 3 роки заборони обіймати посади; Герасимчуку — 4 роки; стягнення 16,3 млн грн на користь громади</td><td><a href="https://reyestr.court.gov.ua/Review/137346228" target="_blank" rel="noopener">137346228</a></td></tr><tr><td class="mono">2026-07-21</td><td>Апеляційна палата ВАКС відкрила апеляційне провадження</td><td><a href="https://reyestr.court.gov.ua/Review/138365940" target="_blank" rel="noopener">138365940</a></td></tr><tr><td class="mono">2026-08-03</td><td>Апеляційна палата — підготовка до розгляду</td><td><a href="https://reyestr.court.gov.ua/Review/138684358" target="_blank" rel="noopener">138684358</a></td></tr></tbody></table></div>
+    <p class="mut" style="margin-top:8px">Медіа: <a href="https://www.unian.ua/politics/skandal-iz-sestroyu-goncharenka-zhinku-pidozryuyut-u-zbagachenni-na-vulichnomu-osvitlenni-12319713.html" target="_blank" rel="noopener">УНІАН, 06.07.2023 — підозра «сестрі Гончаренка» щодо освітлення</a> · <a href="https://www.slovoidilo.ua/2023/11/07/novyna/ekonomika/nabu-peredaly-spravu-pro-zavolodinnya-koshtamy-odeshhyni" target="_blank" rel="noopener">Слово і Діло, 07.11.2023 — НАБУ передали справу</a> · <a href="https://www.anticor.foundation/novyny/34089/" target="_blank" rel="noopener">Антикорупційний фронт, 15.06.2026 — вирок</a> · <a href="https://www.slovoidilo.ua/2026/07/27/novyna/polityka/obvynuvachenyj-eksdeputat-odeskoyi-oblrady-oskarzhyv-strok-koloniyi" target="_blank" rel="noopener">Слово і Діло, 27.07.2026 — апеляція</a></p>
+  </section><section class="card" id="sbu">
+    <h2>4. Справа СБУ про фінансування армії РФ (родина Паращенка, звʼязок — СВК «Дружба народів»)</h2>
+    <p><a class="btn" href="311873-sbu_case.html">📄 відкрити окремий звіт</a></p>
+    <div class="stage"><b>Стадія зараз.</b> Вирок брату — 26.06.2025; щодо інших — розслідування.</div>
+    <dl class="kv">
+      <dt>Хто фігурує</dt><dd>брат Паращенка С. В. (засуджений за угодою), директор російської фірми (заочне розслідування); Паращенки — «можливо причетні», без підозри</dd>
+      
+      <dt>У чому звинувачують</dt><dd>Див. окремий звіт.</dd>
+      
+      <dt>Провадження (ЄРДР)</dt><dd class="mono">22023240000000123 від 10.07.2023</dd>
+    </dl>
+    <h3 style="margin-top:12px">Судові справи онлайн</h3>
+    <div class="tablewrap"><table class="rep"><thead><tr><th>Справа</th><th>Суд</th><th>Що в ній</th><th>Док.</th></tr></thead>
+      <tbody><tr><td class="mono"><a href="https://court.opendatabot.ua/cause/522%2F23280%2F24" target="_blank" rel="noopener">522/23280/24</a></td><td>Приморський / Пересипський суди м. Одеси</td><td>див. звіт</td><td class="mono">30</td></tr></tbody></table></div>
+    
+    
+  </section>
+
+  <section class="card">
+    <h2>Чого це не доводить</h2>
+    <ul class="ev"><li>Обвинувачення ≠ вина: щодо Лесі Дерев&#39;янко вироку немає; вирок Миколі Дерев&#39;янку (освітлення) не набрав законної сили.</li><li>Гончаренко сам назвав Лесю «троюрідною сестрою»; документального підтвердження ступеня спорідненості в реєстрах немає.</li><li>Ні Гончаренка, ні його компаній у цих провадженнях не названо.</li></ul>
+    <p class="mut" style="margin-top:8px">Джерела: <a href="https://reyestr.court.gov.ua/">ЄДРСР</a> · <a href="https://court.opendatabot.ua/">Opendatabot — судові справи</a></p>
+  </section>
+</div>
+</body>
+</html>
