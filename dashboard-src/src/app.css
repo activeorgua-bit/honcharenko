@@ -1,0 +1,198 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   ТЕМА ДАШБОРДА — СВІТЛА Й ТЕМНА
+
+   ЧОМУ ЗМІННІ, А НЕ КОЛЬОРИ В КОМПОНЕНТАХ. Тем дві, а місць, де колір
+   потрібен, — сотні: картки, межі, підписи осей, полюси тональності. Колір,
+   вписаний у компонент, доводиться шукати й міняти двічі, і саме так у
+   попередній збірці графіки розійшлися з темною темою — SVG читав свої
+   значення, а сторінка свої.
+
+   ПОЛЮСИ ТОНАЛЬНОСТІ ТЕЖ ТУТ. --neg і --pos не декоративні: це осі
+   дослідження, і вони мусять бути однакові в таблиці, у смузі й у графіку.
+   Читач звіряє їх поглядом, а не читає легенду щоразу.
+
+   Значення в OKLCH: у ній однакова числова зміна світлості дає однакову
+   зміну на око, тож темна тема виходить із тих самих відтінків без ручного
+   підбору кожного кольору окремо.
+   ============================================================================ */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --radius: 0.65rem;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.141 0.005 285.823);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.141 0.005 285.823);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.141 0.005 285.823);
+  --primary: oklch(0.21 0.006 285.885);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-foreground: oklch(0.552 0.016 285.938);
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-foreground: oklch(0.21 0.006 285.885);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.92 0.004 286.32);
+  --input: oklch(0.92 0.004 286.32);
+  --ring: oklch(0.705 0.015 286.067);
+
+  /* Осі дослідження */
+  --neg: oklch(0.58 0.24 12);          /* дискредитує / проти теми */
+  --pos: oklch(0.62 0.14 165);         /* захищає / за тему */
+  --neu: oklch(0.72 0.02 286);         /* без оцінки */
+
+  /* Групи каналів. «Труха» червона навмисно: єдина група, яка в цьому
+     дослідженні є гіпотезою, а не тлом. */
+  --g-truha: oklch(0.58 0.24 12);
+  --g-truha-dv: oklch(0.68 0.16 5);
+  --g-top15: oklch(0.72 0.16 62);
+  --g-top300: oklch(0.58 0.2 262);
+  --g-top300-nt: oklch(0.7 0.14 232);
+  --g-top1000: oklch(0.6 0.2 295);
+  --g-top1000-nt: oklch(0.52 0.22 295);
+  --g-ref: oklch(0.62 0.14 165);
+  --g-pro-ru: oklch(0.55 0.22 305);
+  --g-ru-pol: oklch(0.55 0.22 25);
+  --g-panel: oklch(0.75 0.15 75);
+
+  /* ТОКЕНИ ДЛЯ ГРАФІКІВ — У HEX, А НЕ OKLCH.
+     Шкала кольору SveltePlot стоїть на d3-color, а d3-color не розуміє
+     oklch(): він повертає null, і бібліотека МОВЧКИ підставляє власну
+     категорійну палітру. Наслідок був не косметичний — негатив малювався
+     синім, нейтраль жовтою, і графік читався навпаки.
+     Семантика: негатив червоний, позитив зелений, нейтральне сіре. Жовтий не
+     використовується: у типовій шкалі він означає ЗМІШАНУ тональність, а
+     такої категорії в розмітці немає — змішане йде в нейтральне. */
+  --c-neg: #d92546;
+  --c-neu: #9aa4b2;
+  --c-pos: #129a6b;
+  --cg-truha: #d92546;
+  --cg-truha-dv: #f0678d;
+  --cg-top15: #e08b1f;
+  --cg-top300: #2f6bff;
+  --cg-top300-nt: #38a3e0;
+  --cg-top1000: #8b5cf6;
+  --cg-top1000-nt: #6d28d9;
+  --cg-ref: #129a6b;
+  --cg-pro-ru: #9333ea;
+  --cg-ru-pol: #b91c1c;
+  --cg-panel: #d99a0b;
+}
+
+.dark {
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.19 0.006 285.885);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.92 0.004 286.32);
+  --primary-foreground: oklch(0.21 0.006 285.885);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.552 0.016 285.938);
+
+  /* Полюси в темній темі трохи світліші: на темному тлі та сама насиченість
+     читається тьмянішою, і негатив переставав відрізнятися від нейтралі. */
+  --neg: oklch(0.68 0.22 12);
+  --pos: oklch(0.72 0.15 165);
+  --neu: oklch(0.6 0.02 286);
+
+  --g-truha: oklch(0.68 0.22 12);
+  --g-truha-dv: oklch(0.75 0.14 5);
+  --g-top15: oklch(0.78 0.15 62);
+  --g-top300: oklch(0.68 0.18 262);
+  --g-top300-nt: oklch(0.78 0.12 232);
+  --g-top1000: oklch(0.7 0.18 295);
+  --g-top1000-nt: oklch(0.62 0.2 295);
+  --g-ref: oklch(0.72 0.15 165);
+  --g-pro-ru: oklch(0.66 0.2 305);
+  --g-ru-pol: oklch(0.66 0.2 25);
+  --g-panel: oklch(0.82 0.14 75);
+
+  /* На темному тлі та сама насиченість читається тьмянішою, тож полюси
+     світлішають. Відтінок лишається той самий — інакше читач звіряв би
+     легенду заново після кожного перемикання теми. */
+  --c-neg: #ff5a78;
+  --c-neu: #7b8595;
+  --c-pos: #35d39b;
+  --cg-truha: #ff5a78;
+  --cg-truha-dv: #ff8fae;
+  --cg-top15: #ffa93d;
+  --cg-top300: #6592ff;
+  --cg-top300-nt: #5cc4ff;
+  --cg-top1000: #a78bfa;
+  --cg-top1000-nt: #8b5cf6;
+  --cg-ref: #35d39b;
+  --cg-pro-ru: #c084fc;
+  --cg-ru-pol: #f87171;
+  --cg-panel: #fbbf24;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-neg: var(--neg);
+  --color-pos: var(--pos);
+  --color-neu: var(--neu);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, monospace;
+}
+
+@layer base {
+  * { border-color: var(--border); }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+  /* КОЖНЕ МАШИННЕ ЗНАЧЕННЯ — МОНОШИРИННИМ. Це не декор: у розслідуванні
+     різниця між написаним людиною і виміряним машиною є частиною
+     доказовості, тож її несе шрифт. */
+  .tnum { font-variant-numeric: tabular-nums; font-family: var(--font-mono); }
+}
+
+/* SveltePlot малює у власний SVG; кольори осей і підписів беремо з теми,
+   інакше в темній вони лишаються чорними на чорному. */
+.plot-wrap svg { overflow: visible; }
+.plot-wrap [aria-label="x-axis tick label"] text,
+.plot-wrap [aria-label="y-axis tick label"] text,
+.plot-wrap [aria-label="x-axis label"] text,
+.plot-wrap [aria-label="y-axis label"] text { fill: var(--muted-foreground); }
+.plot-wrap [aria-label="y-grid"] line,
+.plot-wrap [aria-label="x-grid"] line { stroke: var(--border); }
+
+/* Дашборд цитувань: багаторядкові таблиці й обрізання прев'ю тексту. */
+.line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
