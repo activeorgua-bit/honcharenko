@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Гроші «Гончаренко центрів»</title>
+<meta name="description" content="OSINT-аналіз ГО «ВИ.МОВА» (ЄДРПОУ 43417706): скільки центрів насправді, хто платить і чи сходяться цифри. 04.10.2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: одна колонка-досьє ≈ 70ch, з ширшими блоками для графіків і таблиць; мова податкових форм — коди рядків, штамп «прийнято», КЕП-синій */
+:root{
+  --paper:#f3f5f7; --surface:#ffffff; --ink:#15191e; --muted:#5a636e; --rule:#d6dbe1;
+  --stamp:#1c7a4f; --stamp-soft:#e3f1ea; --sign:#2c4fb8; --sign-soft:#e6ebfa;
+  --warn:#9a6412; --warn-soft:#f8eedb; --risk:#ad3535; --risk-soft:#f7e3e3;
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Golos Text","Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+  --measure:70ch;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#111417; --surface:#181c21; --ink:#e5e8ec; --muted:#9aa4af; --rule:#2b3138;
+  --stamp:#4cc08a; --stamp-soft:#173328; --sign:#86a0f4; --sign-soft:#1d2440;
+  --warn:#e3ad55; --warn-soft:#352915; --risk:#ec7d7d; --risk-soft:#3a1d1d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#111417; --surface:#181c21; --ink:#e5e8ec; --muted:#9aa4af; --rule:#2b3138;
+  --stamp:#4cc08a; --stamp-soft:#173328; --sign:#86a0f4; --sign-soft:#1d2440;
+  --warn:#e3ad55; --warn-soft:#352915; --risk:#ec7d7d; --risk-soft:#3a1d1d; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--body);margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:40px 64px}
+.prose{max-width:var(--measure)}
+a{color:var(--sign);text-underline-offset:2px;text-decoration-thickness:1px;overflow-wrap:anywhere}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--sign);outline-offset:2px;border-radius:2px}
+h1,h2,h3{text-wrap:balance;margin:0}
+h1{font:700 clamp(28px,5.2vw,52px)/1.08 var(--display);letter-spacing:-.01em}
+h2{font:700 clamp(20px,2.6vw,26px)/1.2 var(--display);letter-spacing:-.005em}
+h3{font:600 17px/1.35 var(--body)}
+p{margin:0}
+.mono{font-family:var(--mono);font-size:.86em}
+.num{font-variant-numeric:tabular-nums}
+
+/* masthead */
+.mast{display:grid;gap:20px;padding-bottom:28px;border-bottom:2px solid var(--ink)}
+.formline{display:flex;flex-wrap:wrap;gap:8px 18px;font:500 12px/1.4 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.formline b{color:var(--ink);font-weight:600}
+.lede{font-size:clamp(17px,2vw,19px);line-height:1.55;max-width:62ch;color:var(--ink)}
+.stamp{display:inline-block;font:700 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--stamp);border:2px solid var(--stamp);padding:7px 10px 6px;border-radius:3px;transform:rotate(-2.5deg);justify-self:start}
+
+/* legend */
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--muted);align-items:center}
+.cred{display:inline-flex;align-items:center;gap:5px;font:600 11px/1 var(--mono);letter-spacing:.04em;text-transform:uppercase;padding:4px 7px 3px;border-radius:3px;white-space:nowrap;vertical-align:1px}
+.c-doc{color:var(--stamp);background:var(--stamp-soft)}
+.c-med{color:var(--sign);background:var(--sign-soft)}
+.c-self{color:var(--warn);background:var(--warn-soft)}
+.c-hyp{color:var(--muted);border:1px dashed var(--muted);padding:3px 6px 2px}
+.c-low{color:var(--risk);background:var(--risk-soft)}
+
+/* sections */
+section{padding-block:44px 8px;display:grid;gap:18px}
+.sec-head{display:grid;gap:6px}
+.code{font:600 12px/1 var(--mono);color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+
+/* findings */
+.findings{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.finding{background:var(--surface);padding:18px 18px 20px;display:grid;gap:8px;align-content:start;min-width:0}
+.finding .fig{font:700 26px/1.1 var(--display);letter-spacing:-.01em}
+.finding p{font-size:15px;line-height:1.5}
+.finding .k{font:600 11px/1 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+
+/* charts */
+.figure{background:var(--surface);border:1px solid var(--rule);padding:18px clamp(12px,2vw,22px) 14px;display:grid;gap:10px;min-width:0}
+.figure .cap{font-size:14px;color:var(--muted);max-width:var(--measure)}
+.chart-scroll{overflow-x:auto}
+.chart{width:100%;min-width:520px;height:auto;display:block;font-family:var(--mono)}
+.chart .grid{stroke:var(--rule);stroke-width:1}
+.chart .axis{stroke:var(--muted);stroke-width:1}
+.chart .tick{fill:var(--muted);font-size:11px}
+.chart .val{fill:var(--ink);font-size:12px;font-weight:600}
+.chart .lab{fill:var(--ink);font-size:11.5px;font-family:var(--body)}
+.chart .bar{fill:var(--stamp)}
+.chart .bar-hi{fill:var(--stamp)}
+.chart .bar-pass{fill:var(--stamp);fill-opacity:.32}
+.chart .band{fill:var(--warn);fill-opacity:.12}
+.chart .line-a,.chart .line-b{fill:none;stroke-width:2.2;stroke-linejoin:round}
+.chart .line-a{stroke:var(--muted);stroke-dasharray:5 4}
+.chart .line-b{stroke:var(--sign)}
+.chart .dot-line-a{fill:var(--muted)}
+.chart .dot-line-b{fill:var(--sign)}
+.chart .ind{fill:var(--risk)}
+.chart .anno{fill:none;stroke:var(--muted);stroke-width:1}
+.chart .anno-t{fill:var(--muted);font-size:11px;font-family:var(--body);font-style:italic}
+.key{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted)}
+.key span{display:inline-flex;align-items:center;gap:7px}
+.sw{width:14px;height:10px;display:inline-block;border-radius:1px}
+.sw-core{background:var(--stamp)} .sw-pass{background:var(--stamp);opacity:.32}
+.sw-a{height:0;border-top:2px dashed var(--muted)} .sw-b{height:0;border-top:2px solid var(--sign)}
+.sw-ind{width:9px;height:9px;background:var(--risk);transform:rotate(45deg)}
+.sw-band{background:var(--warn);opacity:.25}
+
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--rule);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.45}
+th,td{padding:9px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule)}
+thead th{font:600 11px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:var(--paper);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.total td{font-weight:700}
+td .sub{display:block;color:var(--muted);font-size:12.5px}
+.tbl-wide table{min-width:760px}
+
+/* premises grid */
+.prem{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:22px;align-items:start}
+.cells{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;max-width:360px}
+.cell{aspect-ratio:1;border-radius:2px;background:var(--stamp)}
+.cell.off{background:transparent;border:1.5px dashed var(--muted)}
+
+/* callouts */
+.note{border-left:3px solid var(--warn);background:var(--warn-soft);padding:12px 16px;font-size:15px;max-width:var(--measure)}
+.note.hyp{border-left-color:var(--muted);background:var(--surface)}
+ul.plain{margin:0;padding-left:1.1em;display:grid;gap:8px;max-width:var(--measure)}
+ol.q{margin:0;padding-left:1.4em;display:grid;gap:8px;max-width:var(--measure)}
+
+/* docs list */
+.docs{display:grid;gap:0;border:1px solid var(--rule);background:var(--surface)}
+.doc{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:12px 14px;border-bottom:1px solid var(--rule)}
+.doc:last-child{border-bottom:0}
+.doc .t{font-weight:600}
+.doc .m{grid-column:1/-1;font:400 12px/1.45 var(--mono);color:var(--muted);overflow-wrap:anywhere}
+.doc .d{font:500 12px/1.4 var(--mono);color:var(--muted);white-space:nowrap;text-align:right}
+.docgroup{font:600 12px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:6px}
+
+
+/* sponsors */
+.sponsors{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:16px}
+.sp{background:var(--surface);border:1px solid var(--rule);padding:16px 18px 18px;display:grid;gap:10px;align-content:start;min-width:0;font-size:15px}
+.sp header{display:grid;gap:4px}
+.sp-code{font:600 11px/1 var(--mono);color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.verdict{justify-self:start;font:700 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px 4px;border-radius:3px;margin-top:4px}
+.v-ok{color:var(--stamp);background:var(--stamp-soft)} .v-no{color:var(--risk);background:var(--risk-soft)} .v-unk{color:var(--warn);background:var(--warn-soft)}
+.sp .src{font-size:13px;color:var(--muted)}
+table.mini{font-size:13px} table.mini th,table.mini td{padding:5px 10px}
+ol.tl{list-style:none;margin:0;padding:0;display:grid;gap:0;max-width:var(--measure);border-left:2px solid var(--rule);margin-left:6px}
+ol.tl li{display:grid;grid-template-columns:8.5em minmax(0,1fr);gap:4px 14px;padding:7px 0 7px 16px;position:relative;font-size:15px}
+ol.tl li::before{content:"";position:absolute;left:-6px;top:14px;width:10px;height:10px;border-radius:50%;background:var(--sign)}
+ol.tl time{font:600 13px/1.6 var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+@media (max-width:560px){ol.tl li{grid-template-columns:1fr}}
+footer{margin-top:56px;padding-top:20px;border-top:2px solid var(--ink);font-size:13px;color:var(--muted);display:grid;gap:8px;max-width:var(--measure)}
+
+@media (max-width:560px){
+  .doc{grid-template-columns:1fr}
+  .doc .d{text-align:left}
+  th,td{padding:8px 10px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head><body>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="formline"><span>ГО «ВИ.МОВА»</span><span>ЄДРПОУ <b>43417706</b></span><span>КВЕД <b>94.99</b></span><span>ознака неприбутковості <b>0032</b></span><span>станом на <b>04.10.2026</b></span></div>
+  <h1>Гроші «Гончаренко центрів»</h1>
+  <p class="lede">Скільки центрів працює насправді, хто їх утримує і чи сходяться цифри. Аналіз власної звітності ГО «ВИ.МОВА», що її оприлюднено на сайті мережі, та відкритих джерел.</p>
+  <span class="stamp">Цифри звірено з оригіналами</span>
+  <div class="legend">
+    <span>Позначки достовірності:</span>
+    <span><span class="cred c-doc">документ</span> офіційний документ чи реєстр</span>
+    <span><span class="cred c-med">медіа</span> надійне медіа</span>
+    <span><span class="cred c-self">самозаява</span> слова мережі чи фігуранта</span>
+    <span><span class="cred c-hyp">гіпотеза</span> оцінка аналітика</span>
+    <span><span class="cred c-low">низька</span> сумнівне джерело</span>
+  </div>
+</header>
+
+<section id="golovne">
+  <div class="sec-head"><span class="code">Розділ 0</span><h2>Головне</h2></div>
+  <div class="findings">
+    <article class="finding"><span class="k">Старт у 2021 році</span><div class="fig num">24,0 млн грн</div><p>Стільки ГО витратила за перший рік мережі. Це більше, ніж у 2022-му (19,4 млн) чи 2023-му (20,8 млн). <span class="cred c-doc">документ</span></p></article>
+    <article class="finding"><span class="k">Заявлено зараз</span><div class="fig num">54 → 51</div><p>З 54 «центрів» фізичних просторів 51; ще 6 позначено як партнерські. Лічильник після закриттів не зменшують. <span class="cred c-self">самозаява</span></p></article>
+    <article class="finding"><span class="k">Приміщення ГО, березень 2024</span><div class="fig num">19 на 30+</div><p>ГО орендувала 19 приміщень, а центрів тоді заявляли 30–31. Третина мережі живе поза балансом. <span class="cred c-doc">документ</span></p></article>
+    <article class="finding"><span class="k">Спонсори, названі мережею</span><div class="fig num">1 з 3</div><p>З трьох компаній у блоці «Спонсори» на сайті гроші має лише СВК «Дружба народів». Дві інші — порожні фірми з нульовими оборотами. <span class="cred c-doc">документ</span></p></article>
+    <article class="finding"><span class="k">Членські внески 2023</span><div class="fig num">2,36 млн</div><p>10 рядових членів по 200–260 тис. грн кожен. Засновник і голова не платили. Схоже на передачу коштів через номінальних членів. <span class="cred c-hyp">гіпотеза</span></p></article>
+    <article class="finding"><span class="k">Повна вартість 2025</span><div class="fig num">≈45–60 млн</div><p>Через ГО пройшло 36,3 млн. Решту, ймовірно, платять партнери напряму, а частину закривають волонтери й безкоштовні приміщення. <span class="cred c-hyp">гіпотеза</span></p></article>
+  </div>
+</section>
+
+<section id="vytraty">
+  <div class="sec-head"><span class="code">Розділ 1 · ф. 2-м, р. 2285</span><h2>Скільки витрачає ГО</h2></div>
+  <div class="figure">
+    <div class="chart-scroll"><svg viewBox="0 0 720 330" role="img" aria-labelledby="c1t" class="chart"><title id="c1t">Витрати ГО «ВИ.МОВА» за роками, тис. грн</title><line x1="56" x2="704" y1="286.0" y2="286.0" class="grid"/><text x="48" y="290.0" class="tick" text-anchor="end">0 млн</text><line x1="56" x2="704" y1="220.5" y2="220.5" class="grid"/><text x="48" y="224.5" class="tick" text-anchor="end">10 млн</text><line x1="56" x2="704" y1="155.0" y2="155.0" class="grid"/><text x="48" y="159.0" class="tick" text-anchor="end">20 млн</text><line x1="56" x2="704" y1="89.5" y2="89.5" class="grid"/><text x="48" y="93.5" class="tick" text-anchor="end">30 млн</text><line x1="56" x2="704" y1="24.0" y2="24.0" class="grid"/><text x="48" y="28.0" class="tick" text-anchor="end">40 млн</text><rect x="79.8" y="284.5" width="60.5" height="1.5" class="bar"/><text x="110.0" y="278.2" class="val" text-anchor="middle">0,1</text><text x="110.0" y="304.0" class="tick" text-anchor="middle">2020</text><rect x="187.8" y="128.7" width="60.5" height="157.3" class="bar bar-hi"/><text x="218.0" y="121.7" class="val" text-anchor="middle">24,0</text><text x="218.0" y="304.0" class="tick" text-anchor="middle">2021</text><rect x="295.8" y="159.1" width="60.5" height="126.9" class="bar"/><text x="326.0" y="152.1" class="val" text-anchor="middle">19,4</text><text x="326.0" y="304.0" class="tick" text-anchor="middle">2022</text><rect x="403.8" y="193.3" width="60.5" height="92.7" class="bar"/><rect x="403.8" y="149.5" width="60.5" height="43.8" class="bar-pass"/><text x="434.0" y="142.5" class="val" text-anchor="middle">20,8</text><text x="434.0" y="304.0" class="tick" text-anchor="middle">2023</text><rect x="511.8" y="129.8" width="60.5" height="156.2" class="bar"/><rect x="511.8" y="106.2" width="60.5" height="23.6" class="bar-pass"/><text x="542.0" y="99.2" class="val" text-anchor="middle">27,4</text><text x="542.0" y="304.0" class="tick" text-anchor="middle">2024</text><rect x="619.8" y="48.2" width="60.5" height="237.8" class="bar"/><text x="650.0" y="41.2" class="val" text-anchor="middle">36,3</text><text x="650.0" y="304.0" class="tick" text-anchor="middle">2025</text><line x1="56" x2="704" y1="286.0" y2="286.0" class="axis"/></svg></div>
+    <div class="key"><span><i class="sw sw-core"></i>витрати на діяльність</span><span><i class="sw sw-pass"></i>транзитна благодійна допомога (рядок 2.4 звіту J0101911)</span></div>
+    <p class="cap">Мільйони гривень. 2020 — з картки Opendatabot; 2021 — графа «попередній рік» у фінзвітності за 2022 рік; 2022–2025 — фінзвітність малого підприємства. Розподіл на транзит відомий лише для 2023 і 2024 років.</p>
+  </div>
+  <div class="prose" style="display:grid;gap:12px">
+    <p>Мережа стартувала з великим бюджетом. На кінець 2021 року ГО вже мала меблів і техніки на 3,9 млн грн за первісною вартістю, з них 74% одразу списано як малоцінні активи. У 2022 році витрати впали на 19%: частина центрів закрилася, решта стали волонтерськими штабами. З 2024 року витрати ростуть на третину щороку.</p>
+  </div>
+  <div class="tbl tbl-wide"><table>
+    <thead><tr><th>Звіт J0101911, грн</th><th class="r">2022 (уточн.)</th><th class="r">2023</th><th class="r">2024</th></tr></thead>
+    <tbody>
+      <tr><td>1.5 Цільові кошти на статутну діяльність</td><td class="r">17 817 314</td><td class="r">13 940 002</td><td class="r">23 840 731</td></tr>
+      <tr><td>1.6.1 Благодійна допомога, отримана<span class="sub">2.4.1: стільки ж передано далі</span></td><td class="r">0</td><td class="r">6 680 785</td><td class="r">3 604 069</td></tr>
+      <tr><td>1.7 Внески засновників і членів<span class="sub">порожньо, хоча внески у 2023 році були</span></td><td class="r">0</td><td class="r">0</td><td class="r">0</td></tr>
+      <tr><td>1.11 Інші доходи</td><td class="r">501 052</td><td class="r">217 212</td><td class="r">0</td></tr>
+      <tr class="total"><td>1 Разом доходи = 2 Разом видатки</td><td class="r">18 318 366</td><td class="r">20 837 999</td><td class="r">27 444 800</td></tr>
+    </tbody></table></div>
+  <ul class="plain">
+    <li><b>Розбіжність за 2022 рік.</b> У фінзвітності доходи 19 370,9 тис., у податковому звіті 18 318,4 тис. Різниця 1,05 млн грн. Податковий звіт уточнили 23.06.2023, а фінзвітність лишилася як була. <span class="cred c-doc">документ</span></li>
+    <li><b>Валютний рахунок.</b> За 2023 рік на рахунок в євро в Укргазбанку надійшло лише €16 278,53 за 5 операцій, усе продано на гривні. Цей самий IBAN мережа публікує для донатів. Виписок у доларах чи фунтах немає, тож гроші закордонних донорів не видно. <span class="cred c-doc">документ</span></li>
+  </ul>
+</section>
+
+<section id="tsentry">
+  <div class="sec-head"><span class="code">Розділ 2</span><h2>Скільки центрів насправді</h2></div>
+  <div class="figure">
+    <div class="chart-scroll"><svg viewBox="0 0 720 340" role="img" aria-labelledby="c2t" class="chart"><title id="c2t">Заявлена кількість Гончаренко центрів і незалежні підрахунки</title><line x1="44" x2="700" y1="296.0" y2="296.0" class="grid"/><text x="36" y="300.0" class="tick" text-anchor="end">0</text><line x1="44" x2="700" y1="251.0" y2="251.0" class="grid"/><text x="36" y="255.0" class="tick" text-anchor="end">10</text><line x1="44" x2="700" y1="206.0" y2="206.0" class="grid"/><text x="36" y="210.0" class="tick" text-anchor="end">20</text><line x1="44" x2="700" y1="161.0" y2="161.0" class="grid"/><text x="36" y="165.0" class="tick" text-anchor="end">30</text><line x1="44" x2="700" y1="116.0" y2="116.0" class="grid"/><text x="36" y="120.0" class="tick" text-anchor="end">40</text><line x1="44" x2="700" y1="71.0" y2="71.0" class="grid"/><text x="36" y="75.0" class="tick" text-anchor="end">50</text><line x1="44" x2="700" y1="26.0" y2="26.0" class="grid"/><text x="36" y="30.0" class="tick" text-anchor="end">60</text><text x="44.0" y="314" class="tick" text-anchor="middle">2021</text><line x1="44.0" x2="44.0" y1="296.0" y2="301.0" class="axis"/><text x="153.3" y="314" class="tick" text-anchor="middle">2022</text><line x1="153.3" x2="153.3" y1="296.0" y2="301.0" class="axis"/><text x="262.7" y="314" class="tick" text-anchor="middle">2023</text><line x1="262.7" x2="262.7" y1="296.0" y2="301.0" class="axis"/><text x="372.0" y="314" class="tick" text-anchor="middle">2024</text><line x1="372.0" x2="372.0" y1="296.0" y2="301.0" class="axis"/><text x="481.3" y="314" class="tick" text-anchor="middle">2025</text><line x1="481.3" x2="481.3" y1="296.0" y2="301.0" class="axis"/><text x="590.7" y="314" class="tick" text-anchor="middle">2026</text><line x1="590.7" x2="590.7" y1="296.0" y2="301.0" class="axis"/><text x="700.0" y="314" class="tick" text-anchor="middle">2027</text><line x1="700.0" x2="700.0" y1="296.0" y2="301.0" class="axis"/><polyline points="53.1,251.0 98.7,215.0 126.0,206.0 144.2,192.5 189.8,174.5 262.7,161.0" class="line-a"/><circle cx="53.1" cy="251.0" r="3.5" class="dot-line-a"/><circle cx="98.7" cy="215.0" r="3.5" class="dot-line-a"/><circle cx="126.0" cy="206.0" r="3.5" class="dot-line-a"/><circle cx="144.2" cy="192.5" r="3.5" class="dot-line-a"/><circle cx="189.8" cy="174.5" r="3.5" class="dot-line-a"/><circle cx="262.7" cy="161.0" r="3.5" class="dot-line-a"/><polyline points="326.4,174.5 362.9,161.0 381.1,156.5 408.4,143.0 481.3,134.0 490.4,129.5 517.8,111.5 563.3,98.0 618.0,89.0 636.2,75.5 654.4,53.0" class="line-b"/><circle cx="326.4" cy="174.5" r="3.5" class="dot-line-b"/><circle cx="362.9" cy="161.0" r="3.5" class="dot-line-b"/><circle cx="381.1" cy="156.5" r="3.5" class="dot-line-b"/><circle cx="408.4" cy="143.0" r="3.5" class="dot-line-b"/><circle cx="481.3" cy="134.0" r="3.5" class="dot-line-b"/><circle cx="490.4" cy="129.5" r="3.5" class="dot-line-b"/><circle cx="517.8" cy="111.5" r="3.5" class="dot-line-b"/><circle cx="563.3" cy="98.0" r="3.5" class="dot-line-b"/><circle cx="618.0" cy="89.0" r="3.5" class="dot-line-b"/><circle cx="636.2" cy="75.5" r="3.5" class="dot-line-b"/><circle cx="654.4" cy="53.0" r="3.5" class="dot-line-b"/><path d="M262.7,151.0 C282.7,121.0 316.4,134.5 326.4,164.5" class="anno"/><text x="294.6" y="119.0" class="anno-t" text-anchor="middle">рахунок почали заново</text><rect x="385.7" y="206.0" width="9" height="9" class="ind" transform="rotate(45 390.2 210.5)"/><text x="400.2" y="214.5" class="lab" text-anchor="start">19 приміщень ГО</text><rect x="485.9" y="134.0" width="9" height="9" class="ind" transform="rotate(45 490.4 138.5)"/><text x="480.4" y="156.5" class="lab" text-anchor="end">ЧЕСНО: 35</text><rect x="659.1" y="62.0" width="9" height="9" class="ind" transform="rotate(45 663.6 66.5)"/><text x="651.6" y="112.5" class="lab" text-anchor="end">51 фізичний простір</text><text x="646.4" y="43.0" class="lab" text-anchor="end">54-й, серпень 2026</text><text x="61.1" y="267.0" class="lab">10, лютий 2021</text><line x1="44" x2="700" y1="296.0" y2="296.0" class="axis"/></svg></div>
+    <div class="key"><span><i class="sw sw-a"></i>нумерація 2021–2022</span><span><i class="sw sw-b"></i>нумерація після перезапуску 2023</span><span><i class="sw sw-ind"></i>незалежний підрахунок або документ ГО</span></div>
+    <p class="cap">Номер «N-й центр» з постів мережі про відкриття. Він показує кількість відкриттів, а не діючі центри: Лиман, Краматорськ, Костянтинівка, Нетішин закриті, Олешки в окупації, ще кілька центрів зникли з переліків без оголошення.</p>
+  </div>
+  <div class="tbl tbl-wide"><table>
+    <thead><tr><th>Дата</th><th class="r">Кількість</th><th>Що за цим числом</th><th>Джерело</th></tr></thead>
+    <tbody>
+      <tr><td class="num">11.02.2021</td><td class="r">10</td><td>Перші міста: Подільськ, Балта, Миргород, Житомир, Рівне, Жмеринка, Івано-Франківськ, Чернівці, Кропивницький, Лиман</td><td><a href="https://ukranews.com/ua/news/755871-u-10-mistah-vidkrylysya-goncharenko-tsentry-dlya-bezkoshtovnogo-navchannya-ditej-i-doroslyh">Ukranews</a> <span class="cred c-self">пресреліз</span></td></tr>
+      <tr><td class="num">09.07.2021</td><td class="r">18-й</td><td>Олешки, «восьмий партнерський»</td><td><a href="https://goncharenkocentre.com.ua/pershij-goncharenko-centr-vidkrito-na-hersonshhini/">сайт мережі</a> <span class="cred c-self">самозаява</span></td></tr>
+      <tr><td class="num">04.2022</td><td class="r">14–17</td><td>Працюють після вторгнення, як волонтерські штаби</td><td><a href="https://t.me/goncharenkocentre/162">Telegram мережі</a> <span class="cred c-self">самозаява</span></td></tr>
+      <tr><td class="num">01.2023</td><td class="r">30</td><td>Гончаренко: «We currently have 30 centers»</td><td><a href="https://goncharenkocentre.com.ua/en/ukrainian-dream-how-people-change-world-s-history/">сайт мережі</a> <span class="cred c-self">самозаява</span></td></tr>
+      <tr><td class="num">02.08.2023</td><td class="r">27-й</td><td>Дніпро. Рахунок почали заново після закриттів</td><td><a href="https://goncharenkocentre.com.ua/popri-trivogi-ta-blizkist-frontu-u-dnipri-vidkrili-novij-kulturno-osvitnij-centr-z-bezkoshtovnimi-kursami-anglijskoi/">сайт мережі</a> <span class="cred c-self">самозаява</span></td></tr>
+      <tr><td class="num">16.12.2023</td><td class="r">30-й</td><td>Одеса, вул. Ойстраха. Вдруге «ювілейний 30-й»</td><td><a href="https://goncharenkocentre.com.ua/yakisna-osvita-staie-shhe-dostupnishoju-v-odesi-vidkrili-juvilejnij-osvitno-kulturnij-goncharenko-centr/">сайт мережі</a> <span class="cred c-self">самозаява</span></td></tr>
+      <tr><td class="num">03.2024</td><td class="r">19</td><td>Приміщень, які ГО орендує або суборендує, у 16 містах</td><td><a href="https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Majnova-baza.docx">«Майнова база», документ ГО</a> <span class="cred c-doc">документ</span></td></tr>
+      <tr><td class="num">25.02.2025</td><td class="r">35</td><td>Незалежний підрахунок за переліком на сайті. Мережа того ж дня називала Вінницю 37-ю</td><td><a href="https://www.chesno.org/post/6335/">ЧЕСНО</a>, <a href="https://glavcom.ua/publications/ekzotichni-tantsi-vid-deputata-jakij-khoche-stati-prezidentom-khto-finansuje-honcharenko-tsentri-1046105.html">Главком</a> <span class="cred c-med">медіа</span></td></tr>
+      <tr><td class="num">02.02.2026</td><td class="r">44</td><td>«П'ять років мережі»</td><td><a href="https://goncharenkocentre.com.ua/p-yat-rokiv-merezhi-goncharenko-centriv-44-centri-2-8-mln-studentiv-i-172-tisyachi-podij/">сайт мережі</a> <span class="cred c-self">самозаява</span></td></tr>
+      <tr><td class="num">24.08.2026</td><td class="r">54-й</td><td>Луцьк</td><td><a href="https://goncharenkocentre.com.ua/u-lucku-vidkrili-pershij-na-volini-hab-merezhi-goncharenko-centr/">сайт мережі</a> <span class="cred c-self">самозаява</span></td></tr>
+      <tr><td class="num">04.10.2026</td><td class="r">54 / 51</td><td>«Працює 54» і ще 6 не працюють через бойові дії. У переліку 51 фізичний простір; Онлайн, Юридичний центр і STEAM-лабораторія теж рахуються як центри. 6 позначено як «центр-партнер»</td><td><a href="https://goncharenkocentre.com.ua/">головна</a>, <a href="https://goncharenkocentre.com.ua/kontakti/">контакти</a> <span class="cred c-self">самозаява</span></td></tr>
+    </tbody></table></div>
+
+  <div class="prem">
+    <div style="display:grid;gap:10px">
+      <h3>19 приміщень на 30 центрів</h3>
+      <div class="cells" aria-label="19 з 30 центрів мають приміщення, які орендує ГО">
+        <i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell"></i><i class="cell off"></i><i class="cell off"></i><i class="cell off"></i><i class="cell off"></i><i class="cell off"></i><i class="cell off"></i><i class="cell off"></i><i class="cell off"></i><i class="cell off"></i><i class="cell off"></i><i class="cell off"></i>
+      </div>
+      <div class="key"><span><i class="sw sw-core"></i>приміщення в оренді чи суборенді ГО</span><span><i class="sw" style="border:1.5px dashed var(--muted)"></i>центр без приміщення ГО</span></div>
+    </div>
+    <div class="prose" style="display:grid;gap:10px;font-size:15px">
+      <p>У переліку приміщень ГО (березень 2024) немає центрів, які звіт ГО про заходи 2023 року називає діючими: Харків, Рогань, Дергачі, Нетішин, Черкаси, Одеса на Ріхтера, Таїрове, Кримськотатарський центр, Теофіполь, Чернігів, Хмельницький.</p>
+      <p>Для Подільська та Миколаєва адреси в переліку приміщень і у звіті про заходи різні. Отже, ці центри утримують партнери, громади або бізнес, і в звітності ГО цих витрат немає.</p>
+    </div>
+  </div>
+</section>
+
+<section id="khto-platyt">
+  <div class="sec-head"><span class="code">Розділ 3</span><h2>Хто платить: що кажуть документи</h2></div>
+  <div class="prose" style="display:grid;gap:12px">
+    <p><b>Повного офіційного переліку донорів немає.</b> Закон не зобов'язує громадську організацію розкривати, хто дає їй гроші: таке правило є для політичних партій, але не для ГО. Податковий звіт неприбуткової організації (форма J0101911) показує лише категорії надходжень, без імен. Тому картину доводиться складати з уривків: внутрішньої відомості ГО, судових рішень, декларацій НАЗК і переліку «Спонсори», який мережа сама публікує на сайті.</p>
+  </div>
+
+  <h3>3.1 Що видно в кожному джерелі</h3>
+  <div class="tbl tbl-wide"><table>
+    <thead><tr><th>Джерело</th><th>Чи названо донорів</th><th>Що саме там є</th><th>Достовірність</th></tr></thead>
+    <tbody>
+      <tr><td>Фінзвітність малого підприємства (ф. 1-м, 2-м), 2022–2025</td><td>ні</td><td>Лише загальні суми: «інші операційні доходи» і «цільове фінансування»</td><td><span class="cred c-doc">документ</span></td></tr>
+      <tr><td>Звіти J0101911 до ДПС, 2022–2024</td><td>ні</td><td>Категорії: цільові кошти, благодійна допомога, членські внески (рядок порожній), інші доходи</td><td><span class="cred c-doc">документ</span></td></tr>
+      <tr><td><a href="https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Chlenski-vneski-2023.pdf">Оборотно-сальдова відомість, рахунок 3771, 2023</a></td><td><b>так</b>, частково</td><td>10 фізичних осіб, членів ГО, по 200–260 тис. грн і ГО «Центр БПЛА.УА «КРУК»» (60 тис.). Разом 2,36 млн</td><td><span class="cred c-doc">документ</span> внутрішній, без підпису</td></tr>
+      <tr><td><a href="https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/evro-VIMOVA.pdf">Виписка з рахунку в євро, 2023</a></td><td>ні</td><td>Платників не видно: €16 278,53 зараховано «після розподілу» як благодійні пожертви</td><td><span class="cred c-doc">документ</span></td></tr>
+      <tr><td>Рішення ООАС і 5ААС у справі 420/27001/25</td><td><b>так</b>, один</td><td>Петро Обухов переказав ГО 1 385 000 грн «благодійного внеску» у 2023 році. Факт виявило НАЗК за банківськими даними</td><td><span class="cred c-doc">документ</span></td></tr>
+      <tr><td>Декларації НАЗК Обухова, Потапського, Гончаренка</td><td>ні</td><td>Серії «безповоротної фінансової допомоги» 2023–2025 рр. без зазначення отримувача; Потапський отримує від ГО зарплату; Гончаренко — член правління ГО</td><td><span class="cred c-doc">документ</span></td></tr>
+      <tr><td>Ухвала ВАКС у справі 991/9222/26, 17.07.2026</td><td>так, у скарзі</td><td>Скаржник називає ФГ «Укрлендфармінг», ПрАТ «Агрохолдинг Авангард», ТОВ «ТаксіБонд» і ГО «ВИ.МОВА» учасниками схеми, з якої нібито фінансується мережа. Суд у скарзі відмовив</td><td><span class="cred c-low">низька</span> слова серійного скаржника</td></tr>
+      <tr><td><a href="https://goncharenkocentre.com.ua/">Блок «Спонсори» на головній сайту мережі</a></td><td><b>так</b>, самоназваний</td><td>СВК «Дружба народів» (03766990), ТОВ «Таксі Бонд» (40644259), ФГ «Укрлендфармінг» (39474798), Michael Ashcroft. Окремо «Друзі та партнери»: Cisco, UPenn, тайванські університети, Lions Clubs, Kyiv Post</td><td><span class="cred c-self">самозаява</span></td></tr>
+    </tbody></table></div>
+
+  <h3>3.2 Чотири спонсори з сайту: хто вони за реєстрами</h3>
+  <p class="prose">Мережа сама називає чотирьох спонсорів і вказує коди ЄДРПОУ трьох компаній. Ми перевірили кожну за державними реєстрами та фінзвітністю. Реальні гроші має лише одна.</p>
+  <div class="sponsors">
+    <article class="sp">
+      <header><span class="sp-code">ЄДРПОУ 03766990</span><h3>СВК «Дружба народів»</h3><span class="verdict v-ok">може фінансувати</span></header>
+      <p>Агрокооператив з Одещини, понад 100 працівників. Власники: С. Паращенко 49%, <b>Петро Обухов 25%</b>, <b>Олексій Потапський 25%</b>, М. Паращенко 1%. Потапський водночас директор ГО «ВИ.МОВА», тож донор і отримувач — під однією людиною.</p>
+      <div class="tbl"><table class="mini">
+        <thead><tr><th>Рік</th><th class="r">Виручка, млн</th><th class="r">Прибуток, млн</th></tr></thead>
+        <tbody><tr><td>2021</td><td class="r">242,9</td><td class="r">59,1</td></tr><tr><td>2022</td><td class="r">205,7</td><td class="r">14,8</td></tr><tr><td>2023</td><td class="r">209,6</td><td class="r">13,5</td></tr><tr><td>2024</td><td class="r">373,0</td><td class="r">97,9</td></tr><tr><td>2025</td><td class="r">369,9</td><td class="r">56,7</td></tr></tbody>
+      </table></div>
+      <p class="src"><a href="https://opendatabot.ua/c/03766990">Opendatabot</a> <span class="cred c-doc">документ</span> · сума внесків СВК у ГО не розкрита</p>
+    </article>
+    <article class="sp">
+      <header><span class="sp-code">ЄДРПОУ 40644259</span><h3>ТОВ «Таксі Бонд», тепер «Смартдевелопмент»</h3><span class="verdict v-no">порожня фірма</span></header>
+      <p>До 2025 року — 100% Петра Обухова. Оборот: 0 грн у 2020-му, 50 тис. у 2021-му, 2 тис. у 2022-му, 0 у 2023-му, 701 тис. у 2024-му; прибуток лише раз, 28 тис. грн у 2021-му. Фінансувати мережу на мільйони вона не могла.</p>
+      <p>У 2025 році Обухов продав фірму за <b>1 000 грн</b> (рядок «відчуження корпоративних прав» у його декларації). За реєстром, новий власник і директор з'явилися <b>16.05.2025</b>, через три дні після розслідування Bihus.Info. Фірму перейменовано на «Смартдевелопмент» (оренда нерухомості) і зареєстровано за адресою Одеса, вул. Стуса, 2Б, — там само, де й СВК «Дружба народів». Сайт мережі досі показує «Таксі Бонд» серед спонсорів. Торговельна марка «Бонд» лишилася в Обухова.</p>
+      <p class="src"><a href="https://clarity-project.info/edr/40644259">Clarity</a>, <a href="https://opendatabot.ua/c/40644259">Opendatabot</a>, <a href="https://youcontrol.com.ua/catalog/company_details/40644259/">YouControl</a>, <a href="https://public.nazk.gov.ua/documents/bf556a2a-1ac5-4b97-9e19-82464e5a32b1">декларація Обухова за 2025</a> <span class="cred c-doc">документ</span></p>
+    </article>
+    <article class="sp">
+      <header><span class="sp-code">ЄДРПОУ 39474798</span><h3>ФГ «Укрлендфармінг»</h3><span class="verdict v-no">не той «Укрлендфармінг»</span></header>
+      <p>На сайті стоїть логотип <b>UkrLandFarming Public Limited Company</b>, кіпрського холдингу Олега Бахматюка. Але вказаний поруч код належить <b>фермерському господарству</b> з Визирської сільради на Одещині: статутний капітал 1 200 грн, активи 46 100 грн (2020). Засновниці — дві фізичні особи; одна з них, за Bihus.Info, сестра Бахматюка.</p>
+      <p>Самого Бахматюка прибрано з кінцевих бенефіціарів ФГ <b>03.12.2019</b>, за 16 днів до реєстрації ГО «ВИ.МОВА» (19.12.2019). Фінзвітності, яка показала б здатність фінансувати мережу, немає. Холдинг чи це господарство дає гроші, і скільки, невідомо.</p>
+      <p class="src"><a href="https://clarity-project.info/edr/39474798">Clarity</a>, <a href="https://opendatabot.ua/c/39474798">Opendatabot</a> <span class="cred c-doc">документ</span> · <a href="https://zn.ua/ukr/POLITICS/tsentri-honcharenka-finansuje-biznes-rodini-bakhmatjuka-bihusinfo.html">ZN.UA / Bihus.Info</a> <span class="cred c-med">медіа</span></p>
+    </article>
+    <article class="sp">
+      <header><span class="sp-code">фізична особа, Велика Британія</span><h3>Michael Ashcroft</h3><span class="verdict v-unk">суми невідомі</span></header>
+      <p>Логотип з'явився в блоці «Спонсори» <b>12.02.2026</b>; у травні 2025 року Bihus бачив там лише три компанії. Ешкрофт «підтримав» київський центр (2023) і був головним спонсором Black Sea Security Forum 2025, співорганізатор якого — мережа. Ні сума, ні платник, ні рахунок ніде не розкриті; британське право цього не вимагає.</p>
+      <p class="src"><a href="https://goncharenkocentre.com.ua/wp-content/uploads/2026/02/photo_2026-02-12_15-06-01.jpg">файл логотипу на сайті</a> <span class="cred c-doc">документ</span> · <a href="https://glavcom.ua/kyiv/photo/u-kijevi-za-pidtrimki-britanskoho-lorda-vidkrili-osvitnij-tsentr-925315.html">Главком</a>, <a href="https://odesaforum.org/black-sea-security-forum-2025/">BSSF</a> <span class="cred c-med">медіа</span></p>
+    </article>
+  </div>
+
+  <h3>3.3 Підтверджені гроші: 2023 рік</h3>
+  <p class="prose">Лише для 2023 року є документи з іменами платників. Разом вони пояснюють близько п'ятої частини надходжень. Звідки решта, з документів не видно.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Платник</th><th class="r">Сума, грн</th><th>Документ</th></tr></thead>
+    <tbody>
+      <tr><td>10 рядових членів ГО, членські внески</td><td class="r">2 300 000</td><td>ОСВ рахунку 3771 <span class="cred c-doc">документ</span></td></tr>
+      <tr><td>Петро Обухов, благодійний внесок</td><td class="r">1 385 000</td><td>рішення ООАС <span class="cred c-doc">документ</span></td></tr>
+      <tr><td>Пожертви в євро (платники невідомі)</td><td class="r">≈657 800</td><td>виписка Укргазбанку <span class="cred c-doc">документ</span></td></tr>
+      <tr><td>ГО «Центр БПЛА.УА «КРУК»», за меморандумом</td><td class="r">60 000</td><td>ОСВ рахунку 3771 <span class="cred c-doc">документ</span></td></tr>
+      <tr class="total"><td>Разом з відомими платниками</td><td class="r">≈4 402 800</td><td>≈22% оцінених надходжень 2023 року (≈20,2 млн)</td></tr>
+      <tr><td>Невідоме джерело</td><td class="r">≈15,8 млн</td><td>≈78%</td></tr>
+    </tbody></table></div>
+
+  <h3>3.4 Хронологія</h3>
+  <ol class="tl">
+    <li><time>03.12.2019</time><span>Бахматюка прибрано з бенефіціарів ФГ «Укрлендфармінг».</span></li>
+    <li><time>19.12.2019</time><span>Зареєстровано ГО «ВИ.МОВА».</span></li>
+    <li><time>02.2021</time><span>Відкриття перших центрів; «Дружба народів», «Бонд» і «Укрлендфармінг» уперше названі спонсорами (<a href="https://www.ukr.net/news/details/vinnytsya/83336381.html">Ukr.net</a>).</span></li>
+    <li><time>2023</time><span>Обухов переказує ГО 1,385 млн грн; 10 членів вносять 2,3 млн.</span></li>
+    <li><time>12–13.05.2025</time><span>Розслідування Bihus.Info про спонсорів.</span></li>
+    <li><time>16.05.2025</time><span>«Таксі Бонд» переходить до нового власника; Обухов отримує за неї 1 000 грн.</span></li>
+    <li><time>12.02.2026</time><span>Ешкрофт з'являється в блоці «Спонсори» на сайті.</span></li>
+    <li><time>20.02.2026</time><span>Голова «Укрпошти» Смілянський подає заяву до НАБУ щодо фінансування центрів.</span></li>
+    <li><time>22–23.02.2026</time><span>ГО публікує на сайті фінзвітність і податкові звіти за 2022–2024 роки, без імен донорів.</span></li>
+  </ol>
+
+  <h3>3.5 Інші названі донори і партнери</h3>
+  <div class="tbl tbl-wide"><table>
+    <thead><tr><th>Хто</th><th>Форма</th><th>Що відомо</th><th>Джерело</th></tr></thead>
+    <tbody>
+      <tr><td>Аднан Ківан (Kadorr Group)</td><td>не розкрито</td><td>У пості мережі від 30.10.2024 саме він названий тим, хто підтримав перший київський центр. Одеський центр з 2023 року працює в ТЦ «Kadorr» (Катерининська, 27/1) на умовах суборенди</td><td><a href="https://t.me/goncharenkocentre/7505">Telegram мережі</a> <span class="cred c-self">самозаява</span></td></tr>
+      <tr><td>Тарас Юрик</td><td>оренда в Луцьку, поза ГО</td><td>Так сказав сам Гончаренко</td><td><a href="https://www.volynpost.com/news/268932-hto-finansuie-goncharenko-centry-nardep-rozpoviv-pro-partneriv-u-lucku">Volynpost</a> <span class="cred c-self">самозаява</span></td></tr>
+      <tr><td>Громади: Вараш, Жмеринка, Краматорськ; Одеська облрада</td><td>комунальні приміщення</td><td>Суперечить тезі Гончаренка, що «не використовується жодна бюджетна копійка». Рішень рад не знайдено</td><td><a href="https://volodymyrets.city/articles/144286/nardep-oleksij-goncharenko-u-varashi-piv-poliske-moloko-i-vidkrivav-osvitno-kulturnij-centr">Вараш</a>, <a href="https://zhmerynka.city/articles/126770/u-zhmerinci-vidkrili-goncharenko-centr-suchasnij-kulturno-osvitnij-prostir-video">Жмеринка</a>, <a href="https://www.golos.com.ua/article/344028">Краматорськ</a>, <a href="https://odessa-life.od.ua/uk/news-uk/incident-u-chornomor-ja-odeska-oblrada-proti-volonteriv">Одеса</a> <span class="cred c-med">медіа</span></td></tr>
+      <tr><td>Фонд Конрада Аденауера</td><td>натуральна допомога</td><td>Оплачує проїзд і проживання учасників політшколи LEAD:UA. ГО «ВИ.МОВА» немає в офіційному списку партнерів фонду</td><td><a href="https://krivbass.city/news/view/z-vishu-do-verkhovnoi-radi-studentiv-z-krivogo-rogu-zaproshuyut-na-politichnu-shkolu-dlya-molodi-lead-ua-minus-yak-doluchitisya">Krivbass.city</a>; <a href="https://www.kas.de/en/web/ukraine/partner">KAS</a> <span class="cred c-med">медіа</span></td></tr>
+      <tr><td>«Друзі та партнери» з сайту: Cisco, UPenn, Shih Chien University, National Open University of Taiwan, Lions Clubs, Kyiv Post</td><td>не гроші</td><td>Освітні програми й інформаційне партнерство. Грошей від UPenn не знайдено; англомовна сторінка мережі серед «партнерів і меценатів» називає навіть ЗСУ та ДСНС</td><td><a href="https://goncharenkocentre.com.ua/en/about-the-project/">сайт мережі</a> <span class="cred c-self">самозаява</span></td></tr>
+      <tr><td>Держбюджет, Prozorro, гранти USAID, NED, УКФ</td><td>не знайдено</td><td>Єдиний слід у Prozorro — благодійний аукціон ГО на 54 000 грн (2022)</td><td><a href="https://prozorro.sale/auction/CSE001-UA-20221219-09712/">Prozorro.Sale</a> <span class="cred c-doc">документ</span></td></tr>
+      <tr><td>«Офшорні транші понад $500 тис.»</td><td>—</td><td>Анонімні джерела, жодного документа; ознаки замовного матеріалу</td><td><a href="https://pb-news.info/2026/05/19/miljonni-transhi-z-ofshoriv-ta-rozdrobleni-rahunky-rozkryto-mehanizm-finansuvannya-politychnyh-proyektiv-goncharenka/">pb-news.info</a> <span class="cred c-low">низька</span></td></tr>
+    </tbody></table></div>
+  <p class="note">Гончаренко: «Для відкриття освітніх просторів не використовується жодна бюджетна копійка. Всі партнери є приватними та міжнародними» (<a href="https://kolo.news/category/osvita/42886">Kolo.news, 14.04.2025</a>). У червні 2025 року він пообіцяв показати суми від донорів, але так і не показав.</p>
+</section>
+
+<section id="realnist">
+  <div class="sec-head"><span class="code">Розділ 4</span><h2>Чи сходяться цифри</h2></div>
+  <div class="figure">
+    <div class="chart-scroll"><svg viewBox="0 0 720 250" role="img" aria-labelledby="c3t" class="chart"><title id="c3t">Витрати ГО на один центр на місяць, тис. грн</title><rect x="56" y="120.7" width="648" height="39.8" class="band"/><text x="698" y="134.7" class="lab" text-anchor="end">мінімальний «кошик» центру: 40–75 тис.</text><line x1="56" x2="704" y1="206.0" y2="206.0" class="grid"/><text x="48" y="210.0" class="tick" text-anchor="end">0</text><line x1="56" x2="704" y1="160.5" y2="160.5" class="grid"/><text x="48" y="164.5" class="tick" text-anchor="end">40</text><line x1="56" x2="704" y1="115.0" y2="115.0" class="grid"/><text x="48" y="119.0" class="tick" text-anchor="end">80</text><line x1="56" x2="704" y1="69.5" y2="69.5" class="grid"/><text x="48" y="73.5" class="tick" text-anchor="end">120</text><line x1="56" x2="704" y1="24.0" y2="24.0" class="grid"/><text x="48" y="28.0" class="tick" text-anchor="end">160</text><rect x="88.4" y="40.4" width="64.8" height="165.6" class="bar"/><text x="120.8" y="33.4" class="val" text-anchor="middle">≈146</text><text x="120.8" y="224" class="tick" text-anchor="middle">2021</text><rect x="218.0" y="114.2" width="64.8" height="91.8" class="bar"/><text x="250.4" y="107.2" class="val" text-anchor="middle">≈81</text><text x="250.4" y="224" class="tick" text-anchor="middle">2022</text><rect x="347.6" y="132.9" width="64.8" height="23.4" class="bar-pass"/><rect x="347.6" y="156.3" width="64.8" height="49.7" class="bar"/><text x="380.0" y="125.9" class="val" text-anchor="middle">≈44 / 64</text><text x="380.0" y="224" class="tick" text-anchor="middle">2023</text><rect x="477.2" y="127.2" width="64.8" height="10.4" class="bar-pass"/><rect x="477.2" y="137.5" width="64.8" height="68.5" class="bar"/><text x="509.6" y="120.2" class="val" text-anchor="middle">≈60 / 69</text><text x="509.6" y="224" class="tick" text-anchor="middle">2024</text><rect x="606.8" y="120.0" width="64.8" height="86.0" class="bar"/><text x="639.2" y="113.0" class="val" text-anchor="middle">≈76</text><text x="639.2" y="224" class="tick" text-anchor="middle">2025</text><line x1="56" x2="704" y1="206.0" y2="206.0" class="axis"/></svg></div>
+    <div class="key"><span><i class="sw sw-core"></i>без транзитної благодійки</span><span><i class="sw sw-pass"></i>разом із нею</span><span><i class="sw sw-band"></i>оцінка мінімальної вартості центру</span></div>
+    <p class="cap">Тисяч гривень на один центр на місяць. Витрати року поділено на середню кількість діючих центрів (оцінка: 15, 20, 27, 33, 40) і на кількість місяців роботи. «Кошик»: оренда 15–40 тис., координатор 20–25 тис. разом з ЄСВ, комуналка 5–10 тис.</p>
+  </div>
+  <div class="prose" style="display:grid;gap:12px">
+    <p><b>Витрати ГО реалістичні, але лише як нижня межа.</b> 44–76 тис. грн на центр на місяць вистачає на оренду, одного координатора й комуналку. Викладачів для заявлених десятків тисяч учнів щомісяця за ці гроші не втримати.</p>
+    <p><b>Людей у ГО втричі менше, ніж каже мережа.</b> Сайт <a href="https://goncharenko.org/goncharenko-centre/">goncharenko.org</a> називає близько 120 працівників, звітність ГО — 38, 36 і 35 у 2023–2025 роках. Це менше одного штатного працівника на центр. Решту оплачують через ФОП, партнери напряму, або це волонтери.</p>
+    <p><b>Повна вартість мережі вища за звітну.</b> Голова «Укрпошти» Смілянський у заяві до НАБУ оцінив її у «більш як 3 млн грн щомісяця» (<a href="https://suspilne.media/1245894-smilanskij-podav-zaavu-do-nabu-na-goncarenka-sodo-perevirki-finansuvanna-goncarenko-centriv/">Суспільне</a>), тобто ≈36 млн на рік. Це збігається з витратами ГО за 2025 рік. Разом із позабалансовими приміщеннями й людьми мережа коштує орієнтовно 45–60 млн грн на рік. <span class="cred c-hyp">гіпотеза</span></p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Що заявляє мережа</th><th>Перевірка</th><th>Висновок</th></tr></thead>
+    <tbody>
+      <tr><td>2023: понад 25 000 подій і 300 000 відвідувачів</td><td class="num">≈77 подій на центр на місяць, ≈12 людей на подію, ≈570 грн витрат ГО на подію</td><td>Правдоподібно, якщо кожне заняття курсу — це «подія», а відвідувачі — це відвідування</td></tr>
+      <tr><td>Вересень 2024: «щомісяця навчаємо понад 50 тисяч»</td><td class="num">≈1 500 учнів на центр на місяць при ≈1 штатному працівнику ГО</td><td>Неправдоподібно без волонтерів, онлайну й позаштатних викладачів</td></tr>
+      <tr><td>Кумулятивно: 1,5 млн (09.2025) → 2,8 млн (02.2026) → «понад 3», «близько 3,5» і «майже 4» млн (вересень–жовтень 2026)</td><td class="num">+1,3 млн за 4,5 місяця, стільки ж, скільки за попередні 4,5 року</td><td>Недостовірно; три різні цифри одночасно</td></tr>
+      <tr><td>«44 регіони» (лютий 2026)</td><td>В Україні 27 регіонів</td><td>Помилка самопіару</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="dokumenty">
+  <div class="sec-head"><span class="code">Розділ 5</span><h2>Оригінали документів на сайті мережі</h2></div>
+  <p class="prose">Усі 15 документів, на яких побудовано аналіз, лежать на сайті goncharenkocentre.com.ua. Ми завантажили кожен із сайту 04.10.2026 і перевірили, що він побайтово збігається з копією, яку аналізували (контрольна сума MD5 нижче). Дата — заголовок Last-Modified сервера, тобто коли файл з'явився на сайті.</p>
+  <div class="docgroup">Сторінка «Звітність», вкладка «Фінансові звіти»: <a href="https://goncharenkocentre.com.ua/zvitnist/">goncharenkocentre.com.ua/zvitnist</a></div>
+  <div class="docs"><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2026/02/Finansova_zvitnist_malogo_pidpriiemstva_2022.pdf">Фінзвітність за 2022 рік</a> <span class="cred c-doc">PDF</span><div style="font-size:14px;color:var(--muted)">Баланс і звіт про фінрезультати; графа «попередній рік» дає 2021 рік</div></div><div class="d">на сайті з 22.02.2026<br>79 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2026/02/Finansova_zvitnist_malogo_pidpriiemstva_2022.pdf<br>MD5 043a47e7b859714259d89d44a5a55080</div></div><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2026/02/Finansova_zvitnist_malogo_pidpriiemstva_2023.pdf">Фінзвітність за 2023 рік</a> <span class="cred c-doc">PDF</span><div style="font-size:14px;color:var(--muted)">Ф. 1-м і 2-м, відмітка ДПС «Документ прийнято»</div></div><div class="d">на сайті з 22.02.2026<br>157 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2026/02/Finansova_zvitnist_malogo_pidpriiemstva_2023.pdf<br>MD5 305823fbfd418ea95e5a9e73a1974c93</div></div><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2026/02/Finansova_zvitnist_malogo_pidpriiemstva_2024.pdf">Фінзвітність за 2024 рік</a> <span class="cred c-doc">PDF</span><div style="font-size:14px;color:var(--muted)">Ф. 1-м і 2-м, КЕП Потапського</div></div><div class="d">на сайті з 22.02.2026<br>158 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2026/02/Finansova_zvitnist_malogo_pidpriiemstva_2024.pdf<br>MD5 d821a8c7abfb8e25b3447ddda28ac6d2</div></div><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2026/02/Zvit_pro_vikoristannya_dohodiv_pributkiv_nepributkovoi_organizacii_2022.pdf">Звіт неприбуткової організації за 2022 рік</a> <span class="cred c-doc">PDF</span><div style="font-size:14px;color:var(--muted)">Форма J0101911, уточнюючий, подано 23.06.2023</div></div><div class="d">на сайті з 23.02.2026<br>92 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2026/02/Zvit_pro_vikoristannya_dohodiv_pributkiv_nepributkovoi_organizacii_2022.pdf<br>MD5 997030cdba42c06a261b0aeeb26fd6b9</div></div><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2026/02/Zvit_pro_vikoristannya_dohodiv_pributkiv_nepributkovoi_organizacii_2023.pdf">Звіт неприбуткової організації за 2023 рік</a> <span class="cred c-doc">PDF</span><div style="font-size:14px;color:var(--muted)">Форма J0101911: цільові кошти, благодійна допомога</div></div><div class="d">на сайті з 23.02.2026<br>166 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2026/02/Zvit_pro_vikoristannya_dohodiv_pributkiv_nepributkovoi_organizacii_2023.pdf<br>MD5 22877df93d0f5f87a87f91b6e2a840d7</div></div><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2026/02/J0101911_Zvit_pro_vikoristannya_dohodiv_pributkiv_nepributkovoi_organizacii.pdf">Звіт неприбуткової організації за 2024 рік</a> <span class="cred c-doc">PDF</span><div style="font-size:14px;color:var(--muted)">Форма J0101911, подано 28.02.2025</div></div><div class="d">на сайті з 23.02.2026<br>166 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2026/02/J0101911_Zvit_pro_vikoristannya_dohodiv_pributkiv_nepributkovoi_organizacii.pdf<br>MD5 7751063f76614381e14dc1ea2ec29de0</div></div></div>
+  <div class="docgroup">Завантажено одним пакетом 04.04.2024; посилань на поточних сторінках сайту не знайдено</div>
+  <div class="docs"><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Balans-.VIMOVA.pdf">Фінзвітність за 2023 рік</a> <span class="cred c-doc">PDF</span><div style="font-size:14px;color:var(--muted)">Та сама, що й у 2026/02</div></div><div class="d">на сайті з 04.04.2024<br>158 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Balans-.VIMOVA.pdf<br>MD5 875951b089643dedef763d9c25b32955</div></div><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Zvit_pro_vikoristannya_dohodiv_pributkiv_nepributkovoi_organizacii.pdf">Звіт неприбуткової організації за 2023 рік</a> <span class="cred c-doc">PDF</span><div style="font-size:14px;color:var(--muted)">Та сама форма J0101911, з нумерацією сторінок</div></div><div class="d">на сайті з 04.04.2024<br>167 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Zvit_pro_vikoristannya_dohodiv_pributkiv_nepributkovoi_organizacii.pdf<br>MD5 01099e459f7ce16801fc03ebf11d7ef2</div></div><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Chlenski-vneski-2023.pdf">Членські внески за 2023 рік</a> <span class="cred c-doc">PDF</span><div style="font-size:14px;color:var(--muted)">Оборотно-сальдова відомість, рахунок 3771: 2 360 000 грн</div></div><div class="d">на сайті з 04.04.2024<br>64 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Chlenski-vneski-2023.pdf<br>MD5 f8ac1b9d38175e09b87dfc2c2c26d70b</div></div><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/evro-VIMOVA.pdf">Виписка з рахунку в євро за 2023 рік</a> <span class="cred c-doc">PDF</span><div style="font-size:14px;color:var(--muted)">Укргазбанк: надійшло €16 278,53</div></div><div class="d">на сайті з 04.04.2024<br>87 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/evro-VIMOVA.pdf<br>MD5 7fb8d7232c51422511a8c06e85bc9078</div></div><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Vityag-z-reiestru-nepributkovih-organizacij.pdf">Витяг з Реєстру неприбуткових організацій</a> <span class="cred c-doc">PDF</span><div style="font-size:14px;color:var(--muted)">Сформовано ДПС 26.03.2024, ознака 0032</div></div><div class="d">на сайті з 04.04.2024<br>125 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Vityag-z-reiestru-nepributkovih-organizacij.pdf<br>MD5 c66fd63832a7313ba22b5f2f2afc4b22</div></div><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Majnova-baza.docx">Інформація про майнову базу</a> <span class="cred c-doc">DOCX</span><div style="font-size:14px;color:var(--muted)">19 приміщень: 12 в оренді, 7 у суборенді</div></div><div class="d">на сайті з 04.04.2024<br>41 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Majnova-baza.docx<br>MD5 8b456d58019218242743e8c90b5bf3fa</div></div><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Zvit-po-zahodam.docx">Звіт про заходи за 2023 рік</a> <span class="cred c-doc">DOCX</span><div style="font-size:14px;color:var(--muted)">30 просторів, 25 000 подій, 5,5 млн грн на армію</div></div><div class="d">на сайті з 04.04.2024<br>46 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Zvit-po-zahodam.docx<br>MD5 a228d2698f243f1ddc7d909f73d0794a</div></div><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Informaciya-pro-chleniv.docx">Інформація про членів і засновників</a> <span class="cred c-doc">DOCX</span><div style="font-size:14px;color:var(--muted)">3 засновники, голова, 13 членів</div></div><div class="d">на сайті з 04.04.2024<br>41 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Informaciya-pro-chleniv.docx<br>MD5 daa2caa45e43facc170e2331e98d8b02</div></div><div class="doc"><div><a class="t" href="https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Biografichna-dovidka.docx">Біографічна довідка про членів правління</a> <span class="cred c-doc">DOCX</span><div style="font-size:14px;color:var(--muted)">Потапський, Гончаренко, Кучіна</div></div><div class="d">на сайті з 04.04.2024<br>41 КБ</div><div class="m">https://goncharenkocentre.com.ua/wp-content/uploads/2024/04/Biografichna-dovidka.docx<br>MD5 80f5268a003952768f1b5df0f395cf87</div></div></div>
+  <p class="note hyp">Пакет від квітня 2024 року (довідки про правління, членів, приміщення, звіт про заходи, звіт до податкової, витяг з реєстру неприбуткових) за складом схожий на заявку на грант чи конкурс фінансування для громадських організацій. Куди її подавали, невідомо. <span class="cred c-hyp">гіпотеза</span></p>
+</section>
+
+<section id="pytannia">
+  <div class="sec-head"><span class="code">Розділ 6</span><h2>Що перевірити далі</h2></div>
+  <ol class="q">
+    <li>Хто 10 членів ГО, що внесли по 200–260 тис. грн у 2023 році, і чи пов'язані вони з бізнесом донорів. Це приватні особи, тому перевірка має бути пропорційною меті.</li>
+    <li>Хто платить за ФГ «Укрлендфармінг»: холдинг UkrLandFarming PLC (Кіпр) чи саме господарство. Перевірити річні звіти холдингу щодо благодійних витрат і фінзвітність ФГ після 2020 року.</li>
+    <li>Скільки дав СВК «Дружба народів»: у повній фінзвітності кооперативу шукати благодійні чи інші операційні витрати 2021–2025 років.</li>
+    <li>Чому сайт мережі досі показує «Таксі Бонд» спонсором, хоча фірму продано за 1 000 грн у травні 2025 року.</li>
+    <li>Запитати в ГО «ВИ.МОВА» перелік донорів і договори. Закон не зобов'язує їх розкривати, тож це лише прохання.</li>
+    <li>Звіт J0101911 за 2025 рік: скільки з 36,3 млн становив транзит.</li>
+    <li>Чому розходяться фінзвітність і податковий звіт за 2022 рік (1,05 млн грн).</li>
+    <li>Виписки з рахунків у доларах і фунтах — там мають бути внески закордонних донорів.</li>
+    <li>Рішення міськрад Вараша, Жмеринки, Краматорська та Одеської облради про умови користування приміщеннями.</li>
+    <li>Чи внесено до ЄРДР відомості за заявою Смілянського до НАБУ (20.02.2026).</li>
+  </ol>
+</section>
+
+<section id="dzherela">
+  <div class="sec-head"><span class="code">Розділ 7</span><h2>Джерела</h2></div>
+  <div class="tbl tbl-wide"><table>
+    <thead><tr><th>Джерело</th><th>Тип і репутація</th><th>Посилання</th></tr></thead>
+    <tbody>
+      <tr><td>Звітність і довідки ГО «ВИ.МОВА»</td><td><span class="cred c-doc">документ</span> офіційні форми з відміткою ДПС «Документ прийнято»; довідки — самозвітування ГО</td><td>див. розділ 5</td></tr>
+      <tr><td>Сайт мережі та Telegram-канал</td><td><span class="cred c-self">самозаява</span> добре фіксує заяви, як лічильник центрів ненадійний</td><td><a href="https://goncharenkocentre.com.ua/">goncharenkocentre.com.ua</a>; <a href="https://t.me/s/goncharenkocentre">t.me/goncharenkocentre</a></td></tr>
+      <tr><td>ЧЕСНО, О. Левчак, 25.02.2025; передрук у Главкомі</td><td><span class="cred c-med">медіа</span> незалежний вотчдог</td><td><a href="https://www.chesno.org/post/6335/">chesno.org/post/6335</a>; <a href="https://glavcom.ua/publications/ekzotichni-tantsi-vid-deputata-jakij-khoche-stati-prezidentom-khto-finansuje-honcharenko-tsentri-1046105.html">glavcom.ua</a></td></tr>
+      <tr><td>Bihus.Info, С. Стеценко, 12.05.2025; переказ ZN.UA</td><td><span class="cred c-med">медіа</span> розслідувальна редакція</td><td><a href="https://youtu.be/wsWZV_BWccw">YouTube</a>; <a href="https://zn.ua/ukr/POLITICS/tsentri-honcharenka-finansuje-biznes-rodini-bakhmatjuka-bihusinfo.html">zn.ua</a></td></tr>
+      <tr><td>Суспільне про заяву Смілянського до НАБУ, 20.02.2026</td><td><span class="cred c-med">медіа</span> факт заяви; зміст — від опонента в конфлікті</td><td><a href="https://suspilne.media/1245894-smilanskij-podav-zaavu-do-nabu-na-goncarenka-sodo-perevirki-finansuvanna-goncarenko-centriv/">suspilne.media</a></td></tr>
+      <tr><td>Рішення ООАС у справі 420/27001/25</td><td><span class="cred c-doc">документ</span> Єдиний реєстр судових рішень</td><td><a href="https://reyestr.court.gov.ua/Review/131798240">reyestr.court.gov.ua/Review/131798240</a></td></tr>
+      <tr><td>Регіональні медіа про відкриття і приміщення</td><td><span class="cred c-med">медіа</span> середня надійність</td><td>див. розділ 3</td></tr>
+      <tr><td>Ukranews, 11.02.2021; Ukr.net, 2021</td><td><span class="cred c-self">пресреліз</span> однаковий текст у кількох виданнях без позначки «реклама»</td><td><a href="https://ukranews.com/ua/news/755871-u-10-mistah-vidkrylysya-goncharenko-tsentry-dlya-bezkoshtovnogo-navchannya-ditej-i-doroslyh">ukranews.com</a>; <a href="https://www.ukr.net/news/details/vinnytsya/83336381.html">ukr.net</a></td></tr>
+      <tr><td>pb-news.info, 19.05.2026</td><td><span class="cred c-low">низька</span> анонімні джерела, без документів</td><td><a href="https://pb-news.info/2026/05/19/miljonni-transhi-z-ofshoriv-ta-rozdrobleni-rahunky-rozkryto-mehanizm-finansuvannya-politychnyh-proyektiv-goncharenka/">pb-news.info</a></td></tr>
+      <tr><td>Картки ЄДР</td><td><span class="cred c-doc">документ</span> агрегатори державних реєстрів</td><td><a href="https://opendatabot.ua/c/43417706">Opendatabot</a>; <a href="https://clarity-project.info/edr/43417706">Clarity</a>; <a href="https://clarity-project.info/edr/44835765">Clarity: ГО «КРУК»</a></td></tr>
+      <tr><td>Реєстрові картки і фінзвітність спонсорів</td><td><span class="cred c-doc">документ</span> агрегатори ЄДР і даних ДПС</td><td><a href="https://opendatabot.ua/c/03766990">СВК «Дружба народів»</a>; <a href="https://clarity-project.info/edr/40644259">«Таксі Бонд» / «Смартдевелопмент»</a>; <a href="https://clarity-project.info/edr/39474798">ФГ «Укрлендфармінг»</a></td></tr>
+      <tr><td>Декларації НАЗК Обухова за 2024 і 2025 роки</td><td><span class="cred c-doc">документ</span> офіційний реєстр</td><td><a href="https://public.nazk.gov.ua/documents/fbb19adc-5197-4237-bcfc-471df1f7c4d3">2024</a>; <a href="https://public.nazk.gov.ua/documents/bf556a2a-1ac5-4b97-9e19-82464e5a32b1">2025</a></td></tr>
+      <tr><td>Ухвала ВАКС, справа 991/9222/26</td><td><span class="cred c-doc">документ</span> реєстр судових рішень; <span class="cred c-low">низька</span> зміст скарги</td><td><a href="https://reyestr.court.gov.ua/Review/138284703">reyestr.court.gov.ua/Review/138284703</a></td></tr>
+    </tbody></table></div>
+</section>
+
+<footer>
+  <p>Складено 04.10.2026 за допомогою AI-аналізу; потребує перевірки людиною. Усі URL перевірено в цей день. Оцінки, позначені як гіпотеза, не є встановленими фактами. Щодо всіх згаданих осіб діє презумпція невинуватості.</p>
+  <p>Імена рядових членів ГО та реєстраційні номери платників податків, які є в оригіналах документів, на цій сторінці свідомо не наведено.</p>
+</footer>
+
+</div>
+</body></html>
