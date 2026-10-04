@@ -94,10 +94,7 @@ dialog { border: 1px solid var(--rule); border-radius: 12px; background: var(--s
 .flag { font-family: var(--f-mono); font-size: 10.5px; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--bad); color: var(--bad); cursor: pointer; display: inline-block; margin-left: 4px; background: transparent; vertical-align: middle; } .flag:hover { background: var(--bad); color: #fff }</style>
 </head>
 <body>
-<div style="background:#fff3cd;color:#5c4400;padding:6px 12px;font:13px sans-serif">Статичний знімок досьє станом на 04.10.2026. Граф розгортається на обмежену глибину; зміни не зберігаються. <a href="index.html">Усі досьє</a></div>
 <div class="wrap">
-<p><a href="index.html">← пошук і всі досьє</a></p>
-
 <style>
 .projnav { display: grid; gap: 6px; margin: 0 0 14px; }
 .projnav .pt { font-family: var(--f-mono); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
@@ -110,18 +107,22 @@ dialog { border: 1px solid var(--rule); border-radius: 12px; background: var(--s
   <div class="pt">проєкт «Гончаренко»</div>
   <div class="row">
     <span class="who">Гончаренко О. О.</span>
-    <a class="tab" href="11651.html">досьє</a>
-    <a class="tab" href="11651-core.html" title="Головне: родина, найближчі помічники та їхні структури">★ Головне</a><a class="tab" href="11651-fees_vymova.html" title="Членські внески ГО «ВИ.МОВА» за 2023 рік">Внески ВИ.МОВА</a><a class="tab" href="11651-criminal_cases.html" title="Кримінальні справи в оточенні Гончаренка">Кримінальні справи</a><a class="tab" href="11651-es_odesa_pr.html" title="Одеський осередок «Європейської Солідарності» і Партія регіонів">ЄС Одеса і Партія регіонів</a><a class="tab" href="11651-kryvorot.html" title="Криворот Олексій Васильович — досьє">Криворот О. В.</a>
+    <a class="tab" href="11651-core.html" title="Головне: родина, найближчі помічники та їхні структури">★ Головне</a>
+    <a class="tab" href="11651.html">повне досьє</a>
+    <a class="tab" href="11651-fees_vymova.html" title="Членські внески ГО «ВИ.МОВА» за 2023 рік">Внески ВИ.МОВА</a><a class="tab" href="11651-criminal_cases.html" title="Кримінальні справи в оточенні Гончаренка">Кримінальні справи</a><a class="tab" href="11651-es_odesa_pr.html" title="Одеський осередок «Європейської Солідарності» і Партія регіонів">ЄС Одеса і Партія регіонів</a><a class="tab" href="11651-kryvorot.html" title="Криворот Олексій Васильович — досьє">Криворот О. В.</a>
   <span class="sep"></span>
     <span class="who">Паращенко С. В.</span>
+    
     <a class="tab" href="311873.html">досьє</a>
     <a class="tab" href="311873-sbu_case.html" title="Паращенко С. В.: справа СБУ про фінансування армії РФ і звʼязки з Гончаренком">Справа СБУ</a>
   <span class="sep"></span>
     <span class="who">Дерев&#39;янко М. М.</span>
+    
     <a class="tab on" href="689884.html">досьє</a>
     <a class="tab" href="689884-lesya.html" title="Дерев&#39;янко Леся Володимирівна — вкладене досьє">Леся Дерев&#39;янко</a>
   <span class="sep"></span>
     <span class="who">Обухов П. Г.</span>
+    
     <a class="tab" href="1522224.html">досьє</a>
     
   </div>
@@ -256,7 +257,7 @@ const corruptPill = n => n && n.corrupt && n.corrupt.length ? ` <span class="fla
   // ── Граф
   h.push(`<section class="panel-tab" data-panel="graph">
   <div class="viewbar"><label class="vcount" for="depth">Рівнів звʼязків:</label>
-    <select id="depth" class="sel">${[1, 2, 3, 4, 5, 6, 7].map(n => `<option value="${n}"${n === 2 ? ' selected' : ''}>${n === 1 ? '1 — безпосереднє коло' : n === 2 ? '2 — коло + його учасники' : n}</option>`).join('')}<option value="99">усе (до 8 рівнів)</option></select>
+    <select id="depth" class="sel">${[1, 2].map(n => `<option value="${n}"${n === 2 ? ' selected' : ''}>${n === 1 ? '1 — безпосереднє коло' : n === 2 ? '2 — коло + його учасники' : n}</option>`).join('')}<option value="3">3 — усі рівні</option></select>
     <span class="vcount" id="vcount"></span></div>
   <div class="legend">
     <span><i class="dot" style="background:var(--n-core)"></i>Фігурант і родина</span><span><i class="dot" style="background:var(--n-person)"></i>Інші особи</span>
@@ -567,7 +568,7 @@ const corruptPill = n => n && n.corrupt && n.corrupt.length ? ` <span class="fla
       if (!quiet) { busy(false); render(); select(id); } }
     async function autoExpand() { autoNote = '';
       const PRI = { family: 0, named: 1, company: 2, go: 3, money: 4, namers: 5, politics: 6, participant: 7 };
-      for (let dd = 1; dd < Math.min(DEPTH, 8); dd++) { const { Nn } = visible(); let cands = Nn.filter(n => level[n.id] === dd && expandable(meta[n.id])).sort((a, b) => (PRI[a.zone] ?? 9) - (PRI[b.zone] ?? 9)); if (!cands.length) break;
+      for (let dd = 1; dd < Math.min(DEPTH, 8); dd++) { const { Nn } = visible(); let cands = Nn.filter(n => level[n.id] === dd && expandable(meta[n.id])).sort((a, b) => (PRI[a.zone] ?? 9) - (PRI[b.zone] ?? 9)); if (!cands.length) continue;
         // без лімітів (на прохання): розгортаємо всі вузли рівня пачками; масові хаби зрізає сервер (truncated)
         busy(`розгортаю рівень ${dd + 1}: ${cands.length} вузлів…`);
         for (let i = 0; i < cands.length; i += 20) { const chunk = cands.slice(i, i + 20); try { const egos = await post('/ego/batch', { items: chunk.map(n => egoItem(meta[n.id])) }); egos.forEach((ego, j) => { if (ego && ego.center) merge(ego, chunk[j].id); else expanded.add(chunk[j].id); }); } catch (e) { autoNote += `рівень ${dd + 1}: ${e.message}; `; break; } }

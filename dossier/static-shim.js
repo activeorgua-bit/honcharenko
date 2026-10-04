@@ -5,14 +5,20 @@
   const miss = (what) => Promise.resolve(new Response(JSON.stringify({ detail: 'немає у статичній версії: ' + what }), { status: 404, headers: { 'Content-Type': 'application/json' } }));
   const egoKey = it => it.kind === 'company' ? 'company:' + it.edrpou : it.kind === 'go' ? 'go:' + it.ident : 'person:' + it.name_key;
   const orig = window.fetch.bind(window);
+  // глибші кола графа лежать у шардах data/<uid>-ego/<n>.json (djb2 за ключем) і довантажуються на вимогу
+  const shardOf = k => { let h = 5381; for (let i = 0; i < k.length; i++) h = (h * 33 + k.charCodeAt(i)) >>> 0; return h % S.shards; };
+  const loaded = {};
+  const loadShard = n => loaded[n] || (loaded[n] = orig(`${S.shardBase}/${n}.json`).then(r => r.json()).then(o => { S.ego = Object.assign(S.ego || {}, o); }).catch(() => {}));
   window.fetch = function (url, opts) {
     const u = typeof url === 'string' ? url : url.url;
     if (!u.startsWith('/api')) return orig(url, opts);
     const path = u.replace(/^\/api/, '');
     const method = ((opts || {}).method || 'GET').toUpperCase();
     if (method === 'POST' && path.startsWith('/ego/batch')) {
-      const items = JSON.parse(opts.body).items || [];
-      return json(items.map(it => (S.ego || {})[egoKey(it)] || { center: null, nodes: [], edges: [], truncated: { 'статична версія': 1 } }));
+      const keys = (JSON.parse(opts.body).items || []).map(egoKey);
+      const need = S.shards ? [...new Set(keys.filter(k => !(S.ego || {})[k]).map(shardOf))] : [];
+      return Promise.all(need.map(loadShard)).then(() =>
+        json(keys.map(k => (S.ego || {})[k] || { center: null, nodes: [], edges: [], truncated: { 'статична версія': 1 } })));
     }
     if (method !== 'GET') { alert('У статичній версії зміни не зберігаються.'); return miss(path); }
     if (path.startsWith('/person/uid/') && path.includes('/dossier')) return S.dossier ? json(S.dossier) : miss(path);
