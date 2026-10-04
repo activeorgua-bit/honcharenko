@@ -77,13 +77,13 @@
 
 <Panel title="1 · Обсяг матеріалів у часі" note="Скільки дописів на кошик і в якій ролі він там з'являється. Для тем — лише дописи, де канал цитує його; одна теза на допис за пріоритетом мир → ТЦК → влада → інше.">
   {#snippet controls()}
-    <Segmented label="розріз" value={S.ovKey} options={[{ value: "rol", label: "роль" }, ...(S.cc === "all" ? [{ value: "cc", label: "країна каналу" }] : []), { value: "teza", label: "тема цитування" }]} onchange={(v) => (S.ovKey = v)} />
+    <Segmented label="розріз" value={S.ovKey} options={[{ value: "rol", label: "роль" }, { value: "teza", label: "тема цитування" }]} onchange={(v) => (S.ovKey = v)} />
     <Segmented label="шкала" value={S.ovPct ? "pct" : "n"} options={[{ value: "n", label: "кількість" }, { value: "pct", label: "частки" }]} onchange={(v) => (S.ovPct = v === "pct")} />
   {/snippet}
   <StackBars rows={volRows} keys={volKeys} percent={S.ovPct} step={S.step} events={EVENTS} onpick={volPick} />
 </Panel>
 
-<Panel title="2 · Як пишуть про нього: тональність матеріалів саме про нього" note="Знаменник — матеріали, де він головна дійова особа (а не джерело новини). Негатив червоний, позитив зелений, без оцінки — сірий.">
+<Panel title="2 · Як пишуть про нього: тональність матеріалів саме про нього" note="Знаменник — матеріали, де він головна дійова особа (а не джерело новини). Негатив червоний, позитив зелений, без оцінки — сірий." warn={S.cc === "ru" ? "Тональність російських каналів не порівнюється з українською: у російському сегменті негативний тон щодо будь-якого українського політика є фоном, а не характеристикою саме цієї особи." : ""}>
   {#snippet controls()}
     <Segmented label="шкала" value={S.snPct ? "pct" : "n"} options={[{ value: "n", label: "кількість" }, { value: "pct", label: "частки" }]} onchange={(v) => (S.snPct = v === "pct")} />
   {/snippet}
