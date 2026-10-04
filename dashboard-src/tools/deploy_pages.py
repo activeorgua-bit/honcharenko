@@ -14,7 +14,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 ROOT = Path(__file__).resolve().parents[1]
 HOME = Path.home()
 AUTHOR = ["-c", "user.name=activeorgua-bit", "-c", "user.email=270802906+activeorgua-bit@users.noreply.github.com", "-c", "core.autocrlf=false"]
-SSH = f"ssh -i {HOME / '.ssh' / 'ghkey'} -o IdentitiesOnly=yes"
+SSH = f"ssh -i {(HOME / '.ssh' / 'ghkey').as_posix()} -o IdentitiesOnly=yes"   # прямі скісні: зворотні в GIT_SSH_COMMAND з'їдаються
 REMOTE = "git@github.com:activeorgua-bit/honcharenko.git"
 BASE = "/honcharenko/dashboard/"
 SRC_INCLUDE = ["package.json", "package-lock.json", "vite.config.js", "jsconfig.json", "index.html", "README.md", ".gitignore", ".gitattributes", "src", "tools", "public"]

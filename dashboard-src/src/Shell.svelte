@@ -5,6 +5,7 @@
   import { num } from "$lib/api.js";
   import { S, syncURL } from "$lib/state.svelte.js";
   import { D, tg, google } from "$lib/data.svelte.js";
+  import Summary from "./panels/Summary.svelte";
   import Overview from "./panels/Overview.svelte";
   import Accusations from "./panels/Accusations.svelte";
   import Endorsements from "./panels/Endorsements.svelte";
@@ -18,7 +19,7 @@
 
   $effect(() => { syncURL(); });
   const PAGES = [
-    { key: "ov", label: "Загальна динаміка" }, { key: "ac", label: "Звинувачення" }, { key: "en", label: "Схвалення тез" },
+    { key: "sm", label: "Головне" }, { key: "ov", label: "Загальна динаміка" }, { key: "ac", label: "Звинувачення" }, { key: "en", label: "Схвалення тез" },
     { key: "ch", label: "Канали" }, { key: "g", label: "Google" }, { key: "mt", label: "Матеріали й набори" }, { key: "pm", label: "Методологія" },
   ];
   const nUa = $derived(D.ready ? tg("ua").length : 0), nRu = $derived(D.ready ? tg("ru").length : 0), nG = $derived(D.ready ? google().length : 0);
@@ -41,7 +42,7 @@
     <nav class="flex flex-col gap-0.5 p-2">
       {#each PAGES as p, i (p.key)}
         <button onclick={() => (S.page = p.key)}
-          class="rounded-md px-3 py-1.5 text-left text-[13px] transition-colors {S.page === p.key ? 'bg-secondary font-semibold text-foreground' : 'text-muted-foreground hover:bg-accent/60'}">{i + 1} · {p.label}</button>
+          class="rounded-md px-3 py-1.5 text-left text-[13px] transition-colors {S.page === p.key ? 'bg-secondary font-semibold text-foreground' : 'text-muted-foreground hover:bg-accent/60'}">{i ? i + ' · ' : ''}{p.label}</button>
       {/each}
     </nav>
     <div class="mt-auto flex flex-col gap-2 border-t border-border p-3">
@@ -73,6 +74,7 @@
       <p class="mt-6 text-[13px] text-destructive">Не вдалося завантажити дані: {D.error.message}</p>
     {:else if !D.ready}
       <p class="mt-10 text-center text-[13px] text-muted-foreground">{D.progress || "завантаження…"}</p>
+    {:else if S.page === "sm"}<Summary />
     {:else if S.page === "ov"}<Overview />
     {:else if S.page === "ac"}<Accusations />
     {:else if S.page === "en"}<Endorsements />

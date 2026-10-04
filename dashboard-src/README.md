@@ -31,5 +31,9 @@ scp root@65.109.239.159:/tmp/dash_data.tgz . && tar xzf dash_data.tgz && rm -rf 
 npm install
 npm run dev            # :5177
 npm run build          # dist/
-VITE_BASE=/<repo>/ VITE_OUTDIR=dist-static npx vite build   # для GitHub Pages (у Git Bash: MSYS_NO_PATHCONV=1)
+py -3.13 tools/deploy_pages.py   # GitHub Pages: activeorgua-bit/honcharenko, main, тека dashboard/ (+ джерело в dashboard-src/)
 ```
+
+## Деплой
+Сайт: https://activeorgua-bit.github.io/honcharenko/dashboard/ — Pages збирається Jekyll-ом із кореня main репозиторію honcharenko (там є й інші розділи).
+`tools/deploy_pages.py` збирає з базою `/honcharenko/dashboard/`, кладе збірку в `dashboard/`, джерело без даних у `dashboard-src/`, комітить ЛИШЕ як activeorgua-bit і пушить ключем `~/.ssh/ghkey`.
