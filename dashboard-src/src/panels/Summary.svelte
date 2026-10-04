@@ -23,9 +23,9 @@
   const crit = (rows) => rows.filter((r) => r.qsv === "critical");
 
   const kpi = $derived([
-    { label: "негативних серед матеріалів саме про нього", value: `UA ${pct(neg(ua).length / (about(ua).length || 1), 0)} · RU ${pct(neg(ru).length / (about(ru).length || 1), 0)}`, tone: "neg",
-      hint: `українські: ${num(neg(ua).length)} з ${num(about(ua).length)}; російські: ${num(neg(ru).length)} з ${num(about(ru).length)}` },
-    { label: "звинувачення в роботі на російську пропаганду", value: num(ua.filter(hasRos).length), hint: `${pct(ua.filter(hasRos).length / (about(ua).length || 1), 0)} українських матеріалів саме про нього; у російських каналах — ${num(ru.filter(hasRos).length)}` },
+    { label: "негативних серед українських матеріалів саме про нього", value: pct(neg(ua).length / (about(ua).length || 1), 0), tone: "neg",
+      hint: `${num(neg(ua).length)} з ${num(about(ua).length)}; позитивних ${pct(about(ua).filter((r) => tone(r) === "pos").length / (about(ua).length || 1), 0)}` },
+    { label: "звинувачення в роботі на російську пропаганду", value: num(ua.filter(hasRos).length), hint: `${pct(ua.filter(hasRos).length / (about(ua).length || 1), 0)} українських матеріалів саме про нього` },
     { label: "схвально підхоплюють тезу про ТЦК", value: `RU ${pct(endo(quotes(ru, "tck")).length / (quotes(ru, "tck").length || 1), 0)} · UA ${pct(endo(quotes(ua, "tck")).length / (quotes(ua, "tck").length || 1), 0)}`,
       hint: `російські канали — утричі частіше за українські (${num(endo(quotes(ru, "tck")).length)} з ${num(quotes(ru, "tck").length)} проти ${num(endo(quotes(ua, "tck")).length)} з ${num(quotes(ua, "tck").length)})` },
     { label: "схвально підхоплюють тезу про мир", value: `RU ${pct(endo(quotes(ru, "myr")).length / (quotes(ru, "myr").length || 1), 1)} · UA ${pct(endo(quotes(ua, "myr")).length / (quotes(ua, "myr").length || 1), 1)}`,
@@ -61,7 +61,7 @@
 
 <h2 class="mb-1 mt-2 text-[19px] font-semibold tracking-tight">Головне</h2>
 <p class="mb-4 max-w-[96ch] text-[13.5px] leading-relaxed text-muted-foreground">
-  Українські канали пишуть про Гончаренка переважно негативно, російські — ще жорсткіше. Кожен восьмий український матеріал саме про нього звинувачує його
+  Українські канали пишуть про Гончаренка переважно негативно. Кожен восьмий український матеріал саме про нього звинувачує його
   в поширенні російських наративів, і ці звинувачення йдуть хвилями навколо його гучних заяв. Водночас його тези про ТЦК і мобілізацію російські канали
   схвально підхоплюють утричі частіше за українські, а серед українських «схвалювачів» помітні проросійські канали. Телеграм України й Росії за
   01.01.2025–03.10.2026 (Telemetrio) і російська видача Google від 03.10.2026. Кожне число відкривається в перелік першоджерел.

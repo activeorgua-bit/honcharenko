@@ -16,7 +16,6 @@
   const dark = $derived(theme.choice === "dark" || (theme.choice === "system" && matchMedia("(prefers-color-scheme: dark)").matches));
   const C = (k) => colorOf(k, dark);
   const rows = $derived(tg(S.cc).filter((r) => inRange(r, S.from, S.to)));
-  const other = $derived(S.cc === "all" ? [] : tg(S.cc === "ua" ? "ru" : "ua").filter((r) => inRange(r, S.from, S.to)));
   const ccLabel = $derived(S.cc === "all" ? "усі канали" : CC_LABEL[S.cc]);
   const bLabel = (b) => (S.step === "month" ? b : S.step === "week" ? `тиждень від ${b}` : b);
 
@@ -26,12 +25,10 @@
     const ros = rows.filter(hasRos), quotes = rows.filter((r) => r.rol === "quotes");
     const tck = quotes.filter((r) => r.teza.includes("tck")), tckE = tck.filter((r) => r.qsv === "endorses");
     const myr = quotes.filter((r) => r.teza.includes("myr")), myrE = myr.filter((r) => r.qsv === "endorses");
-    const oA = other.filter(isAbout), oNeg = oA.filter((r) => tone(r) === "neg");
-    const oLabel = S.cc === "ua" ? "у російських" : "в українських";
     return [
       { label: `релевантних матеріалів · ${ccLabel}`, value: num(rows.length), hint: `цитують його: ${num(quotes.length)} · саме про нього: ${num(about.length)}` },
       { label: "негативних серед матеріалів саме про нього", value: pct(neg.length / (about.length || 1), 0), tone: "neg",
-        hint: `${num(neg.length)} з ${num(about.length)}; позитивних ${pct(pos.length / (about.length || 1), 0)}${other.length ? ` · ${oLabel}: ${pct(oNeg.length / (oA.length || 1), 0)}` : ""}` },
+        hint: `${num(neg.length)} з ${num(about.length)}; позитивних ${pct(pos.length / (about.length || 1), 0)}` },
       { label: "звинувачення в роботі на російську пропаганду", value: num(ros.length), hint: `${pct(ros.length / (about.length || 1), 0)} матеріалів саме про нього` },
       { label: "схвально підхоплюють тези", value: `ТЦК ${pct(tckE.length / (tck.length || 1), 0)} · мир ${pct(myrE.length / (myr.length || 1), 1)}`,
         hint: `ТЦК: ${num(tckE.length)} з ${num(tck.length)} цитувань · мир: ${num(myrE.length)} з ${num(myr.length)}` },
