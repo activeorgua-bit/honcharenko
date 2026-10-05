@@ -92,6 +92,12 @@ dialog { border: 1px solid var(--rule); border-radius: 12px; background: var(--s
 .conn.wrong { opacity: .55 } .conn.wrong b { text-decoration: line-through }
 .pg a { position: relative; padding-right: 22px } .hidex { position: absolute; right: 4px; top: 2px; color: var(--faint); font-size: 14px; line-height: 1; display: none; padding: 0 3px; border-radius: 3px } .pg a:hover .hidex { display: inline } .hidex:hover { color: var(--bad); background: var(--bg) }
 .flag { font-family: var(--f-mono); font-size: 10.5px; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--bad); color: var(--bad); cursor: pointer; display: inline-block; margin-left: 4px; background: transparent; vertical-align: middle; } .flag:hover { background: var(--bad); color: #fff }
+/* ЧЕСНО — жовтий бейдж: при наведенні темний текст на жовтому (раніше inline-колір лишав жовтий текст на червоному фоні) */
+.flag.ch { border-color: var(--warn); color: var(--warn) } .flag.ch:hover { background: var(--warn); color: #15181c }
+.flag.court { border-color: var(--accent); color: var(--accent) } .flag.court:hover { background: var(--accent); color: #fff }
+.flag.proru { cursor: help } .flag.proru:hover { background: transparent; color: var(--bad) }
+.spotbox { display: grid; gap: 4px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--rule); }
+.spotbox select { font: inherit; font-size: 12px; }
 .wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; display: grid; gap: 16px; }
 .stage { border-left: 4px solid var(--warn); padding: 8px 12px; background: var(--surface); margin: 10px 0; }
 table.rep { width: 100%; border-collapse: collapse; font-size: 13px; }

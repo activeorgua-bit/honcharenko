@@ -24,6 +24,7 @@
     if (path.startsWith('/person/uid/') && path.includes('/dossier')) return S.dossier ? json(S.dossier) : miss(path);
     if (path.startsWith('/reports')) return json(S.reports || []);
     if (path.startsWith('/feedback')) return json(S.feedback || { items: [] });
+    if (path.startsWith('/courts/hits')) return json(S.courts || { hits: [], sources: [] });
     if (path.startsWith('/chesno')) { const n = decodeURIComponent((path.match(/name=([^&]*)/) || [])[1] || ''); return json((S.chesno || {})[n] || { matches: [], others: [] }); }
     return miss(path);
   };
