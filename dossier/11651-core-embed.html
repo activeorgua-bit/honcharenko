@@ -124,6 +124,14 @@ html, body { background: var(--bg); }
 #cgc { height: calc(100vh - 120px) !important; min-height: 460px !important; }
 .embed-src { font: 12px var(--f-body); color: var(--muted); margin: 6px 2px 0; }
 .embed-src a { color: var(--accent); }
+/* у вузькому iframe сітка ставить панель під граф — поза видимою висотою; тому панель — поверх графа, по кліку */
+.card:has(#cgc) .cg { display: block !important; position: relative; }
+#cgp { position: absolute !important; top: 8px; right: 8px; z-index: 5; width: min(380px, calc(100% - 16px));
+       max-height: calc(100% - 16px) !important; display: none; box-shadow: 0 10px 34px rgba(0,0,0,.28); padding-right: 34px !important; }
+.cg.open #cgp { display: block; }
+#cgp-close { position: absolute; top: 14px; right: 16px; z-index: 6; display: none; width: 26px; height: 26px; border-radius: 50%;
+             border: 1px solid var(--rule); background: var(--surface); color: var(--fg); font: 15px/1 var(--f-body); cursor: pointer; }
+.cg.open #cgp-close { display: block; }
 </style>
 <base target="_blank">
 </head>
@@ -189,7 +197,7 @@ html, body { background: var(--bg); }
       <label><input type="checkbox" id="t-mem" checked> фракції ЄС (облрада, міськрада)</label>
       <button class="btn" id="fit">Вмістити</button>
     </div>
-    <div class="cg" style="margin-top:10px"><div id="cgc"></div><aside id="cgp"><p class="mut">Клік по вузлу — звʼязки з джерелами.</p></aside></div><p class="embed-src">Граф звʼязків Олексія Гончаренка · <a href="11651-core.html" target="_blank" rel="noopener">відкрити досьє повністю ↗</a></p>
+    <div class="cg" style="margin-top:10px"><div id="cgc"></div><aside id="cgp"><p class="mut">Клік по вузлу — звʼязки з джерелами.</p></aside></div><p class="embed-src">Граф звʼязків Олексія Гончаренка · клік по вузлу — повна інформація · <a href="11651-core.html" target="_blank" rel="noopener">відкрити досьє повністю ↗</a></p>
   </section>
 
   <section class="card">
@@ -266,6 +274,18 @@ document.getElementById('t-fund').onchange = e => { show.fund = e.target.checked
 document.getElementById('t-addr').onchange = e => { show.addr = e.target.checked; render(); };
 document.getElementById('t-mem').onchange = e => { show.mem = e.target.checked; render(); };
 render();
+</script>
+
+<script>
+(function () {
+  const cg = document.querySelector('.cg'), panel = document.getElementById('cgp');
+  const close = document.createElement('button'); close.id = 'cgp-close'; close.type = 'button'; close.title = 'закрити'; close.textContent = '✕';
+  cg.appendChild(close);
+  const orig = select;
+  select = function (id) { orig(id); cg.classList.toggle('open', !!sel); if (sel) panel.scrollTop = 0; };
+  close.onclick = () => { if (sel) select(sel); };
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && sel) select(sel); });
+})();
 </script>
 </body>
 </html>
